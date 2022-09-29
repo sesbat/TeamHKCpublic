@@ -8,7 +8,6 @@ public:
 	MovingObj(string str);
 	virtual ~MovingObj();
 
-
 	virtual void Draw(RenderWindow& window)override;
 	virtual void Init()override;
 	virtual void Update(float dt)override;
