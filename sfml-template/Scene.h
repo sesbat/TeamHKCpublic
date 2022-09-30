@@ -5,7 +5,7 @@
 #include "MovingObj.h"
 #include "ResourceMgr.h"
 #include "Player.h"
-
+#include "SoundMgr.h"
 enum class MOVEOBJ {
     CLOUD,
     BEE,
@@ -16,6 +16,7 @@ class Scene
 private:
     list<Graphics> env;
     list<MovingObj> movingObj;
+    SoundMgr sdMgr;
     vector<Player> player;
     int sel = 0;
 public:
