@@ -37,6 +37,7 @@ public:
 
     void SetOrigin(Origins origin);
     void SetOrigin(Sprite& obj, Origins origin);
+
     Vector2f GetPos();
 
     virtual void Init();

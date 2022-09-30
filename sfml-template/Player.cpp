@@ -22,7 +22,7 @@ Sides Player::GetSide()
 void Player::Init()
 {
 	isAlive = true;
-	SetOrigin(sprite, Origins::BC);
+	SetOrigin(Origins::BC);
 	if (pos == Sides::Left)
 		SetFlipX(true);
 
@@ -68,7 +68,7 @@ void Player::Die()
 	
 	sprite.setTexture(rip.GetTex());
 	SetFlipX(false);
-	SetOrigin(sprite, Origins::BC);
+	SetOrigin(Origins::BC);
 }
 
 void Player::SetAlive(bool alive)

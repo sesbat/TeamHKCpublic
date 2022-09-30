@@ -11,6 +11,7 @@ vector<bool>InputMgr::upList(Keyboard::Key::KeyCount);
 
 void InputMgr::UpdateInput(Event& ev)
 {
+	
 	switch (ev.type)
 	{
 	case Event::EventType::KeyPressed:
@@ -23,8 +24,7 @@ void InputMgr::UpdateInput(Event& ev)
 		break;
 	case Event::EventType::KeyReleased:
 		std::cout << "Keyreleased" << ev.key.code << std::endl;
-		if (ev.key.code != Keyboard::Key::Unknown) //unknown이 아닐때
-		{
+		if (ev.key.code != Keyboard::Key::Unknown){ //unknown???�닐??		
 			ingList[ev.key.code] = false;
 			upList[ev.key.code] = true;
 		}

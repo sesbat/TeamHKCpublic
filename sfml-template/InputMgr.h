@@ -6,7 +6,6 @@
 using namespace sf;
 using namespace std;
 
-//전역적으로 스태틱 함수를 이용하여 키보드 및 마우스 입력을 검사할 수 있는 클래스
 
 class InputMgr
 {
