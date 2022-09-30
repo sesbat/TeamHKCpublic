@@ -33,15 +33,16 @@ int main()
 	movingObj.push_back(bee);
 	movingObj.push_back(cloud);
 
-	Player p;
-	env.push_back(back);
-
+	Player p("graphics/player.png");
+	p.SetPos({ 800,800 });
+	env.push_back(back);                                                                                                                                                                                 
 	vector<Player> player;
 	player.push_back(p);
 
 	startText.SetPos({ WIDTH / 2, HEIGHT - 100 });
 	startText.SetOrigin(Origins::MC);
 	env.push_back(startText);
+	tree.SetOrigin(Origins::TC);
 
 	Scene startMenu(env, movingObj, (int)SceneSelect::StartMenu);
 	env.pop_back();
@@ -52,7 +53,6 @@ int main()
 	movingObj.clear();
 	env.clear();
 	env.push_back(back);
-	tree.SetOrigin(Origins::TC);
 
 	Scene MainMeun(env, movingObj, (int)SceneSelect::MainMenu);
 

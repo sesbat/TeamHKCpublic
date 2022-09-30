@@ -21,7 +21,6 @@ private:
     list<Effect*> useLogs;
     string texLog;
 
-    Graphics player;
     Graphics axe;
     Graphics rip;
 
@@ -33,7 +32,7 @@ private:
     Vector2f Center;
     Vector2f axePos;
 public:
-    Player();
+    Player(string tex);
 
     virtual void SetFlipX(bool flip)override;
     virtual void Init()override;
@@ -51,4 +50,5 @@ public:
     bool GetChop();
     void SetSide(Sides pos);
     void SetChop(bool chop);
+ 
 };

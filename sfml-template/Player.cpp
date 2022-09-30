@@ -1,16 +1,17 @@
 #include "Player.h"
 #include "Effect.h"
-Player::Player()
+Player::Player(string str)
+	:Graphics(str)
 {
 	axe.SetTex("graphics/axe.png");
-	this->player.SetTex("graphics/player.png");
 	rip.SetTex("graphics/rip.png");
 	for (int i = 0; i < 100; i++)
 	{
 		auto log = new Effect(texLog, 5.f);
 		unuseLogs.push_back(log);
 	}
-	//Init();
+	
+	Init();
 }
 
 void Player::SetFlipX(bool flip)
@@ -54,12 +55,12 @@ void Player::Init()
 
 	Vector2f size = GetSize();
 
-	originalPos[(int)Sides::Left].x = Center.x - size.x * 2;
-	originalPos[(int)Sides::Left].y = Center.y;
+	originalPos.clear();
+	originalPos.push_back({400 ,800 });
 
-	originalPos[(int)Sides::Right].x = Center.x + size.x * 2;
-	originalPos[(int)Sides::Right].y = Center.y;
-	SetPos(originalPos[(int)pos]);
+	originalPos.push_back({ 800 ,800 });
+	
+	sprite.setPosition(originalPos[0]);
 }
 
 void Player::Release()
@@ -93,6 +94,7 @@ void Player::Update(float dt)
 			++it;
 		}
 	}
+
 }
 
 void Player::Draw(RenderWindow& window)
@@ -106,7 +108,7 @@ void Player::Draw(RenderWindow& window)
 	{
 		log->Draw(window);
 	}
-	window.draw(player.GetSprite());
+	window.draw(sprite);
 }
 
 void Player::SetPos(Vector2f pos)
@@ -143,7 +145,8 @@ void Player::Chop(Sides side)
 {
 	pos = side;
 	SetFlipX(pos == Sides::Left);
-	SetPos(originalPos[(int)pos]);
+	sprite.setPosition(originalPos[(int)pos]);
+	cout << GetPos().x << " " << GetPos().y << endl;
 }
 void Player::SetChop(bool chop)
 {

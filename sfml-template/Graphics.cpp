@@ -10,7 +10,7 @@ Graphics::Graphics(string str, Vector2f pos)
     :Graphics(str)
 {
     this->pos = pos;
-    sprite.setPosition(pos);
+    sprite.setPosition(this->pos);
 }
 
 Graphics::~Graphics()
