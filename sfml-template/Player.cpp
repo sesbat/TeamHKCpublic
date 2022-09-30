@@ -1,10 +1,16 @@
 #include "Player.h"
 #include "Effect.h"
+
 Player::Player(string str)
 	:Graphics(str)
 {
 	axe.SetTex("graphics/axe.png");
 	rip.SetTex("graphics/rip.png");
+
+	skin.push_back("graphics/player.png");
+	skin.push_back("graphics/player-.png");
+	skin.push_back("graphics/player_green.png");
+
 	for (int i = 0; i < 100; i++)
 	{
 		auto log = new Effect(texLog, 5.f);
@@ -12,6 +18,29 @@ Player::Player(string str)
 	}
 
 	Init();
+}
+
+Player::~Player()
+{
+	for (auto v : unuseLogs) {
+		delete v;
+	}
+	unuseLogs.clear();
+
+	for (auto v : useLogs) {
+		delete v;
+	}
+	useLogs.clear();
+}
+
+void Player::SetSkin(int temp) {
+	if (temp==1&&skinsel == 2)
+		skinsel = -1;
+	if (temp == -1 && skinsel == 0)
+		skinsel = 3;
+	skinsel += temp;
+
+	this->SetTex(skin[skinsel]);
 }
 
 void Player::SetFlipX(bool flip)
@@ -69,7 +98,7 @@ void Player::Release()
 	{
 		delete log;
 	}
-	unuseLogs.clear(); //¼øÈ¸ÇÏ¸é¼­ Å¬¸®¾î
+	unuseLogs.clear(); //ï¿½ï¿½È¸ï¿½Ï¸é¼­ Å¬ï¿½ï¿½ï¿½ï¿½
 	for (auto log : useLogs)
 	{
 		delete log;

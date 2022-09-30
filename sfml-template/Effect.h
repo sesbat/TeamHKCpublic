@@ -5,8 +5,8 @@ class Effect : public Graphics
 {
 protected:
 	Vector2f velocity;
-	float angluarVelocity; // È¸Àü
-	float dur; // Å¸ÀÌ¸Ó
+	float angluarVelocity; // È¸ï¿½ï¿½
+	float dur; // Å¸ï¿½Ì¸ï¿½
 	float timer;
 
 	bool active;

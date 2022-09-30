@@ -10,12 +10,12 @@ Scene::Scene(list<Graphics> tempenv, list<MovingObj>movingObj, int sel)
 	this->movingObj = movingObj;
 }
 
-Scene::Scene(list<Graphics> tempenv, list<MovingObj> movingObj, vector<Player> player, int sel)
+Scene::Scene(list<Graphics> tempenv, list<MovingObj> movingObj, Player* player, int sel)
+	:player(player)
 {
 	this->sel = sel;
 	env = tempenv;
 	this->movingObj = movingObj;
-	this->player = player;
 }
 
 Scene::~Scene()
@@ -28,11 +28,12 @@ void Scene::Draw(RenderWindow& e)
 		v.Draw(e);
 	for (auto v : movingObj)
 		v.Draw(e);
-	for (auto v : player)
-		v.Draw(e);
+
+	if (player != nullptr)
+		player->Draw(e);
 }
 
-void Scene::StartMeun()
+void Scene::StartMeun(float dt)
 {
 	std::cout << "test" << std::endl;
 	if (InputMgr::GetKeyDown(Keyboard::A)) {
@@ -41,7 +42,7 @@ void Scene::StartMeun()
 	}
 }
 
-void Scene::MainMenu()
+void Scene::MainMenu(float dt)
 {
 
 	if (InputMgr::GetKeyDown(Keyboard::A)) {
@@ -50,31 +51,37 @@ void Scene::MainMenu()
 	}
 }
 
-void Scene::SkinMenu()
+void Scene::SkinMenu(float dt)
 {
 	cout << "skin" << endl;
-	if (InputMgr::GetKeyDown(Keyboard::S)) {
+
+	if (InputMgr::GetKeyDown(Keyboard::Right)) {
+		player->SetSkin(1);
+	}
+	else if (InputMgr::GetKeyDown(Keyboard::Left)) {
+		player->SetSkin(-1);
+	}
+	if (InputMgr::GetKeyDown(Keyboard::Return)) {
 		sel++;
 		SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
 	}
 }
 
-void Scene::Solo()
+void Scene::Solo(float dt)
 {
 
-	cout << player[0].GetPos().x << " " << player[0].GetPos().y << endl;
+	cout << player->GetPos().x << " " << player->GetPos().y << endl;
 
-	if (InputMgr::GetKeyDown(Keyboard::Left)){
-		player[0].Chop(Sides::Left);
-		UpdateBranches()
+	if (InputMgr::GetKeyDown(Keyboard::Left)) {
+		player->Chop(Sides::Left);
 	}
 	if (InputMgr::GetKeyDown(Keyboard::Right))
-		player[0].Chop(Sides::Right);
+		player->Chop(Sides::Right);
 
 
 }
 
-void Scene::Couple()
+void Scene::Couple(float dt)
 {
 
 }
@@ -83,18 +90,18 @@ void Scene::Update(float dt)
 {
 	switch (sel) {
 	case 0:
-		StartMeun();
+		StartMeun(dt);
 		break;
 	case 1:
-		MainMenu();
+		MainMenu(dt);
 		break;
 
 	case 2:
-		SkinMenu();
+		SkinMenu(dt);
 		break;
 
 	case 3:
-		Solo();
+		Solo(dt);
 		break;
 	}
 	//    sceneCollect[sel]->Draw(e);

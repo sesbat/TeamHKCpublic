@@ -20,6 +20,7 @@ private:
     list<Effect*> unuseLogs;
     list<Effect*> useLogs;
     string texLog;
+    vector<string> skin;
 
     Graphics axe;
     Graphics rip;
@@ -31,9 +32,11 @@ private:
     vector<Vector2f> originalPos;
     Vector2f Center;
     Vector2f axePos;
+
+    int skinsel=0;
 public:
     Player(string tex);
-
+    virtual ~Player();
     virtual void SetFlipX(bool flip)override;
     virtual void Init()override;
     virtual void Release()override;
@@ -50,5 +53,6 @@ public:
     bool GetChop();
     void SetSide(Sides pos);
     void SetChop(bool chop);
+    void SetSkin(int temp);
  
 };

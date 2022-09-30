@@ -20,9 +20,9 @@ public:
     Branche(string tex, Graphics* tree);
     virtual void Init() override;
     void SetSide(Sides side);
-    void UpdateBranches(vector<Branche*>& branches, int& current, vector<Vector2f>& posArr); // ³ª¹µ°¡Áö ÁÂ, ¿ì ·£´ý »ý¼º, ¼øÈ¯
+    void UpdateBranches(vector<Branche*>& branches, int& current, vector<Vector2f>& posArr); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½È¯
     Sides GetSide() const;
     static int RandomRange(int min, int max);
     static float RandomRange(float min, float max);
-    void BrancheOffset(vector<Branche*> branches); // ³ª¹µ°¡Áö YÀ§Ä¡ ÁöÁ¤(³»·Á¿À°Ô)
+    void BrancheOffset(vector<Branche*> branches); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Yï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 };

@@ -1,16 +1,24 @@
-#pragma once
+#include <iostream>
 #include "InputMgr.h"
 #include <algorithm>
-#include <iostream>
 
-using namespace std;
+vector<bool> InputMgr::downList;
+vector<bool> InputMgr::ingList;
+vector<bool> InputMgr::upList;
 
-vector<bool>InputMgr::downList(Keyboard::Key::KeyCount);
-vector<bool>InputMgr::ingList(Keyboard::Key::KeyCount);
-vector<bool>InputMgr::upList(Keyboard::Key::KeyCount);
+void InputMgr::ClearInput()
+{
+	downList.clear();
+	upList.clear();
+	for (int i = 0; i < (int)Keyboard::Key::KeyCount; i++) {
+		upList.push_back(false);
+		downList.push_back(false);
+	}
+}
 
 void InputMgr::UpdateInput(Event& ev)
 {
+
 	int pos = (int)ev.key.code;
 
 	switch (ev.type)
@@ -30,46 +38,39 @@ void InputMgr::UpdateInput(Event& ev)
 
 		ingList[pos] = false;
 		upList[pos] = true;
-		downList[pos] = false;
+		//		downList[pos] = false;
 		break;
 	}
-	//switch (ev.type)
-	//{
-	//case Event::EventType::KeyPressed:
-	//	std::cout << "Keypressed" << ev.key.code << std::endl;
-	//	if (ev.key.code != Keyboard::Key::Unknown && !ingList[ev.key.code])
-	//	{
-	//		downList[ev.key.code] = true;
-	//		ingList[ev.key.code] = true;
-	//	}
-	//	break;
-	//case Event::EventType::KeyReleased:
-	//	std::cout << "Keyreleased" << ev.key.code << std::endl;
-	//	if (ev.key.code != Keyboard::Key::Unknown){ //unknown???„ë‹??		
-	//		ingList[ev.key.code] = false;
-	//		upList[ev.key.code] = true;
-	//	}
-	//	break;
-	//}
 }
 
-void InputMgr::ClearInput()
+
+
+void InputMgr::Set()
 {
-	fill(downList.begin(), downList.end(), false);
-	fill(upList.begin(), downList.end(), false);
+	int count = (int)Keyboard::Key::KeyCount;
+	for (int i = 0; i < count; i++) {
+		downList.push_back(false);
+		ingList.push_back(false);
+		upList.push_back(false);
+	}
+
+}
+
+void InputMgr::againSet()
+{
 }
 
 bool InputMgr::GetKeyDown(Keyboard::Key key)
 {
-	return downList[(int)key];
+	return downList[key];
 }
 
 bool InputMgr::GetKey(Keyboard::Key key)
 {
-	return ingList[(int)key];
+	return ingList[key];
 }
 
 bool InputMgr::GetKeyUp(Keyboard::Key key)
 {
-	return upList[(int)key];
+	return upList[key];
 }

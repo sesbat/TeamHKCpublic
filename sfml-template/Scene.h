@@ -19,19 +19,20 @@ private:
     list<Graphics> env;
     list<MovingObj> movingObj;
     SoundMgr sdMgr;
-    vector<Player> player;
-    vector<Branche*> branches();
+    Player* player=nullptr;
+
     int sel = 0;
 public:
+   
     Scene(list<Graphics> tempenv, list<MovingObj>movingObj, int sel);
-    Scene(list<Graphics> tempenv, list<MovingObj>movingObj,vector<Player>player, int sel);
+    Scene(list<Graphics> tempenv, list<MovingObj>movingObj,Player* player, int sel);
     ~Scene();
 
     void Draw(RenderWindow& e);
     void Update(float dt);
-    void StartMeun();
-    void MainMenu();
-    void SkinMenu();
-    void Solo();
-    void Couple();
+    void StartMeun(float dt);
+    void MainMenu(float dt);
+    void SkinMenu(float dt);
+    void Solo(float dt);
+    void Couple(float dt);
 };

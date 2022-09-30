@@ -35,9 +35,7 @@ int main()
 
 	Player p("graphics/player.png");
 	p.SetPos({ 800,800 });
-	env.push_back(back);                                                                                                                                                                                 
-	vector<Player> player;
-	player.push_back(p);
+	env.push_back(back);                                                                                                                                                                                
 
 	startText.SetPos({ WIDTH / 2, HEIGHT - 100 });
 	startText.SetOrigin(Origins::MC);
@@ -46,9 +44,9 @@ int main()
 
 	Scene startMenu(env, movingObj, (int)SceneSelect::StartMenu);
 	env.pop_back();
+	Scene SkinMenu(env, movingObj, &p, (int)SceneSelect::SkinMenu);
 	env.push_back(tree);
-	Scene SkinMenu(env, movingObj, player, (int)SceneSelect::SkinMenu);
-	Scene SoloPlay(env, movingObj, player, (int)SceneSelect::Solo);
+	Scene SoloPlay(env, movingObj, &p, (int)SceneSelect::Solo);
 
 	movingObj.clear();
 	env.clear();
@@ -64,9 +62,10 @@ int main()
 
 	SceneMgr::GetInstance()->SetScene(SceneSelect::StartMenu);
 
+	InputMgr::Set();
 	Clock clock;
 	while (window.isOpen()) {
-
+		InputMgr::ClearInput();
 		Time dt = clock.restart();
 		Event ev;
 		while (window.pollEvent(ev))
