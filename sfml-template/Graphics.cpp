@@ -2,6 +2,7 @@
 
 Graphics::Graphics(string str)
 {
+    this->tex.loadFromFile(str);
     SetTex(str);
 }
 

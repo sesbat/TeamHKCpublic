@@ -24,6 +24,7 @@ private:
 	
 	vector<Vector2f> originalPos;
 	Vector2f Center;
+	Vector2f axePos;
 public:
 	Player();
 
@@ -37,6 +38,6 @@ public:
 	Sides GetSide();
 	void Die();
 	void SetAlive(bool alive);
-	void GetAlive();
 	void Chop(Sides side);
+	bool GetAlive();
 };
