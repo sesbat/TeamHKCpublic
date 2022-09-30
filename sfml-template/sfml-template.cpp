@@ -25,18 +25,19 @@ int main()
 	Graphics tree("graphics/tree.png", { WIDTH / 2, 0 });
 	Graphics back("graphics/background.png");
 	Graphics startText("graphics/Start.png");
-	MovingObj bee("graphics/bee.png");
-	MovingObj cloud("graphics/cloud.png");
+	vector<MovingObj> bee;
+	vector<MovingObj> cloud;
 
+	for (int i = 0; i < 3; i++) {
+		bee.push_back(MovingObj("graphics/bee.png"));
+		cloud.push_back(MovingObj("graphics/cloud.png"));
+	}
 	list<Graphics> env;
 	list<MovingObj> movingObj;
-	movingObj.push_back(bee);
-	movingObj.push_back(cloud);
 
 	Player p("graphics/player.png");
-	p.SetPos({ 800,800 });
-	env.push_back(back);                                                                                                                                                                                
-
+	p.SetPos({ 1920 / 2 - 250,900 });
+	env.push_back(back);
 	startText.SetPos({ WIDTH / 2, HEIGHT - 100 });
 	startText.SetOrigin(Origins::MC);
 	env.push_back(startText);
@@ -46,6 +47,10 @@ int main()
 	env.pop_back();
 	Scene SkinMenu(env, movingObj, &p, (int)SceneSelect::SkinMenu);
 	env.push_back(tree);
+	for (int i = 0; i < 3; i++) {
+		movingObj.push_back(bee[i]);
+		movingObj.push_back(cloud[i]);
+	}
 	Scene SoloPlay(env, movingObj, &p, (int)SceneSelect::Solo);
 
 	movingObj.clear();
@@ -59,11 +64,9 @@ int main()
 	SceneMgr::GetInstance()->AddScene(SceneSelect::SkinMenu, &SkinMenu);
 	SceneMgr::GetInstance()->AddScene(SceneSelect::Solo, &SoloPlay);
 
-
-	SceneMgr::GetInstance()->SetScene(SceneSelect::StartMenu);
-
 	InputMgr::Set();
 	Clock clock;
+
 	while (window.isOpen()) {
 		InputMgr::ClearInput();
 		Time dt = clock.restart();

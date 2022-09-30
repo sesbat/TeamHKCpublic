@@ -1,8 +1,10 @@
 #pragma once
-#include "Graphics.h"
+
 #include "Effect.h"
 #include <list>
 #include "InputMgr.h"
+
+class Graphics;
 
 using namespace sf;
 enum class Sides
@@ -21,9 +23,9 @@ private:
     list<Effect*> useLogs;
     string texLog;
     vector<string> skin;
-
-    Graphics axe;
-    Graphics rip;
+    Texture axeTex;
+    Sprite axe;  
+    Texture ripTex;
 
     bool isAxe = false;
     bool isAlive = true;

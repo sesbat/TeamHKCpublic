@@ -36,7 +36,7 @@ void Scene::Draw(RenderWindow& e)
 void Scene::StartMeun(float dt)
 {
 	std::cout << "test" << std::endl;
-	if (InputMgr::GetKeyDown(Keyboard::A)) {
+	if (InputMgr::GetKeyDown(Keyboard::Return)) {
 		sel++;
 		SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
 	}
@@ -45,7 +45,7 @@ void Scene::StartMeun(float dt)
 void Scene::MainMenu(float dt)
 {
 
-	if (InputMgr::GetKeyDown(Keyboard::A)) {
+	if (InputMgr::GetKeyDown(Keyboard::Return)) {
 		sel++;
 		SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
 	}
@@ -77,6 +77,16 @@ void Scene::Solo(float dt)
 	}
 	if (InputMgr::GetKeyDown(Keyboard::Right))
 		player->Chop(Sides::Right);
+	if (InputMgr::GetKeyDown(Keyboard::Space)){
+		if (!player->GetAlive()) {
+			player->Init();
+		}
+		else
+			player->Die();
+	}
+	if (!(InputMgr::GetKey(Keyboard::Left)||InputMgr::GetKey(Keyboard::Right))) {
+		player->SetChop(false);
+	}
 
 
 }

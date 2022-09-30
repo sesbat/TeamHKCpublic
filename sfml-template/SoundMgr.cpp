@@ -25,23 +25,7 @@ SoundMgr::SoundMgr()
 
 SoundMgr::~SoundMgr()
 {
-	for (auto& k : soundBuffers)
-	{
-		delete& k;
-	}
-	soundBuffers.clear();
-
-	for (auto& k : sounds)
-	{
-		delete& k;
-	}
-	sounds.clear();
-
-	for (auto& k : soundName)
-	{
-		delete& k;
-	}
-	soundName.clear();
+	
 }
 
 void SoundMgr::SoundPlay(SoundChoice soundchoice)

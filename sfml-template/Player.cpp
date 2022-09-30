@@ -1,21 +1,25 @@
 #include "Player.h"
 #include "Effect.h"
+#include "Graphics.h"
 
 Player::Player(string str)
 	:Graphics(str)
 {
-	axe.SetTex("graphics/axe.png");
-	rip.SetTex("graphics/rip.png");
+	
+	axeTex.loadFromFile("graphics/axe.png");
+	axe.setTexture(axeTex);
+	ripTex.loadFromFile("graphics/rip.png");	
 
+	axe.setOrigin(axe.getLocalBounds().width, axe.getLocalBounds().height);
 	skin.push_back("graphics/player.png");
 	skin.push_back("graphics/player-.png");
 	skin.push_back("graphics/player_green.png");
 
-	for (int i = 0; i < 100; i++)
-	{
-		auto log = new Effect(texLog, 5.f);
-		unuseLogs.push_back(log);
-	}
+	//for (int i = 0; i < 100; i++)
+	//{
+	//	auto log = new Effect(texLog, 5.f);
+	//	unuseLogs.push_back(log);
+	//}
 
 	Init();
 }
@@ -43,13 +47,6 @@ void Player::SetSkin(int temp) {
 	this->SetTex(skin[skinsel]);
 }
 
-void Player::SetFlipX(bool flip)
-{
-	Graphics::SetFlipX(flip);
-	Vector2f scale = axe.GetScale();
-	scale.x = flip ? -abs(scale.x) : abs(scale.x);
-	axe.GetSprite().setScale(scale);
-}
 void Player::ShowLog()
 {
 	if (unuseLogs.empty())
@@ -65,7 +62,7 @@ void Player::ShowLog()
 	float aForce = pos == Sides::Left ? 360 * 5 : -360 * 5;
 
 	Vector2f pos = Center;
-	pos.y = axe.GetPos().y;
+	pos.y = axe.getPosition().y;
 
 	log->SetPos(pos);
 	log->Shot(force, aForce);
@@ -77,6 +74,7 @@ Sides Player::GetSide()
 
 void Player::Init()
 {
+	this->SetTex(skin[skinsel]);
 	isAlive = true;
 	SetOrigin(Origins::BC);
 	if (pos == Sides::Left)
@@ -85,11 +83,11 @@ void Player::Init()
 	Vector2f size = GetSize();
 
 	originalPos.clear();
-	originalPos.push_back({ 800,900 });
+	originalPos.push_back({ 1920/2-250,900 });
 
-	originalPos.push_back({ 1200,900 });
+	originalPos.push_back({ 1920 / 2 + 250,900 });
 
-	sprite.setPosition(originalPos[0]);
+	sprite.setPosition(this->GetPos());
 }
 
 void Player::Release()
@@ -128,16 +126,16 @@ void Player::Update(float dt)
 
 void Player::Draw(RenderWindow& window)
 {
-	if (isChopping)
-	{
-
-		window.draw(axe.GetSprite());
-	}
+	
 	for (auto& log : useLogs)
 	{
 		log->Draw(window);
 	}
 	window.draw(sprite);
+	if (isChopping)
+	{
+		window.draw(axe);
+	}
 }
 
 void Player::SetPos(Vector2f pos)
@@ -145,11 +143,11 @@ void Player::SetPos(Vector2f pos)
 	Graphics::SetPos(pos);
 
 	Vector2f axePos2 = axePos;
-	if (axe.GetSprite().getScale().x < 0)
+	if (axe.getScale().x < 0)
 	{
 		axePos2.x *= -1;
 	}
-	axe.GetSprite().setPosition(pos + axePos2);
+	axe.setPosition(pos + axePos2);
 }
 
 void Player::Die()
@@ -157,7 +155,7 @@ void Player::Die()
 	isAlive = false;
 	isChopping = false;
 
-	sprite.setTexture(rip.GetTex());
+	sprite.setTexture(ripTex);
 	SetFlipX(false);
 	SetOrigin(Origins::BC);
 }
@@ -170,12 +168,21 @@ bool Player::GetAlive()
 	return isAlive;
 }
 
+void Player::SetFlipX(bool flip)
+{
+	Graphics::SetFlipX(flip);
+	Vector2f scale = axe.getScale();
+	scale.x = flip ? -abs(scale.x) : abs(scale.x);
+	axe.setScale(scale);
+}
+
 void Player::Chop(Sides side)
 {
-	isChopping = false;
+	isChopping = true;
 	pos = side;
-	SetFlipX(pos == Sides::Left);
 	sprite.setPosition(originalPos[(int)pos]);
+	axe.setPosition(sprite.getPosition().x, sprite.getPosition().y-100);
+	SetFlipX(pos == Sides::Left);
 }
 void Player::SetChop(bool chop)
 {
