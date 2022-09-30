@@ -6,6 +6,7 @@
 #include"Graphics.h"
 #include "Player.h"
 #include "Scene.h"
+#include "SoundMgr.h"
 
 enum class SceneSelect
 {
@@ -22,7 +23,8 @@ class SceneMgr : public Singleton<SceneMgr>
 private:
     SceneSelect sel;
     map<SceneSelect, Scene*> sceneCollect;
-
+    SoundMgr sound;
+    bool played=false;
 public:
     SceneMgr();
     virtual ~SceneMgr();

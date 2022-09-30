@@ -20,14 +20,14 @@ SoundMgr::SoundMgr()
 	{
 		sound.setBuffer(soundBuffers[i]);
 		sounds.push_back(sound);
-	}	
+	}
 }
 
 SoundMgr::~SoundMgr()
 {
 	for (auto& k : soundBuffers)
 	{
-		delete &k;
+		delete& k;
 	}
 	soundBuffers.clear();
 
@@ -49,6 +49,7 @@ void SoundMgr::SoundPlay(SoundChoice soundchoice)
 	switch (soundchoice)
 	{
 	case SoundChoice::TitleSound:
+
 		sounds[0].play();
 		break;
 

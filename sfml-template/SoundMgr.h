@@ -21,6 +21,8 @@ private:
 	vector<string> soundName;
 
 	SoundChoice soundChoice;
+
+	bool played = false;
 public:
 	SoundMgr();
 	virtual ~SoundMgr();

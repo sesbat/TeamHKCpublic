@@ -28,7 +28,13 @@ void SceneMgr::Draw(RenderWindow& e)
 }
 void SceneMgr::Update(float dt)
 {
-
+	if (!(sel == SceneSelect::Solo && sel == SceneSelect::Couple)&&played==false) {
+		sound.SoundPlay(SoundChoice::TitleSound);
+		played = true;
+	}
+	if(sel == SceneSelect::Solo && sel == SceneSelect::Couple){
+		played = false;
+	}
 	sceneCollect[sel]->Update(dt);
 }
 

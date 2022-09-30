@@ -7,6 +7,7 @@
 #include "SceneMgr.h"
 #include "Scene.h"
 #include "InputMgr.h"
+#include "SoundMgr.h"
 #include <list>
 
 using namespace sf;
@@ -21,7 +22,7 @@ int main()
 
 	RenderWindow window(vm, "Timber!!", Style::Default);
 
-	Graphics tree("graphics/tree.png", { WIDTH / 2, 0});
+	Graphics tree("graphics/tree.png", { WIDTH / 2, 0 });
 	Graphics back("graphics/background.png");
 	Graphics startText("graphics/Start.png");
 	MovingObj bee("graphics/bee.png");
@@ -35,13 +36,13 @@ int main()
 
 	env.push_back(back);
 
-	startText.SetPos({ WIDTH / 2, HEIGHT - 100});
+	startText.SetPos({ WIDTH / 2, HEIGHT - 100 });
 	startText.SetOrigin(Origins::MC);
 	env.push_back(startText);
 
 	Scene startMenu(env, movingObj, (int)SceneSelect::StartMenu);
 	Scene SkinMenu(env, movingObj, (int)SceneSelect::SkinMenu);
-	Scene SoloPlay(env, movingObj, player,(int)SceneSelect::Solo);
+	Scene SoloPlay(env, movingObj, player, (int)SceneSelect::Solo);
 
 	movingObj.clear();
 	env.clear();
@@ -57,8 +58,11 @@ int main()
 
 	SceneMgr::GetInstance()->SetScene(SceneSelect::StartMenu);
 
+	
+
 	Clock clock;
 	while (window.isOpen()) {
+
 		Time dt = clock.restart();
 		Event ev;
 		while (window.pollEvent(ev))
@@ -67,7 +71,7 @@ int main()
 		}
 		SceneMgr::GetInstance()->Draw(window);
 		SceneMgr::GetInstance()->Update(dt.asSeconds());
-		 
+
 		if (InputMgr::GetKeyDown(Keyboard::Key::Escape))
 		{
 			window.close();

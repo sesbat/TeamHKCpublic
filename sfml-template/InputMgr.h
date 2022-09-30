@@ -13,6 +13,8 @@ private:
 	static vector<bool> downList;
 	static vector<bool> ingList;
 	static vector<bool> upList;
+	
+	
 public:
 	static void UpdateInput(Event& ev);
 	static void ClearInput();
