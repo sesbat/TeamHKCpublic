@@ -2,9 +2,7 @@
 
 Graphics::Graphics(string str)
 {
-    this->tex.loadFromFile(str);
-    sprite.setTexture(tex);
-
+    SetTex(str);
 }
 
 Graphics::Graphics(string str, Vector2f pos)
@@ -18,8 +16,13 @@ Graphics::~Graphics()
 {
 }
 
-void Graphics::SetOrigin()
+void Graphics::SetOrigin(Sprite& obj, Origins origin)
 {
+    FloatRect rect = obj.getLocalBounds();
+    Vector2f originPos;
+    originPos.x = rect.width * ((int)origin % 3) * 0.5f;
+    originPos.y = rect.height * ((int)origin / 3) * 0.5f;
+    obj.setOrigin(originPos);
 }
 
 Vector2f Graphics::GetPos()
@@ -37,6 +40,12 @@ void Graphics::SetFlipX(bool flip)
     Vector2f scale = sprite.getScale();
     scale.x = flip ? -abs(scale.x) : abs(scale.x);
     sprite.setScale(scale);
+}
+
+void Graphics::SetTex(string str)
+{
+    this->tex.loadFromFile(str);
+    sprite.setTexture(tex);
 }
 
 void Graphics::Translate(Vector2f delta)
@@ -60,4 +69,10 @@ void Graphics::Update(float dt)
 
 void Graphics::Release()
 {
+}
+Vector2f Graphics::GetSize()
+{
+    FloatRect rect = sprite.getLocalBounds();
+
+    return Vector2f(rect.width, rect.height);
 }

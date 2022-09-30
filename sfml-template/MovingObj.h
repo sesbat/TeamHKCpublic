@@ -21,6 +21,6 @@ public:
 	virtual void Draw(RenderWindow& window)override;
 	virtual void Init()override;
 	virtual void Update(float dt)override;
-	virtual void Release()override;
+
 };
 

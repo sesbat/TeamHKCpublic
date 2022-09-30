@@ -152,6 +152,7 @@
     <ClCompile Include="ResourceMgr.cpp" />
     <ClCompile Include="sceneMgr.cpp" />
     <ClCompile Include="sfml-template.cpp" />
+    <ClCompile Include="SoundMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphics.h" />
@@ -161,6 +162,8 @@
     <ClInclude Include="rapidcsv.h" />
     <ClInclude Include="ResourceMgr.h" />
     <ClInclude Include="sceneMgr.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SoundMgr.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
