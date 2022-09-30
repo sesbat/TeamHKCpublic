@@ -166,6 +166,7 @@
     <ClInclude Include="rapidcsv.h" />
     <ClInclude Include="ResourceMgr.h" />
     <ClInclude Include="sceneMgr.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="SoundMgr.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

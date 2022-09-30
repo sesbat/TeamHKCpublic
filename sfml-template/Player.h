@@ -1,6 +1,7 @@
 #pragma once
 #include "Graphics.h"
 
+
 enum class Sides
 {
 	Left,
@@ -12,10 +13,19 @@ class Player :public Graphics
 {
 private:
 	Sides pos;
-public:
-	Player(string str);
 
+	Graphics player;
+	Graphics axe;
+	Graphics rip;
 	
+	bool isAxe=false;
+	bool isAlive=true;
+	bool isChopping;
+	
+	vector<Vector2f> originalPos;
+	Vector2f Center;
+public:
+	Player();
 
 	virtual void SetFlipX(bool flip)override;
 	virtual void Init()override;
@@ -23,4 +33,10 @@ public:
 	virtual void Update(float dt)override;
 	virtual void Draw(RenderWindow& window)override;
 	virtual void SetPos(Vector2f pos)override;
+
+	Sides GetSide();
+	void Die();
+	void SetAlive(bool alive);
+	void GetAlive();
+	void Chop(Sides side);
 };
