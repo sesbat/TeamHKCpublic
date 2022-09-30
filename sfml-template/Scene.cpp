@@ -89,7 +89,7 @@ void Scene::Solo(float dt)
 		player->SetChop(false);
 	}
 
-	if (InputMgr::GetKeyDown(Keyboard::Escape)){
+	if (InputMgr::GetKeyDown(Keyboard::RShift)){
 		sel = 1;
 		player->SetSide(Sides::Left);
 		SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
