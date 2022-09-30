@@ -11,9 +11,11 @@ enum class Origins
     TL,
     TC,
     TR,
+
     ML,
     MC,
     MR,
+
     BL,
     BC,
     BR
@@ -33,7 +35,8 @@ public:
     Graphics(string str, Vector2f pos);
     virtual ~Graphics();
 
-    static void SetOrigin(Sprite& obj, Origins origin);
+    void SetOrigin(Origins origin);
+    void SetOrigin(Sprite& obj, Origins origin);
     Vector2f GetPos();
 
     virtual void Init();

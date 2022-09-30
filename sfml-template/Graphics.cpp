@@ -17,6 +17,14 @@ Graphics::~Graphics()
 {
 }
 
+void Graphics::SetOrigin(Origins origin)
+{
+    Vector2f originPos;
+    originPos.x = sprite.getLocalBounds().width * ((int)origin % 3) * 0.5f;
+    originPos.y = sprite.getLocalBounds().height * ((int)origin / 3) * 0.5f;
+    sprite.setOrigin(originPos);
+}
+
 void Graphics::SetOrigin(Sprite& obj, Origins origin)
 {
     FloatRect rect = obj.getLocalBounds();

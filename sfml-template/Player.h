@@ -1,7 +1,6 @@
 #pragma once
 #include "Graphics.h"
 
-
 enum class Sides
 {
 	Left,

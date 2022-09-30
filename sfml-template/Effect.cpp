@@ -5,7 +5,7 @@ const Vector2f Effect::Gravity = Vector2f(0.f, 8000.f);
 Effect::Effect(string& tex, float dur)
 	: Graphics(tex), dur(dur)
 {
-	//SetOrigin(Origins::MiddleCenter);
+	SetOrigin(Origins::MC);
 }
 
 Effect::~Effect()
@@ -28,13 +28,12 @@ bool Effect::GetActive() const
 void Effect::Init()
 {
 	Graphics::Init();
-	//SetOrigin(Origins::MiddleCenter);
+	SetOrigin(Origins::MC);
 }
 
 void Effect::Release()
 {
 	Graphics::Release();
-
 }
 
 void Effect::Update(float dt)

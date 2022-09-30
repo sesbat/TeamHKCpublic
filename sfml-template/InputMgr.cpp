@@ -5,11 +5,11 @@
 
 using namespace std;
 
-vector<bool>InputMgr2::downList(Keyboard::Key::KeyCount);
-vector<bool>InputMgr2::ingList(Keyboard::Key::KeyCount);
-vector<bool>InputMgr2::upList(Keyboard::Key::KeyCount);
+vector<bool>InputMgr::downList(Keyboard::Key::KeyCount);
+vector<bool>InputMgr::ingList(Keyboard::Key::KeyCount);
+vector<bool>InputMgr::upList(Keyboard::Key::KeyCount);
 
-void InputMgr2::UpdateInput(Event& ev)
+void InputMgr::UpdateInput(Event& ev)
 {
 	switch (ev.type)
 	{
@@ -32,23 +32,23 @@ void InputMgr2::UpdateInput(Event& ev)
 	}
 }
 
-void InputMgr2::ClearInput()
+void InputMgr::ClearInput()
 {
 	fill(downList.begin(), downList.end(), false);
 	fill(upList.begin(), downList.end(), false);
 }
 
-bool InputMgr2::GetKeyDown(Keyboard::Key key)
+bool InputMgr::GetKeyDown(Keyboard::Key key)
 {
 	return downList[(int)key];
 }
 
-bool InputMgr2::GetKey(Keyboard::Key key)
+bool InputMgr::GetKey(Keyboard::Key key)
 {
 	return ingList[(int)key];
 }
 
-bool InputMgr2::GetKeyUp(Keyboard::Key key)
+bool InputMgr::GetKeyUp(Keyboard::Key key)
 {
 	return upList[(int)key];
 }
