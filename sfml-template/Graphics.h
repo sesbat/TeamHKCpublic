@@ -43,8 +43,9 @@ public:
     virtual void SetPos(Vector2f pos);
     virtual void SetFlipX(bool flip);
     void Translate(Vector2f delta);
+    void SetTex(string str);
     Texture GetTex() { return tex; }
     Vector2f GetScale() { return sprite.getScale(); };
     Sprite GetSprite() { return sprite; }
-    Vector2f GetSize();
+    Vector2f GetSize() const;
 };

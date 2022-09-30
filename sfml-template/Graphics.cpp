@@ -77,9 +77,3 @@ void Graphics::Update(float dt)
 void Graphics::Release()
 {
 }
-Vector2f Graphics::GetSize()
-{
-    FloatRect rect = sprite.getLocalBounds();
-
-    return Vector2f(rect.width, rect.height);
-}
