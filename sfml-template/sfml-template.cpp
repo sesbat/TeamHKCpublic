@@ -21,8 +21,9 @@ int main()
 
 	RenderWindow window(vm, "Timber!!", Style::Default);
 
-	Graphics tree("graphics/tree.png", { WIDTH / 2,HEIGHT/2});
+	Graphics tree("graphics/tree.png", { WIDTH / 2, 0});
 	Graphics back("graphics/background.png");
+	Graphics startText("graphics/Start.png");
 	MovingObj bee("graphics/bee.png");
 	MovingObj cloud("graphics/cloud.png");
 	vector<Player> player;
@@ -33,6 +34,11 @@ int main()
 	movingObj.push_back(cloud);
 
 	env.push_back(back);
+
+	startText.SetPos({ WIDTH / 2, HEIGHT - 100});
+	startText.SetOrigin(Origins::MC);
+	env.push_back(startText);
+
 	Scene startMenu(env, movingObj, (int)SceneSelect::StartMenu);
 	Scene SkinMenu(env, movingObj, (int)SceneSelect::SkinMenu);
 	Scene SoloPlay(env, movingObj, player,(int)SceneSelect::Solo);
@@ -40,7 +46,7 @@ int main()
 	movingObj.clear();
 	env.clear();
 	env.push_back(back);
-	tree.SetOrigin(Origins::MC);
+	tree.SetOrigin(Origins::TC);
 	env.push_back(tree);
 
 	Scene MainMeun(env, movingObj, (int)SceneSelect::MainMenu);
@@ -62,6 +68,11 @@ int main()
 		SceneMgr::GetInstance()->Draw(window);
 		SceneMgr::GetInstance()->Update(dt.asSeconds());
 		 
+		if (InputMgr::GetKeyDown(Keyboard::Key::Escape))
+		{
+			window.close();
+		}
+
 		window.display();
 	}
 
