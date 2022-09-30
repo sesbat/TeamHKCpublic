@@ -8,7 +8,7 @@ using namespace std;
 
 class Graphics
 {
-private:
+protected:
 	Sprite sprite;
 	Texture tex;
 	Vector2f pos;
@@ -21,9 +21,11 @@ public:
 	void SetOrigin();
 	Vector2f GetPos();
 
-	virtual void Draw(RenderWindow& window);
 	virtual void Init();
-	virtual void Update(float dt);
 	virtual void Release();
+	virtual void Update(float dt);
+	virtual void Draw(RenderWindow& window);
+	virtual void SetPos(Vector2f pos);
+	void Translate(Vector2f delta);
 };
 

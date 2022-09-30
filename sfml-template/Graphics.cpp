@@ -24,7 +24,18 @@ void Graphics::SetOrigin()
 
 Vector2f Graphics::GetPos()
 {
-	return Vector2f();
+	return sprite.getPosition();
+}
+
+void Graphics::SetPos(Vector2f pos)
+{
+	sprite.setPosition(pos);
+}
+
+void Graphics::Translate(Vector2f delta)
+{
+	Vector2f pos = sprite.getPosition() + delta;
+	sprite.setPosition(pos);
 }
 
 void Graphics::Draw(RenderWindow& window)
