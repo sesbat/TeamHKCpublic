@@ -28,5 +28,5 @@ public:
     virtual void Draw(RenderWindow& window);
     virtual void SetPos(Vector2f pos);
     virtual void SetFlipX(bool flip);
-    void Translate(Vector2f delta);
+    Vector2f GetSize() const; // Branche에 쓰기 위해 추가
 };

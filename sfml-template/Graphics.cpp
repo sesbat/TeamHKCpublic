@@ -45,6 +45,12 @@ void Graphics::Translate(Vector2f delta)
     sprite.setPosition(pos);
 }
 
+Vector2f Graphics::GetSize() const
+{
+    FloatRect rect = sprite.getLocalBounds();
+    return Vector2f(rect.width, rect.height);
+}
+
 void Graphics::Draw(RenderWindow& window)
 {
     window.draw(sprite);
