@@ -5,6 +5,7 @@
 #include "Graphics.h"
 #include "MovingObj.h"
 #include "SceneMgr.h"
+#include "Scene.h"
 
 #include <list>
 
@@ -14,6 +15,44 @@ using namespace std;
 #define HEIGHT 1080
 int main()
 {
+    //파일 불러오기
+
+    VideoMode vm(WIDTH, HEIGHT);
+
+    RenderWindow window(vm, "Timber!!", Style::Default);
+
+    Graphics tree("graphics/tree.png", { WIDTH / 2,0 });
+    Graphics back("graphics/background.png");
+    MovingObj bee("graphics/bee.png");
+    list<Graphics> env;
+    list<MovingObj> movingObj;
+    env.push_back(back);
+    Scene startMenu(env, movingObj, (int)SceneSelect::StartMenu);
+    //Scene SkinMenu(env, movingObj, (int)SceneSelect::SkinMenu);
+    movingObj.clear();
+    env.clear();
+    env.push_back(back);
+    env.push_back(tree);
+    Scene MainMeun(env, movingObj, (int)SceneSelect::MainMenu);
+    SceneMgr::GetInstance()->AddScene(SceneSelect::StartMenu, &startMenu);
+    SceneMgr::GetInstance()->AddScene(SceneSelect::MainMenu, &MainMeun);
+    //SceneMgr::GetInstance()->AddScene(SceneSelect::SkinMenu, &SkinMenu);
+
+        SceneMgr::GetInstance()->SetScene(SceneSelect::MainMenu);
+
+    Clock clock;
+    while (window.isOpen()) {
+        Time dt = clock.restart();
+        Event ev;
+        while (window.pollEvent(ev))
+        {
+
+        }
+        SceneMgr::GetInstance()->Draw(window);
+        SceneMgr::GetInstance()->Update(dt.asSeconds());
+
+        window.display();
+    }
 
     return 0;
 }

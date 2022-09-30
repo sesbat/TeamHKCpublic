@@ -5,16 +5,17 @@
 #include "MovingObj.h"
 #include "ResourceMgr.h"
 
-class Scene 
+class Scene
 {
 private:
-	//list<Player> player;
-	list<Graphics*> env;
-	list<MovingObj*>movingThing;
+    //list<Player> player;
+    list<Graphics> env;
+    list<MovingObj>movingObj;
+    int sel = 0;
 public:
-	Scene();
-	~Scene();
+    Scene(list<Graphics> tempenv, list<MovingObj>movingObj, int sel);
+    ~Scene();
 
-	void Draw(RenderWindow& e);
+    void Draw(RenderWindow& e);
+    void Update(float dt);
 };
-

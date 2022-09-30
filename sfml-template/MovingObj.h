@@ -13,7 +13,7 @@ private:
 	Vector2f endPos;
 public:
 	MovingObj(string str);
-	MovingObj(string str, Vector2f pos = Vector2f());
+	MovingObj(string str, Vector2f pos);
 	virtual ~MovingObj();
 
 	void Set(Vector2i srange, Vector2i yrange, Vector2f start, Vector2f end);

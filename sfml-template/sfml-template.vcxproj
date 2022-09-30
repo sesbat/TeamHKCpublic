@@ -151,7 +151,7 @@
     <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="MovingObj.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="ResourceMgr.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="sceneMgr.cpp" />
     <ClCompile Include="sfml-template.cpp" />
     <ClCompile Include="SoundMgr.cpp" />
@@ -164,7 +164,7 @@
     <ClInclude Include="MovingObj.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="rapidcsv.h" />
-    <ClInclude Include="ResourceMgr.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="sceneMgr.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SoundMgr.h" />
