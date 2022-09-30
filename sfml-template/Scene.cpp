@@ -34,7 +34,7 @@ void Scene::StartMeun()
 {
 	std::cout << "test" << std::endl;
 	if (InputMgr::GetKeyDown(Keyboard::A)) {
-		sel=3;
+		sel++;
 		SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
 	}
 }
@@ -51,9 +51,7 @@ void Scene::SkinMenu()
 
 void Scene::Solo()
 {
-<<<<<<< HEAD
 
-=======
 	if (InputMgr::GetKeyDown(Keyboard::Key::Space))
 	{
 		if (player[0].GetAlive())
@@ -97,7 +95,7 @@ void Scene::Solo()
 			player[0].SetChop(false);
 		}
 	}
->>>>>>> origin/Develop
+
 }
 
 void Scene::Couple()
@@ -105,18 +103,7 @@ void Scene::Couple()
 }
 
 void Scene::Update(float dt)
-{
-<<<<<<< HEAD
-
-	switch (sel) {
-	case 0:
-		StartMeun();
-		break;
-	case 1:
-		MainMenu();
-		break;
-=======
-   
+{  
 	switch (sel) {
 	case 0:
 		StartMeun();
@@ -134,17 +121,6 @@ void Scene::Update(float dt)
 		break;
 	}
     //    sceneCollect[sel]->Draw(e);
->>>>>>> origin/Develop
-
-		//case 2:
-		//    sceneCollect[sel]->Draw(e);
-		//    break;
-
-	case 3:
-		Solo();
-
-		break;
-	}
 	//case 4:
 	//    sceneCollect[sel]->Draw(e);
 	//    break;

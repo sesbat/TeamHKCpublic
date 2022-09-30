@@ -85,3 +85,12 @@ void Player::Chop(Sides side)
 	SetFlipX(pos == Sides::Left);
 	SetPos(originalPos[(int)pos]);
 }
+void Player::SetChop(bool chop)
+{
+	isChopping = chop;
+}
+
+bool Player::GetChop()
+{
+	return isChopping;
+}

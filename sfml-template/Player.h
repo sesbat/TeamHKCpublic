@@ -39,4 +39,6 @@ public:
 	void SetAlive(bool alive);
 	void Chop(Sides side);
 	bool GetAlive();
+	bool GetChop();
+	void SetChop(bool chop);
 };

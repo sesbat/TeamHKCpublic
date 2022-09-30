@@ -57,9 +57,7 @@ int main()
 	SceneMgr::GetInstance()->AddScene(SceneSelect::SkinMenu, &SkinMenu);
 
 	SceneMgr::GetInstance()->SetScene(SceneSelect::StartMenu);
-
 	
-
 	Clock clock;
 	while (window.isOpen()) {
 
