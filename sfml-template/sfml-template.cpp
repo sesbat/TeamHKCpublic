@@ -4,70 +4,50 @@
 #include <iostream>
 #include "Graphics.h"
 #include "MovingObj.h"
+#include "SceneMgr.h"
 
 #include <list>
 
 using namespace sf;
-
+using namespace std;
 #define WIDTH 1920
 #define HEIGHT 1080
 int main()
 {
-	//파일 불러오기
+    //파일 불러오기
 
-	VideoMode vm(WIDTH, HEIGHT);
+    VideoMode vm(WIDTH, HEIGHT);
 
-	RenderWindow window(vm, "Timber!!", Style::Default);
+    RenderWindow window(vm, "Timber!!", Style::Default);
 
-	list<Graphics*> objects;
-	//텍스쳐 로딩(클래스 필요)
+    Graphics tree("graphics/tree.png");
+    Graphics back("graphics/background.png");
 
-    objects.push_back(new Graphics("graphics/background.png"));
-	objects.push_back(new MovingObj("graphics/cloud.png"));
-	objects.push_back(new Graphics("graphics/tree.png", { 960.f, 10.f }));
-	objects.push_back(new MovingObj("graphics/bee.png"));
-	objects.push_back(new Graphics("graphics/player.png"));
-	objects.push_back(new Graphics("graphics/axe.png"));
-	objects.push_back(new Graphics("graphics/rip.png"));
+    list<Graphics> env;
+    env.push_back(back);
+    env.push_back(tree);
+    SceneMgr::GetInstance()->SetSel(SceneSelect::Couple);
 
+    //텍스쳐 로딩(클래스 필요)
+    for (auto& v : env)
+        SceneMgr::GetInstance()->SetGraphic(v);
 
-	//SoundBuffer chopBuffer;
-	//chopBuffer.loadFromFile("sound/chop.wav");
-	//Sound chopSound;
-	//chopSound.setBuffer(chopBuffer);
+    while (window.isOpen()) {
+        Event ev;
+        while (window.pollEvent(ev))
+        {
 
-	//SoundBuffer deathBuffer;
-	//deathBuffer.loadFromFile("sound/death.wav");
-	//Sound deathSound;
-	//deathSound.setBuffer(deathBuffer);
+        }
+        SceneMgr::GetInstance()->Draw(window);
 
-	//SoundBuffer timeOutBuffer;
-	//timeOutBuffer.loadFromFile("sound/out_of_time.wav");
-	//Sound timeOutSound;
-	//timeOutSound.setBuffer(timeOutBuffer);
+        /*switch (SceneMgr::GetInstance()->GetSel()) {
+        case SceneSelect::Couple:
 
+            break;
+        }*/
 
+            window.display();
+    }
 
-	//업데이트
-	//드로우
-	while (1) {
-		for (auto& go : objects)
-		{
-			go->Draw(window);
-		}
-		if (Keyboard::isKeyPressed(Keyboard::Escape))
-			break;
-		window.display();
-
-	}
-
-	//출력
-
-	//딜리트
-	for (auto go : objects)
-	{
-		delete go;
-	}
-	objects.clear();
-	return 0;
+    return 0;
 }
