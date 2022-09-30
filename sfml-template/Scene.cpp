@@ -26,8 +26,9 @@ void Scene::Draw(RenderWindow& e)
 {
 	for (auto v : env)
 		v.Draw(e);
-	for (auto v : movingObj)
+	for (auto v : movingObj){
 		v.Draw(e);
+	}
 
 	if (player != nullptr)
 		player->Draw(e);
@@ -44,7 +45,7 @@ void Scene::StartMeun(float dt)
 
 void Scene::MainMenu(float dt)
 {
-
+	cout << "main" << endl;
 	if (InputMgr::GetKeyDown(Keyboard::Return)) {
 		sel++;
 		SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
@@ -88,6 +89,13 @@ void Scene::Solo(float dt)
 		player->SetChop(false);
 	}
 
+	if (InputMgr::GetKeyDown(Keyboard::Escape)){
+		sel = 1;
+		player->SetSide(Sides::Left);
+		SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
+
+	}
+
 
 }
 
@@ -98,6 +106,7 @@ void Scene::Couple(float dt)
 
 void Scene::Update(float dt)
 {
+	sel = (int)SceneMgr::GetInstance()->GetSel();
 	switch (sel) {
 	case 0:
 		StartMeun(dt);

@@ -31,7 +31,7 @@ public:
     void SetScene(SceneSelect);
     void SetOrigins();
     void SetPosition(Vector2f pos);
-    virtual void Draw(RenderWindow& e);
+    void Draw(RenderWindow& e);
     void Update(float dt);
     void Init();
     void Release();

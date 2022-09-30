@@ -25,39 +25,55 @@ int main()
 	Graphics tree("graphics/tree.png", { WIDTH / 2, 0 });
 	Graphics back("graphics/background.png");
 	Graphics startText("graphics/Start.png");
-	vector<MovingObj> bee;
-	vector<MovingObj> cloud;
+	MovingObj bee("grpahics/bee.png");
+	MovingObj cloud("graphics/cloud.png");
+	Player p("graphics/player.png");
+	//리스트, 벡터로 벌,구름 생성하면 플레이어이미지나옴 
+	/*list<MovingObj> bee;
+	list<MovingObj> cloud;
 
 	for (int i = 0; i < 3; i++) {
 		bee.push_back(MovingObj("graphics/bee.png"));
 		cloud.push_back(MovingObj("graphics/cloud.png"));
+
 	}
+	for(auto& v:bee){
+		movingObj.push_back(v);
+		
+	}
+	for (auto& v : cloud) {
+		movingObj.push_back(v);
+	}
+
+	*/
+
 	list<Graphics> env;
 	list<MovingObj> movingObj;
 
-	Player p("graphics/player.png");
+	movingObj.push_back(bee);
+	movingObj.push_back(cloud);
+	
 	p.SetPos({ 1920 / 2 - 250,900 });
+
 	env.push_back(back);
-	startText.SetPos({ WIDTH / 2, HEIGHT - 100 });
-	startText.SetOrigin(Origins::MC);
-	env.push_back(startText);
+	
 	tree.SetOrigin(Origins::TC);
+
+	startText.SetOrigin(Origins::MC);
+	startText.SetPos({ WIDTH / 2, HEIGHT - 100 });
+	env.push_back(startText);
 
 	Scene startMenu(env, movingObj, (int)SceneSelect::StartMenu);
 	env.pop_back();
+	Scene MainMeun(env, movingObj, (int)SceneSelect::MainMenu);
+	env.push_back(tree);	
 	Scene SkinMenu(env, movingObj, &p, (int)SceneSelect::SkinMenu);
-	env.push_back(tree);
-	for (int i = 0; i < 3; i++) {
-		movingObj.push_back(bee[i]);
-		movingObj.push_back(cloud[i]);
-	}
 	Scene SoloPlay(env, movingObj, &p, (int)SceneSelect::Solo);
 
 	movingObj.clear();
 	env.clear();
-	env.push_back(back);
+	
 
-	Scene MainMeun(env, movingObj, (int)SceneSelect::MainMenu);
 
 	SceneMgr::GetInstance()->AddScene(SceneSelect::StartMenu, &startMenu);
 	SceneMgr::GetInstance()->AddScene(SceneSelect::MainMenu, &MainMeun);
@@ -78,7 +94,7 @@ int main()
 		SceneMgr::GetInstance()->Draw(window);
 		SceneMgr::GetInstance()->Update(dt.asSeconds());
 
-		if (InputMgr::GetKeyDown(Keyboard::Key::Escape))
+		if (InputMgr::GetKeyDown(Keyboard::Key::Num0))
 		{
 			window.close();
 		}

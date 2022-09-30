@@ -197,4 +197,7 @@ bool Player::GetChop()
 void Player::SetSide(Sides pos)
 {
 	this->pos = pos;
+	sprite.setPosition(originalPos[(int)pos]);
+	SetFlipX(pos == Sides::Left);
+
 }
