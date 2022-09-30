@@ -8,22 +8,24 @@ using namespace std;
 
 class Graphics
 {
-private:
-	Sprite sprite;
-	Texture tex;
-	Vector2f pos;
+protected:
+    Sprite sprite;
+    Texture tex;
+    Vector2f pos;
 public:
 
-	Graphics(string str);
-	Graphics(string str,Vector2f pos);
-	virtual ~Graphics();
+    Graphics(string str);
+    Graphics(string str, Vector2f pos);
+    virtual ~Graphics();
 
-	void SetOrigin();
-	Vector2f GetPos();
+    void SetOrigin();
+    Vector2f GetPos();
+    void Translate(Vector2f delta);
 
-	virtual void Draw(RenderWindow& window);
-	virtual void Init();
-	virtual void Update(float dt);
-	virtual void Release();
+    virtual void Init();
+    virtual void Release();
+    virtual void Update(float dt);
+    virtual void Draw(RenderWindow& window);
+    virtual void SetPos(Vector2f pos);
+    virtual void SetFlipX(bool flip);
 };
-
