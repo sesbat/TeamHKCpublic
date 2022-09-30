@@ -10,7 +10,7 @@ Player::Player(string str)
 		auto log = new Effect(texLog, 5.f);
 		unuseLogs.push_back(log);
 	}
-	
+
 	Init();
 }
 
@@ -56,10 +56,10 @@ void Player::Init()
 	Vector2f size = GetSize();
 
 	originalPos.clear();
-	originalPos.push_back({400 ,800 });
+	originalPos.push_back({ 800,900 });
 
-	originalPos.push_back({ 800 ,800 });
-	
+	originalPos.push_back({ 1200,900 });
+
 	sprite.setPosition(originalPos[0]);
 }
 
@@ -99,10 +99,10 @@ void Player::Update(float dt)
 
 void Player::Draw(RenderWindow& window)
 {
-	if (isAlive && isChopping)
+	if (isChopping)
 	{
-		if (InputMgr::GetKey(Keyboard::Left) || InputMgr::GetKey(Keyboard::Right))
-			window.draw(axe.GetSprite());
+
+		window.draw(axe.GetSprite());
 	}
 	for (auto& log : useLogs)
 	{
@@ -143,10 +143,10 @@ bool Player::GetAlive()
 
 void Player::Chop(Sides side)
 {
+	isChopping = false;
 	pos = side;
 	SetFlipX(pos == Sides::Left);
 	sprite.setPosition(originalPos[(int)pos]);
-	cout << GetPos().x << " " << GetPos().y << endl;
 }
 void Player::SetChop(bool chop)
 {

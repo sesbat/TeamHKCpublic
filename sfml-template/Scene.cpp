@@ -64,57 +64,12 @@ void Scene::Solo()
 
 	cout << player[0].GetPos().x << " " << player[0].GetPos().y << endl;
 
-	if (InputMgr::GetKeyDown(Keyboard::Left))
-		player[0].SetPos({ 800,900 });
+	if (InputMgr::GetKeyDown(Keyboard::Left)){
+		player[0].Chop(Sides::Left);
+		UpdateBranches()
+	}
 	if (InputMgr::GetKeyDown(Keyboard::Right))
-		player[0].SetPos({ 1200,900 });
-	//if (InputMgr::GetKeyDown(Keyboard::Space))
-	//{
-	//	if (player[0].GetAlive())
-	//	{
-	//		player[0].Die();
-	//		sdMgr.SoundPlay(SoundChoice::DeathSound);
-	//	}
-	//	else
-	//	{
-	//		player[0].Init();
-	//	}
-	//	return;
-	//}
-	//if (!player[0].GetAlive())
-	//	return;
-
-	//if (!player[0].GetChop()) //!isChopping
-	//{
-	//	if (InputMgr::GetKeyDown(Keyboard::Left))
-	//	{
-	//		player[0].GetPlayer()->SetPos({ 200,200 });
-
-	//	/*	player[0].Chop(Sides::Left);
-	//		player[0].SetChop(true);
-	//		sdMgr.SoundPlay(SoundChoice::ChopSound);*/
-
-	//	}
-	//	if (InputMgr::GetKeyDown(Keyboard::Right))
-	//	{
-	//		player[0].GetPlayer()->SetPos({ 800,200 });
-	//		/*player[0].Chop(Sides::Right);
-	//		player[0].SetChop(true);
-	//		sdMgr.SoundPlay(SoundChoice::ChopSound);*/
-	//	}
-	//}
-	//else {
-
-	//	if (player[0].GetSide() == Sides::Left && InputMgr::GetKeyUp(Keyboard::Key::Left))
-	//	{
-	//		player[0].SetChop(false);
-	//	}
-	//	if (player[0].GetSide() == Sides::Right && InputMgr::GetKeyUp(Keyboard::Key::Right))
-	//	{
-	//		player[0].SetChop(false);
-	//	}
-	//}
-
+		player[0].Chop(Sides::Right);
 
 
 }

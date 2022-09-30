@@ -6,6 +6,8 @@
 #include "ResourceMgr.h"
 #include "Player.h"
 #include "SoundMgr.h"
+#include "Branche.h"
+
 enum class MOVEOBJ {
     CLOUD,
     BEE,
@@ -18,6 +20,7 @@ private:
     list<MovingObj> movingObj;
     SoundMgr sdMgr;
     vector<Player> player;
+    vector<Branche*> branches();
     int sel = 0;
 public:
     Scene(list<Graphics> tempenv, list<MovingObj>movingObj, int sel);
