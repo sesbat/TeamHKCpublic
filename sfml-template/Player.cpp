@@ -15,11 +15,11 @@ Player::Player(string str)
 	skin.push_back("graphics/player-.png");
 	skin.push_back("graphics/player_green.png");
 
-	//for (int i = 0; i < 100; i++)
-	//{
-	//	auto log = new Effect(texLog, 5.f);
-	//	unuseLogs.push_back(log);
-	//}
+	for (int i = 0; i < 100; i++)
+	{
+		auto log = new Effect("graphics/log.png", 5.f);
+		unuseLogs.push_back(log);
+	}
 
 	Init();
 }

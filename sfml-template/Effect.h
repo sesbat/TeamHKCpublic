@@ -14,7 +14,7 @@ protected:
 public:
 	static const Vector2f Gravity;
 
-	Effect(string& tex, float dur);
+	Effect(string tex, float dur);
 	virtual ~Effect();
 
 	void Shot(const Vector2f v, float av);

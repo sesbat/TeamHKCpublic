@@ -2,7 +2,7 @@
 
 const Vector2f Effect::Gravity = Vector2f(0.f, 8000.f);
 
-Effect::Effect(string& tex, float dur)
+Effect::Effect(string tex, float dur)
 	: Graphics(tex), dur(dur)
 {
 	SetOrigin(Origins::MC);
