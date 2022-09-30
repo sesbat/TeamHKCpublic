@@ -11,25 +11,46 @@ vector<bool>InputMgr::upList(Keyboard::Key::KeyCount);
 
 void InputMgr::UpdateInput(Event& ev)
 {
-	
+	int pos = (int)ev.key.code;
+
 	switch (ev.type)
 	{
+
 	case Event::EventType::KeyPressed:
-		std::cout << "Keypressed" << ev.key.code << std::endl;
-		if (ev.key.code != Keyboard::Key::Unknown && !ingList[ev.key.code])
-		{
-			downList[ev.key.code] = true;
-			ingList[ev.key.code] = true;
+		if (!GetKey(ev.key.code) && !GetKeyDown(ev.key.code)) {
+			cout << ev.key.code << endl;
+			downList[pos] = true;
+			ingList[pos] = true;
+
 		}
 		break;
 	case Event::EventType::KeyReleased:
-		std::cout << "Keyreleased" << ev.key.code << std::endl;
-		if (ev.key.code != Keyboard::Key::Unknown){ //unknown???„ë‹??		
-			ingList[ev.key.code] = false;
-			upList[ev.key.code] = true;
-		}
+
+		cout << "KeyReleased" << endl;
+
+		ingList[pos] = false;
+		upList[pos] = true;
+		downList[pos] = false;
 		break;
 	}
+	//switch (ev.type)
+	//{
+	//case Event::EventType::KeyPressed:
+	//	std::cout << "Keypressed" << ev.key.code << std::endl;
+	//	if (ev.key.code != Keyboard::Key::Unknown && !ingList[ev.key.code])
+	//	{
+	//		downList[ev.key.code] = true;
+	//		ingList[ev.key.code] = true;
+	//	}
+	//	break;
+	//case Event::EventType::KeyReleased:
+	//	std::cout << "Keyreleased" << ev.key.code << std::endl;
+	//	if (ev.key.code != Keyboard::Key::Unknown){ //unknown???„ë‹??		
+	//		ingList[ev.key.code] = false;
+	//		upList[ev.key.code] = true;
+	//	}
+	//	break;
+	//}
 }
 
 void InputMgr::ClearInput()

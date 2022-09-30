@@ -28,6 +28,8 @@ void Scene::Draw(RenderWindow& e)
 		v.Draw(e);
 	for (auto v : movingObj)
 		v.Draw(e);
+	for (auto v : player)
+		v.Draw(e);
 }
 
 void Scene::StartMeun()
@@ -41,18 +43,26 @@ void Scene::StartMeun()
 
 void Scene::MainMenu()
 {
-	std::cout << "this is menu" << std::endl;
-
+	
+	if (InputMgr::GetKeyDown(Keyboard::A)) {
+		sel++;
+		SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
+	}
 }
 
 void Scene::SkinMenu()
 {
+	cout << "skin" << endl;
+	if (InputMgr::GetKeyDown(Keyboard::A)) {
+		sel++;
+		SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
+	}
 }
 
 void Scene::Solo()
 {
-
-	if (InputMgr::GetKeyDown(Keyboard::Key::Space))
+	cout << "play" << endl;
+	if (InputMgr::GetKeyDown(Keyboard::Space))
 	{
 		if (player[0].GetAlive())
 		{
@@ -70,14 +80,14 @@ void Scene::Solo()
 
 	if (!player[0].GetChop()) //!isChopping
 	{
-		if (InputMgr::GetKey(Keyboard::Key::Left))
+		if (InputMgr::GetKey(Keyboard::Left))
 		{
 			player[0].Chop(Sides::Left);
 			player[0].SetChop(true);
 			sdMgr.SoundPlay(SoundChoice::ChopSound);
 
 		}
-		if (InputMgr::GetKey(Keyboard::Key::Right))
+		if (InputMgr::GetKey(Keyboard::Right))
 		{
 			player[0].Chop(Sides::Right);
 			player[0].SetChop(true);
@@ -103,7 +113,7 @@ void Scene::Couple()
 }
 
 void Scene::Update(float dt)
-{  
+{
 	switch (sel) {
 	case 0:
 		StartMeun();
@@ -112,15 +122,15 @@ void Scene::Update(float dt)
 		MainMenu();
 		break;
 
-		//case 2:
-		//    sceneCollect[sel]->Draw(e);
-		//    break;
+	case 2:
+		SkinMenu();
+		break;
 
 	case 3:
 		Solo();
 		break;
 	}
-    //    sceneCollect[sel]->Draw(e);
+	//    sceneCollect[sel]->Draw(e);
 	//case 4:
 	//    sceneCollect[sel]->Draw(e);
 	//    break;

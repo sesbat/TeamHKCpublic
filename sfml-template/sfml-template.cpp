@@ -27,37 +27,43 @@ int main()
 	Graphics startText("graphics/Start.png");
 	MovingObj bee("graphics/bee.png");
 	MovingObj cloud("graphics/cloud.png");
-	vector<Player> player;
 
 	list<Graphics> env;
 	list<MovingObj> movingObj;
 	movingObj.push_back(bee);
 	movingObj.push_back(cloud);
 
+	Player p;
 	env.push_back(back);
+
+	vector<Player> player;
+	player.push_back(p);
 
 	startText.SetPos({ WIDTH / 2, HEIGHT - 100 });
 	startText.SetOrigin(Origins::MC);
 	env.push_back(startText);
 
 	Scene startMenu(env, movingObj, (int)SceneSelect::StartMenu);
-	Scene SkinMenu(env, movingObj, (int)SceneSelect::SkinMenu);
+	env.pop_back();
+	env.push_back(tree);
+	Scene SkinMenu(env, movingObj, player, (int)SceneSelect::SkinMenu);
 	Scene SoloPlay(env, movingObj, player, (int)SceneSelect::Solo);
 
 	movingObj.clear();
 	env.clear();
 	env.push_back(back);
 	tree.SetOrigin(Origins::TC);
-	env.push_back(tree);
 
 	Scene MainMeun(env, movingObj, (int)SceneSelect::MainMenu);
 
 	SceneMgr::GetInstance()->AddScene(SceneSelect::StartMenu, &startMenu);
 	SceneMgr::GetInstance()->AddScene(SceneSelect::MainMenu, &MainMeun);
 	SceneMgr::GetInstance()->AddScene(SceneSelect::SkinMenu, &SkinMenu);
+	SceneMgr::GetInstance()->AddScene(SceneSelect::Solo, &SoloPlay);
+
 
 	SceneMgr::GetInstance()->SetScene(SceneSelect::StartMenu);
-	
+
 	Clock clock;
 	while (window.isOpen()) {
 

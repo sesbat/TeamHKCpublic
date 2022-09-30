@@ -1,10 +1,16 @@
 #include "Player.h"
-
+#include "Effect.h"
 Player::Player()
 {
 	axe.SetTex("graphics/axe.png");
-	this->player.SetTex("graphics/player.pne");
+	this->player.SetTex("graphics/player.png");
 	rip.SetTex("graphics/rip.png");
+	for (int i = 0; i < 100; i++)
+	{
+		auto log = new Effect(texLog, 5.f);
+		unuseLogs.push_back(log);
+	}
+	//Init();
 }
 
 void Player::SetFlipX(bool flip)
@@ -13,6 +19,26 @@ void Player::SetFlipX(bool flip)
 	Vector2f scale = axe.GetScale();
 	scale.x = flip ? -abs(scale.x) : abs(scale.x);
 	axe.GetSprite().setScale(scale);
+}
+void Player::ShowLog()
+{
+	if (unuseLogs.empty())
+		return;
+
+	auto log = unuseLogs.front();
+	unuseLogs.pop_front();
+	useLogs.push_back(log);
+
+	Vector2f force;
+	force.x = pos == Sides::Left ? 1500 : -1500;
+	force.y = -1500;
+	float aForce = pos == Sides::Left ? 360 * 5 : -360 * 5;
+
+	Vector2f pos = Center;
+	pos.y = axe.GetPos().y;
+
+	log->SetPos(pos);
+	log->Shot(force, aForce);
 }
 Sides Player::GetSide()
 {
@@ -38,15 +64,49 @@ void Player::Init()
 
 void Player::Release()
 {
-
+	for (auto log : unuseLogs)
+	{
+		delete log;
+	}
+	unuseLogs.clear(); //순회하면서 클리어
+	for (auto log : useLogs)
+	{
+		delete log;
+	}
+	useLogs.clear();
 }
 
 void Player::Update(float dt)
 {
+	Graphics::Update(dt);
+	auto it = useLogs.begin();
+	while (it != useLogs.end())
+	{
+		(*it)->Update(dt);
+		if (!(*it)->GetActive())
+		{
+			unuseLogs.push_back(*it);
+			it = useLogs.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
 }
 
 void Player::Draw(RenderWindow& window)
 {
+	if (isAlive && isChopping)
+	{
+		if (InputMgr::GetKey(Keyboard::Left) || InputMgr::GetKey(Keyboard::Right))
+			window.draw(axe.GetSprite());
+	}
+	for (auto& log : useLogs)
+	{
+		log->Draw(window);
+	}
+	window.draw(player.GetSprite());
 }
 
 void Player::SetPos(Vector2f pos)
@@ -65,7 +125,7 @@ void Player::Die()
 {
 	isAlive = false;
 	isChopping = false;
-	
+
 	sprite.setTexture(rip.GetTex());
 	SetFlipX(false);
 	SetOrigin(Origins::BC);
@@ -93,4 +153,9 @@ void Player::SetChop(bool chop)
 bool Player::GetChop()
 {
 	return isChopping;
+}
+
+void Player::SetSide(Sides pos)
+{
+	this->pos = pos;
 }
