@@ -3,10 +3,11 @@
 random_device Branche::rd;
 mt19937 Branche::gen(Branche::rd());
 
-Branche::Branche(string tex, Graphics* tree) 
+Branche::Branche(string tex) 
     : Graphics(tex), tree(tree), curBranch(-1)
 {
-
+    this->SetTex("graphics/branch.png");
+    Init();
 }
 
 void Branche::Init()
@@ -58,17 +59,23 @@ int Branche::RandomRange(int min, int max)
 
 void Branche::BrancheOffset(vector<Branche*> branches)
 {
-    vector<Vector2f> branchPosArr(branches.size());
+    //branchPosArr.size() = branches.size();
     float x = branches[0]->GetPos().x;
     float y = 800;
     float offset = branches[0]->GetSize().y;
     offset += 100;
+
     for (int i = 0; i < branches.size(); ++i)
     {
         branchPosArr[i] = Vector2f(x, y);
         y -= offset;
     }
     UpdateBranches(branches, curBranch, branchPosArr);
+}
+
+vector<Vector2f> Branche::GetBranchePos() const
+{
+    return branchPosArr;
 }
 
 float Branche::RandomRange(float min, float max)

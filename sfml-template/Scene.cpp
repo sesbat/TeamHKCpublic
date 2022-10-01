@@ -70,22 +70,34 @@ void Scene::SkinMenu(float dt)
 
 void Scene::Solo(float dt)
 {
-
 	cout << player->GetPos().x << " " << player->GetPos().y << endl;
 
-	if (InputMgr::GetKeyDown(Keyboard::Left)) {
-		player->Chop(Sides::Left);
+	if (player->GetAlive())
+	{
+		if (InputMgr::GetKeyDown(Keyboard::Left))
+		{
+			player->Chop(Sides::Left);
+
+		}
+		if (InputMgr::GetKeyDown(Keyboard::Right))
+		{
+			player->Chop(Sides::Right);
+		}
 	}
-	if (InputMgr::GetKeyDown(Keyboard::Right))
-		player->Chop(Sides::Right);
+
 	if (InputMgr::GetKeyDown(Keyboard::Space)){
-		if (!player->GetAlive()) {
+		if (!player->GetAlive()) 
+		{
 			player->Init();
 		}
 		else
+		{
 			player->Die();
+			dt = 0;
+		}
 	}
-	if (!(InputMgr::GetKey(Keyboard::Left)||InputMgr::GetKey(Keyboard::Right))) {
+	if (!(InputMgr::GetKey(Keyboard::Left)||InputMgr::GetKey(Keyboard::Right))) 
+	{
 		player->SetChop(false);
 	}
 
@@ -95,8 +107,6 @@ void Scene::Solo(float dt)
 		SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
 
 	}
-
-
 }
 
 void Scene::Couple(float dt)

@@ -76,6 +76,7 @@ void Player::Init()
 {
 	this->SetTex(skin[skinsel]);
 	isAlive = true;
+	sprite.setPosition(GetPos().x, 900.f);
 	SetOrigin(Origins::BC);
 	if (pos == Sides::Left)
 		SetFlipX(true);
@@ -156,6 +157,9 @@ void Player::Die()
 	isChopping = false;
 
 	sprite.setTexture(ripTex);
+	if (sprite.getPosition().y >= 900.f)
+		sprite.setPosition(GetPos().x, GetPos().y + 50.f);
+
 	SetFlipX(false);
 	SetOrigin(Origins::BC);
 }
@@ -181,7 +185,11 @@ void Player::Chop(Sides side)
 	isChopping = true;
 	pos = side;
 	sprite.setPosition(originalPos[(int)pos]);
-	axe.setPosition(sprite.getPosition().x, sprite.getPosition().y-100);
+	if (GetSide() == Sides::Left)
+		axe.setPosition(sprite.getPosition().x + 50.f, sprite.getPosition().y-50.f);
+	else
+		axe.setPosition(sprite.getPosition().x - 50.f, sprite.getPosition().y - 50.f);
+
 	SetFlipX(pos == Sides::Left);
 }
 void Player::SetChop(bool chop)
