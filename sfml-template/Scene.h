@@ -21,6 +21,8 @@ private:
     SoundMgr sdMgr;
     Player* player=nullptr;
 
+    Vector2f ScreenSize = { 1920, 1080 };
+
     int sel = 0;
 public:
    

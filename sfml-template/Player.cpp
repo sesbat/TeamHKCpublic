@@ -122,12 +122,10 @@ void Player::Update(float dt)
 			++it;
 		}
 	}
-
 }
 
 void Player::Draw(RenderWindow& window)
 {
-	
 	for (auto& log : useLogs)
 	{
 		log->Draw(window);
@@ -186,7 +184,7 @@ void Player::Chop(Sides side)
 	pos = side;
 	sprite.setPosition(originalPos[(int)pos]);
 	if (GetSide() == Sides::Left)
-		axe.setPosition(sprite.getPosition().x + 50.f, sprite.getPosition().y-50.f);
+		axe.setPosition(sprite.getPosition().x + 50.f, sprite.getPosition().y - 50.f);
 	else
 		axe.setPosition(sprite.getPosition().x - 50.f, sprite.getPosition().y - 50.f);
 

@@ -28,7 +28,6 @@ protected:
 	Texture tex;
 	Vector2f pos;
 
-
 public:
     Graphics() {};
     Graphics(string str);

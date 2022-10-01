@@ -35,7 +35,6 @@ void Graphics::SetOrigin(Sprite& obj, Origins origin)
 }
 
 
-
 Vector2f Graphics::GetPos()
 {
     return sprite.getPosition();

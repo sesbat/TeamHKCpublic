@@ -149,6 +149,7 @@
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="InputMgr.cpp" />
+    <ClCompile Include="Letter.cpp" />
     <ClCompile Include="MovingObj.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="InputMgr.h" />
+    <ClInclude Include="Letter.h" />
     <ClInclude Include="MovingObj.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="rapidcsv.h" />

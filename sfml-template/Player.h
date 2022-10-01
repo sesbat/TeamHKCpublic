@@ -3,6 +3,7 @@
 #include "Effect.h"
 #include <list>
 #include "InputMgr.h"
+//#include "Letter.h"
 
 class Graphics;
 
@@ -36,6 +37,7 @@ private:
     Vector2f axePos;
 
     int skinsel=0;
+
 public:
     Player(string tex);
     virtual ~Player();

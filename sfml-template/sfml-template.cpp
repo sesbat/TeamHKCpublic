@@ -9,6 +9,7 @@
 #include "InputMgr.h"
 #include "SoundMgr.h"
 #include <list>
+#include "Letter.h"
 
 using namespace sf;
 using namespace std;
@@ -80,6 +81,50 @@ int main()
 	SceneMgr::GetInstance()->AddScene(SceneSelect::SkinMenu, &SkinMenu);
 	SceneMgr::GetInstance()->AddScene(SceneSelect::Solo, &SoloPlay);
 
+
+
+	/***************************** Letter Change *****************************/
+	Font font;
+	font.loadFromFile("fonts/Mabinogi_Classic_TTF.ttf");
+	Text deathText, restartText, menuText, pte, ptrh;
+
+	deathText.setFont(font);
+	deathText.setCharacterSize(100);
+	deathText.setFillColor(Color::White);
+	deathText.setString("You  Die  !");
+	Letter::SetOrigin(deathText, Origins::MC);
+	deathText.setPosition(WIDTH * 0.5f, HEIGHT * 0.4f);
+
+	restartText.setFont(font);
+	restartText.setCharacterSize(80);
+	restartText.setFillColor(Color::Blue);
+	restartText.setString("RE  START ?");
+	Letter::SetOrigin(restartText, Origins::MC);
+	restartText.setPosition(WIDTH * 0.3f, HEIGHT * 0.55f);
+
+	menuText.setFont(font);
+	menuText.setCharacterSize(80);
+	menuText.setFillColor(Color::Blue);
+	menuText.setString("MAIN  MENU");
+	Letter::SetOrigin(menuText, Origins::MC);
+	menuText.setPosition(WIDTH * 0.7f, HEIGHT * 0.55f);
+
+	pte.setFont(font);
+	pte.setCharacterSize(45);
+	pte.setFillColor(Color::White);
+	pte.setString("(PRESS  TO  ENTER  KEY)");
+	Letter::SetOrigin(pte, Origins::MC);
+	pte.setPosition(WIDTH * 0.3f, HEIGHT * 0.6f);
+
+	ptrh.setFont(font);
+	ptrh.setCharacterSize(45);
+	ptrh.setFillColor(Color::White);
+	ptrh.setString("(PRESS  TO  RSHIFT  KEY)");
+	Letter::SetOrigin(ptrh, Origins::MC);
+	ptrh.setPosition(WIDTH * 0.7f, HEIGHT * 0.6f);
+	/*************************************************************************/
+
+
 	InputMgr::Set();
 	Clock clock;
 
@@ -97,6 +142,16 @@ int main()
 		if (InputMgr::GetKeyDown(Keyboard::Key::Num0))
 		{
 			window.close();
+		}
+
+
+		if (!p.GetAlive() && (int)SceneMgr::GetInstance()->GetSel() == 3)
+		{
+			window.draw(deathText);
+			window.draw(restartText);
+			window.draw(menuText);
+			window.draw(pte);
+			window.draw(ptrh);
 		}
 
 		window.display();
