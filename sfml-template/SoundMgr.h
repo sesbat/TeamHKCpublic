@@ -22,12 +22,13 @@ private:
 
 	SoundChoice soundChoice;
 
-	bool played = false;
+	bool played = true;
 public:
 	SoundMgr();
 	virtual ~SoundMgr();
 	
 	void SoundPlay(SoundChoice soundchoice);
 	SoundChoice GetSoundChoice();
+	void SetPlay(bool tof);
 };
 

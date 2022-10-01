@@ -37,7 +37,7 @@ void Scene::Draw(RenderWindow& e)
 
 void Scene::StartMeun(float dt)
 {
-	std::cout << "test" << std::endl;
+	std::cout << "Start" << std::endl;
 	if (InputMgr::GetKeyDown(Keyboard::Return)) {
 		sel++;
 		SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
@@ -56,7 +56,6 @@ void Scene::MainMenu(float dt)
 void Scene::SkinMenu(float dt)
 {
 	cout << "skin" << endl;
-
 	if (InputMgr::GetKeyDown(Keyboard::Right)) {
 		player->SetSkin(1);
 	}
@@ -72,17 +71,17 @@ void Scene::SkinMenu(float dt)
 void Scene::Solo(float dt)
 {
 	cout << player->GetPos().x << " " << player->GetPos().y << endl;
-
 	if (player->GetAlive())
 	{
 		if (InputMgr::GetKeyDown(Keyboard::Left))
 		{
 			player->Chop(Sides::Left);
-
+			sdMgr.SoundPlay(SoundChoice::ChopSound);
 		}
 		if (InputMgr::GetKeyDown(Keyboard::Right))
 		{
 			player->Chop(Sides::Right);
+			sdMgr.SoundPlay(SoundChoice::ChopSound);
 		}
 	}
 
@@ -94,6 +93,7 @@ void Scene::Solo(float dt)
 		else
 		{
 			player->Die();
+			sdMgr.SoundPlay(SoundChoice::DeathSound);
 			dt = 0;
 		}
 	}
@@ -103,14 +103,19 @@ void Scene::Solo(float dt)
 	}
 
 	if (!player->GetAlive())
-	if (InputMgr::GetKeyDown(Keyboard::Return))
 	{
-		SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
+		if (InputMgr::GetKeyDown(Keyboard::Return))
+		{
+			player->Init();
+			SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
+		}
 	}
 
 	if (InputMgr::GetKeyDown(Keyboard::RShift))
 	{
 		sel = 1;
+		player->Init();
+		player->SetAlive(true);
 		player->SetSide(Sides::Left);
 		SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
 	}
