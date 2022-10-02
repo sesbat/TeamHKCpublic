@@ -10,6 +10,29 @@ Duo::Duo()
 	tree2.SetTex("graphics/tree.png");
 	tree2.SetOrigin(Origins::TC);
 	tree2.SetPos({ 1500 ,0 });
+
+
+	font.loadFromFile("fonts/Mabinogi_Classic_TTF.ttf");
+	dieText_1P.SetTex("graphics/Die.png");
+	dieText_1P.SetOrigin(Origins::MC);
+	dieText_1P.SetPos({ 1920 * 0.5f, 1080 * 0.2f });
+
+	choice.SetTex("graphics/Choice.png");
+	choice.SetOrigin(Origins::MC);
+
+	reStart.SetAll(font, 80, Color::Blue, "RE  START ?", { 1920 * 0.2f, 1080 * 0.565f });
+	mainMenu.SetAll(font, 80, Color::Blue, "MAIN  MENU", { 1920 * 0.8f, 1080 * 0.565f });
+
+
+	score_1P.SetAll(font, 40, Color::Black, "SCORE = " + to_string(scoreNum_1P), { 0, 0 });
+	score_1P.SetOrigin(Origins::TL);
+	score_2P.SetAll(font, 40, Color::Black, "SCORE = " + to_string(scoreNum_2P), { 1920 * 0.5f, 0 });
+	score_2P.SetOrigin(Origins::TL);
+
+
+	scoreResult_1P.SetAll(font, 40, Color::Yellow, "SCORE : " + to_string(scoreNum_1P), { 1920 * 0.5f, 1080 * 0.5f });
+	scoreResult_2P.SetAll(font, 40, Color::Yellow, "SCORE : " + to_string(scoreNum_2P), { 1920 * 0.5f, 1080 * 0.5f });
+
 	Init();	
 }
 
@@ -19,8 +42,8 @@ Duo::~Duo()
 
 void Duo::Init()
 {
-	player2.SetOriginalPos({ 100,900 }, { 600,900 });
 	player1.SetOriginalPos({ 1200 ,900 }, { 1800 ,900 });
+	player2.SetOriginalPos({ 100,900 }, { 600,900 });
 
 }
 

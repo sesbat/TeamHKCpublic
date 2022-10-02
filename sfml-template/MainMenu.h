@@ -1,14 +1,11 @@
 #pragma once
 #include "Scene.h"
+#include "Letter.h"
 
 class MainMenu :public Scene
 {
 public:
-	MainMenu() {
-		tree.SetTex("graphics/tree.png");
-		tree.SetOrigin(Origins::TC);
-		tree.SetPos({ 1920 / 2,0 });
-	};
+	MainMenu();
 	virtual ~MainMenu() {};
 
 	virtual void Draw(RenderWindow& e);
@@ -16,4 +13,9 @@ public:
 private:
 	Graphics tree;
 
+	Graphics choice;
+	Graphics playMode;
+	Letter onePlayer;
+	Letter twoPlayer;
+	Font font;
 };

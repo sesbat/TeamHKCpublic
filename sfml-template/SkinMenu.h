@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "Scene.h"
+#include "Graphics.h"
 
 class SkinMenu : public Scene
 {
@@ -14,8 +15,9 @@ public:
 private:
 	vector<string> skinList;
 	Graphics tree;
-	
 	int skin=0;
 	int skin2 = 0;
+
+	Graphics skinSelect;
 };
 

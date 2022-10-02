@@ -10,10 +10,14 @@ SkinMenu::SkinMenu() {
 	skinList.push_back("graphics/player.png");
 	skinList.push_back("graphics/player-.png");
 	skinList.push_back("graphics/player_green.png");
-	player1.SetOrigin(Origins::MC);
-	player2.SetOrigin(Origins::MC);
+	player1.SetOrigin(Origins::BC);
+	player2.SetOrigin(Origins::BC);
 	player1.SetPos({ 200,900 });
 	player2.SetPos({ 1200,900 });
+
+	skinSelect.SetTex("graphics/SkinSelect.png");
+	skinSelect.SetOrigin(Origins::MC);
+	skinSelect.SetPos({1920 * 0.5f, 1080 * 0.1f});
 }
 void SkinMenu::Draw(RenderWindow& e)
 {
@@ -21,7 +25,10 @@ void SkinMenu::Draw(RenderWindow& e)
 	GetPlayer1()->Draw(e);
 	if (mode)
 		player2.Draw(e);
+
 	tree.Draw(e);
+
+	skinSelect.Draw(e);
 }
 
 void SkinMenu::Update(float dt)
@@ -49,12 +56,12 @@ void SkinMenu::Update(float dt)
 	else if (mode) {
 		if (InputMgr::GetKeyDown(Keyboard::Return))
 			SceneMgr::GetInstance()->SetScene(SceneSelect::Couple);
-		if (InputMgr::GetKeyDown(Keyboard::Right)) {
+		if (InputMgr::GetKeyDown(Keyboard::A)) {
 			if (skin == skinList.size() - 1)
 				skin = -1;
 			skin++;
 			tempSkin = skinList[skin];
-		}if (InputMgr::GetKeyDown(Keyboard::Left)) {
+		}if (InputMgr::GetKeyDown(Keyboard::D)) {
 			if (skin == 0)
 				skin = skinList.size();
 			skin--;
@@ -64,12 +71,12 @@ void SkinMenu::Update(float dt)
 		player1.SetSkin(tempSkin);
 
 		
-		if (InputMgr::GetKeyDown(Keyboard::D)) {
+		if (InputMgr::GetKeyDown(Keyboard::Right)) {
 			if (skin2 == skinList.size() - 1)
 				skin2 = -1;
 			skin2++;
 			tempSkin2 = skinList[skin2];
-		}if (InputMgr::GetKeyDown(Keyboard::A)) {
+		}if (InputMgr::GetKeyDown(Keyboard::Left)) {
 			if (skin2 == 0)
 				skin2 = skinList.size();
 			skin2--;

@@ -194,9 +194,9 @@ void Player::Chop(Sides side)
 	pos = side;
 	sprite.setPosition(originalPos[(int)pos]);
 	if (GetSide() == Sides::Left)
-		axe.setPosition(0, 0);
+		axe.setPosition(sprite.getPosition().x + 50, sprite.getPosition().y - 50);
 	else
-		axe.setPosition(0, 0);
+		axe.setPosition(sprite.getPosition().x - 50 , sprite.getPosition().y - 50);
 
 	SetFlipX(pos == Sides::Left);
 }
