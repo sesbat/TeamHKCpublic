@@ -13,7 +13,7 @@ public:
 private:
 	Graphics tree;
 	Graphics tree2;
-	Player player;
-	Player Player2;
+
+	bool updateInit = false;
 
 };

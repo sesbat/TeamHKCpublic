@@ -23,7 +23,7 @@ private:
     list<Effect*> unuseLogs;
     list<Effect*> useLogs;
     string texLog;
-    vector<string> skin;
+   
     Texture axeTex;
     Sprite axe;  
     Texture ripTex;
@@ -40,8 +40,10 @@ private:
     int choice = 1;
     bool isPause = false;
 
+    string skin= "graphics/player.png";
+
 public:
-    Player() {};
+    Player();
     Player(string tex);
     virtual ~Player();
     virtual void SetFlipX(bool flip)override;
@@ -53,6 +55,8 @@ public:
     
     void SetOriginalPos(Vector2f Left, Vector2f Right);
 
+    void SetSkin(string str) { skin = str; }
+
     void ShowLog();
     Sides GetSide();
     void Die();
@@ -62,7 +66,7 @@ public:
     bool GetChop();
     void SetSide(Sides pos);
     void SetChop(bool chop);
-    void SetSkin(int temp);
+  
     int GetChoice();
     void AddChoice();
     void SubChoice();

@@ -12,6 +12,7 @@ private:
 	Vector2f startPos;
 	Vector2f endPos;
 public:
+	MovingObj() {};
 	MovingObj(string str);
 	MovingObj(string str, Vector2f pos);
 	virtual ~MovingObj();

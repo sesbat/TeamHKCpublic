@@ -1,6 +1,7 @@
 #pragma once
 
 #include"Scene.h"
+#include "SkinMenu.h"
 
 class Solo :public Scene {
 public:
@@ -11,5 +12,8 @@ public:
 	void Init();
 private:
 	Graphics tree;
-	Player player;
+	
+	SkinMenu skin;
+
+	bool updateInit=false;
 };

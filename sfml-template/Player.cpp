@@ -2,18 +2,32 @@
 #include "Effect.h"
 #include "Graphics.h"
 
+Player::Player() {
+	originalPos.clear();
+	originalPos.push_back({ 1920 / 2 - 250,900 });
+
+	originalPos.push_back({ 1920 / 2 + 250,900 });
+	axeTex.loadFromFile("graphics/axe.png");
+	axe.setTexture(axeTex);
+	ripTex.loadFromFile("graphics/rip.png");
+
+	axe.setOrigin(axe.getLocalBounds().width, axe.getLocalBounds().height);
+
+	Init();
+}
+
 Player::Player(string str)
 	:Graphics(str)
 {
-	
+	originalPos.clear();
+	originalPos.push_back({ 1920 / 2 - 250,900 });
+
+	originalPos.push_back({ 1920 / 2 + 250,900 });
 	axeTex.loadFromFile("graphics/axe.png");
 	axe.setTexture(axeTex);
-	ripTex.loadFromFile("graphics/rip.png");	
+	ripTex.loadFromFile("graphics/rip.png");
 
 	axe.setOrigin(axe.getLocalBounds().width, axe.getLocalBounds().height);
-	skin.push_back("graphics/player.png");
-	skin.push_back("graphics/player-.png");
-	skin.push_back("graphics/player_green.png");
 
 	for (int i = 0; i < 100; i++)
 	{
@@ -35,16 +49,6 @@ Player::~Player()
 		delete v;
 	}
 	useLogs.clear();
-}
-
-void Player::SetSkin(int temp) {
-	if (temp==1&&skinsel == 2)
-		skinsel = -1;
-	if (temp == -1 && skinsel == 0)
-		skinsel = 3;
-	skinsel += temp;
-
-	this->SetTex(skin[skinsel]);
 }
 
 void Player::ShowLog()
@@ -71,7 +75,7 @@ Sides Player::GetSide()
 {
 	return pos;
 }
-void Player::SetOriginalPos(Vector2f Left,Vector2f Right)
+void Player::SetOriginalPos(Vector2f Left, Vector2f Right)
 {
 	originalPos.clear();
 	originalPos.push_back(Left);
@@ -80,7 +84,7 @@ void Player::SetOriginalPos(Vector2f Left,Vector2f Right)
 }
 void Player::Init()
 {
-	this->SetTex(skin[skinsel]);
+	this->SetTex(skin);
 	isAlive = true;
 	sprite.setPosition(GetPos().x, 900.f);
 	SetOrigin(Origins::BC);
@@ -90,7 +94,7 @@ void Player::Init()
 	Vector2f size = GetSize();
 
 	originalPos.clear();
-	originalPos.push_back({ 1920/2-250,900 });
+	originalPos.push_back({ 1920 / 2 - 250,900 });
 
 	originalPos.push_back({ 1920 / 2 + 250,900 });
 
@@ -190,9 +194,9 @@ void Player::Chop(Sides side)
 	pos = side;
 	sprite.setPosition(originalPos[(int)pos]);
 	if (GetSide() == Sides::Left)
-		axe.setPosition(sprite.getPosition().x + 50.f, sprite.getPosition().y - 50.f);
+		axe.setPosition(0, 0);
 	else
-		axe.setPosition(sprite.getPosition().x - 50.f, sprite.getPosition().y - 50.f);
+		axe.setPosition(0, 0);
 
 	SetFlipX(pos == Sides::Left);
 }
