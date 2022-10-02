@@ -143,8 +143,7 @@ int main()
 			if (InputMgr::GetKeyDown(Keyboard::RShift) || InputMgr::GetKeyDown(Keyboard::Return))
 			{
 				scoreNum = 0;
-				score.SetAll(font, 100, Color::Black, "SCORE = " + to_string(scoreNum), { 0, 0 });
-				score.SetOrigin(Origins::TL);
+				score.SetString("SCORE = " + to_string(scoreNum));
 			}
 
 			if (p.GetAlive())
@@ -152,8 +151,7 @@ int main()
 				if (InputMgr::GetKeyDown(Keyboard::Left) || InputMgr::GetKeyDown(Keyboard::Right))
 				{
 					scoreNum += 1;
-					score.SetAll(font, 100, Color::Black, "SCORE = " + to_string(scoreNum), { 0, 0 });
-					score.SetOrigin(Origins::TL);
+					score.SetString("SCORE = " + to_string(scoreNum));
 				}
 			}
 			if (!p.GetAlive())
@@ -162,8 +160,7 @@ int main()
 					{ WIDTH * 0.5f, HEIGHT * 0.4f});
 				scoreResult.Draw(window);
 
-				score.SetAll(font, 100, Color::Black, "SCORE = " + to_string(scoreNum), { 0, 0 });
-				score.SetOrigin(Origins::TL);
+				score.SetString("SCORE = " + to_string(scoreNum));
 				deathText.Draw(window);
 				restartText.Draw(window);
 				menuText.Draw(window);
