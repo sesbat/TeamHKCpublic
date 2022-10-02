@@ -174,7 +174,9 @@ void Player::Die()
 
 void Player::SetAlive(bool alive)
 {
+	isAlive = alive;
 }
+
 bool Player::GetAlive()
 {
 	return isAlive;

@@ -80,6 +80,7 @@ void Solo::Draw(RenderWindow& e)
 		choice.Draw(e);
 		mainMenu.Draw(e);
 	}
+
 	e.draw(timerBar);
 	for (auto v : useLogs) 
 	{
@@ -134,11 +135,15 @@ void Solo::Update(float dt)
 		if (InputMgr::GetKeyUp(Keyboard::Left) || InputMgr::GetKeyUp(Keyboard::Right))
 			player1.SetChop(false);
 	}
-<<<<<<< HEAD
 
 	// ReStart / MainMenu choice
-	if (!player1.GetAlive())
+	if (!player1.GetAlive() || timer == 0.f)
 	{
+		player1.Die();
+		scoreResultNum = scoreNum;
+		scoreNum = 0;
+		sdMgr.SoundPlay(SoundChoice::DeathSound);
+
 		if (InputMgr::GetKeyDown(Keyboard::Left))
 			choicePlay = 0;
 		if (InputMgr::GetKeyDown(Keyboard::Right))
@@ -154,27 +159,24 @@ void Solo::Update(float dt)
 			else if (choicePlay == 1)
 			{
 				SceneMgr::GetInstance()->SetScene(SceneSelect::MainMenu);
+				player1.SetAlive(true);
 			}
 		}
 	}
 
 	// 조건 : 피격시 or 타임아웃시 로 변경 / ReStart, MainMenu choice 버튼 옮기기
-	if (timer < 0.f) 
+
+	if (timer < 0.f)
 	{
-		if (!player1.GetAlive())
+		timer = 0.f;
+		dt = 0.f;
+		if (player1.GetAlive())
 		{
-			player1.Init();
-			player1.SetAlive(true);
-		}
-		else
-		{
-			player1.Die();
-			scoreResultNum = scoreNum;
-			scoreNum = 0;
-			sdMgr.SoundPlay(SoundChoice::DeathSound);
-			dt = 0;
+			player1.SetAlive(false);
 		}
 	}
+
+	timer -= dt;
 	float normTime = timer / duration; // 정규화
 	float timerSizeX = timerBarSize.x * normTime;
 	timerBar.setSize({ timerSizeX, timerBarSize.y });
