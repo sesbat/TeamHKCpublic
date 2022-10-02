@@ -71,7 +71,13 @@ Sides Player::GetSide()
 {
 	return pos;
 }
+void Player::SetOriginalPos(Vector2f Left,Vector2f Right)
+{
+	originalPos.clear();
+	originalPos.push_back(Left);
 
+	originalPos.push_back(Right);
+}
 void Player::Init()
 {
 	this->SetTex(skin[skinsel]);

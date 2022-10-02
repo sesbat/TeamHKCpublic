@@ -10,7 +10,11 @@
 #include "SoundMgr.h"
 #include <list>
 #include "Letter.h"
-
+#include "Duo.h"
+#include "Solo.h"
+#include "StartMenu.h"
+#include "MainMenu.h"
+#include "SkinMenu.h"
 using namespace sf;
 using namespace std;
 #define WIDTH 1920
@@ -23,62 +27,17 @@ int main()
 	SoundMgr sdMgr;
 	RenderWindow window(vm, "Timber!!", Style::Default);
 
-	Graphics tree("graphics/tree.png", { WIDTH / 2, 0 });
-	Graphics back("graphics/background.png");
-	Graphics startText("graphics/Start.png");
-	MovingObj bee("grpahics/bee.png");
-	MovingObj cloud("graphics/cloud.png");
-	Player p("graphics/player.png");
-	//리스트, 벡터로 벌,구름 생성하면 플레이어이미지나옴 
-	/*list<MovingObj> bee;
-	list<MovingObj> cloud;
+	Solo soloPlay;
+	Duo duo;
+	StartMenu start;
+	MainMenu Menu;
+	SkinMenu Skin;
 
-	for (int i = 0; i < 3; i++) {
-		bee.push_back(MovingObj("graphics/bee.png"));
-		cloud.push_back(MovingObj("graphics/cloud.png"));
-
-	}
-	for(auto& v:bee){
-		movingObj.push_back(v);
-
-	}
-	for (auto& v : cloud) {
-		movingObj.push_back(v);
-	}
-
-	*/
-
-	list<Graphics> env;
-	list<MovingObj> movingObj;
-
-	movingObj.push_back(bee);
-	movingObj.push_back(cloud);
-
-	p.SetPos({ 1920 / 2 - 250,900 });
-
-	env.push_back(back);
-
-	tree.SetOrigin(Origins::TC);
-
-	startText.SetOrigin(Origins::MC);
-	startText.SetPos({ WIDTH / 2, HEIGHT / 2 });
-	env.push_back(startText);
-
-	Scene startMenu(env, movingObj, (int)SceneSelect::StartMenu);
-	env.pop_back();
-	Scene MainMeun(env, movingObj, (int)SceneSelect::MainMenu);
-	env.push_back(tree);
-	Scene SkinMenu(env, movingObj, &p, (int)SceneSelect::SkinMenu);
-	Scene SoloPlay(env, movingObj, &p, (int)SceneSelect::Solo);
-
-	movingObj.clear();
-	env.clear();
-
-
-	SceneMgr::GetInstance()->AddScene(SceneSelect::StartMenu, &startMenu);
-	SceneMgr::GetInstance()->AddScene(SceneSelect::MainMenu, &MainMeun);
-	SceneMgr::GetInstance()->AddScene(SceneSelect::SkinMenu, &SkinMenu);
-	SceneMgr::GetInstance()->AddScene(SceneSelect::Solo, &SoloPlay);
+	SceneMgr::GetInstance()->AddScene(SceneSelect::StartMenu, &start);
+	SceneMgr::GetInstance()->AddScene(SceneSelect::MainMenu, &Menu);
+	SceneMgr::GetInstance()->AddScene(SceneSelect::SkinMenu, &Skin);
+	SceneMgr::GetInstance()->AddScene(SceneSelect::Solo, &soloPlay);
+	SceneMgr::GetInstance()->AddScene(SceneSelect::Couple, &duo);
 
 
 	/************************ skin ****************************/
@@ -132,8 +91,6 @@ int main()
 		{
 			window.close();
 		}
-
-
 
 		// Skin Mode - SkinSelect image
 		if ((int)SceneMgr::GetInstance()->GetSel() == 2)

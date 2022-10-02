@@ -146,30 +146,40 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Branche.cpp" />
+    <ClCompile Include="Duo.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="Letter.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MovingObj.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="sceneMgr.cpp" />
     <ClCompile Include="sfml-template.cpp" />
+    <ClCompile Include="SkinMenu.cpp" />
+    <ClCompile Include="Solo.cpp" />
     <ClCompile Include="SoundMgr.cpp" />
+    <ClCompile Include="StartMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Branche.h" />
+    <ClInclude Include="Duo.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="InputMgr.h" />
     <ClInclude Include="Letter.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MovingObj.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="rapidcsv.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="sceneMgr.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SkinMenu.h" />
+    <ClInclude Include="Solo.h" />
     <ClInclude Include="SoundMgr.h" />
+    <ClInclude Include="StartMenu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

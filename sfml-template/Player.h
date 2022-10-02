@@ -41,6 +41,7 @@ private:
     bool isPause = false;
 
 public:
+    Player() {};
     Player(string tex);
     virtual ~Player();
     virtual void SetFlipX(bool flip)override;
@@ -49,6 +50,8 @@ public:
     virtual void Update(float dt)override;
     virtual void Draw(RenderWindow& window)override;
     virtual void SetPos(Vector2f pos)override;
+    
+    void SetOriginalPos(Vector2f Left, Vector2f Right);
 
     void ShowLog();
     Sides GetSide();

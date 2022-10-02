@@ -4,19 +4,15 @@
 #include "Letter.h"
 #include <iostream>
 
-Scene::Scene(list<Graphics> tempenv, list<MovingObj>movingObj, int sel)
+Scene::Scene()
 {
-	this->sel = sel;
-	env = tempenv;
-	this->movingObj = movingObj;
-}
+	Graphics back("graphics/background.png");
+	MovingObj bee("grpahics/bee.png");
+	MovingObj cloud("graphics/cloud.png");
 
-Scene::Scene(list<Graphics> tempenv, list<MovingObj> movingObj, Player* player, int sel)
-	:player(player)
-{
-	this->sel = sel;
-	env = tempenv;
-	this->movingObj = movingObj;
+	env.push_back(back);
+	movingObj.push_back(bee);
+	movingObj.push_back(cloud);
 }
 
 Scene::~Scene()
@@ -30,9 +26,6 @@ void Scene::Draw(RenderWindow& e)
 	for (auto v : movingObj){
 		v.Draw(e);
 	}
-
-	if (player != nullptr)
-		player->Draw(e);
 }
 
 void Scene::StartMeun(float dt)
@@ -151,7 +144,6 @@ void Scene::Update(float dt)
 	sel = (int)SceneMgr::GetInstance()->GetSel();
 	switch (sel) {
 	case 0:
-		StartMeun(dt);
 		break;
 	case 1:
 		MainMenu(dt);
