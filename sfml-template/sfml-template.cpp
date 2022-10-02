@@ -39,6 +39,7 @@ int main()
 	SceneMgr::GetInstance()->AddScene(SceneSelect::Solo, &soloPlay);
 	SceneMgr::GetInstance()->AddScene(SceneSelect::Couple, &duo);
 
+
 	/************************ skin ****************************/
 	//Graphics skinSelect("graphics/SkinSelect.png", { WIDTH * 0.5f, 100 });
 	//skinSelect.SetOrigin(Origins::MC);

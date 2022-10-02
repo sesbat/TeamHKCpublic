@@ -15,5 +15,12 @@ private:
 	Graphics tree2;
 
 	bool updateInit = false;
+	float duration = 10;
+	float timer1 = duration;
+	float timer2 = duration;
+	Vector2f timerBarSize;
+	RectangleShape timerBar1;
+	RectangleShape timerBar2;
+
 
 };

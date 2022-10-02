@@ -6,7 +6,7 @@ mt19937 Branche::gen(Branche::rd());
 Branche::Branche(string tex) 
     : Graphics(tex), tree(tree), curBranch(-1)
 {
-    this->SetTex("graphics/branch.png");
+ 
     Init();
 }
 

@@ -52,6 +52,8 @@ public:
     virtual void Update(float dt)override;
     virtual void Draw(RenderWindow& window)override;
     virtual void SetPos(Vector2f pos)override;
+
+    Sprite* GetAxe() { return &axe; }
     
     void SetOriginalPos(Vector2f Left, Vector2f Right);
 
