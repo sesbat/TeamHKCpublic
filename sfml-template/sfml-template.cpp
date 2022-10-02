@@ -61,7 +61,7 @@ int main()
 	tree.SetOrigin(Origins::TC);
 
 	startText.SetOrigin(Origins::MC);
-	startText.SetPos({ WIDTH / 2, HEIGHT - 100 });
+	startText.SetPos({ WIDTH / 2, HEIGHT / 2 });
 	env.push_back(startText);
 
 	Scene startMenu(env, movingObj, (int)SceneSelect::StartMenu);
@@ -79,6 +79,12 @@ int main()
 	SceneMgr::GetInstance()->AddScene(SceneSelect::MainMenu, &MainMeun);
 	SceneMgr::GetInstance()->AddScene(SceneSelect::SkinMenu, &SkinMenu);
 	SceneMgr::GetInstance()->AddScene(SceneSelect::Solo, &SoloPlay);
+
+
+	/************************ skin ****************************/
+	Graphics skinSelect("graphics/SkinSelect.png", { WIDTH * 0.5f, 100 });
+	skinSelect.SetOrigin(Origins::MC);
+	/*************************************************************/
 
 
 	int scoreNum = 0;
@@ -101,6 +107,11 @@ int main()
 	score.SetOrigin(Origins::TL);
 	/*************************************************************************/
 
+	Vector2f timerBarSize = { 1200, 50 };
+	RectangleShape timerBar;
+	timerBar.setSize(timerBarSize);
+	timerBar.setFillColor(Color::Red);
+	timerBar.setPosition(WIDTH * 0.5f - timerBarSize.x * 0.5f, HEIGHT - 80);
 
 	InputMgr::Set();
 	Clock clock;
@@ -123,9 +134,24 @@ int main()
 		}
 
 
+
+		// Skin Mode - SkinSelect image
+		if ((int)SceneMgr::GetInstance()->GetSel() == 2)
+			skinSelect.Draw(window);
+
+
 		// Solo Mode - Show ScoreText, Score++
 		if ((int)SceneMgr::GetInstance()->GetSel() == 3)
 		{
+			if (InputMgr::GetKeyDown(Keyboard::Return)) // Enter
+			{
+				if (timer > 0.f)
+				{
+					isPause = !isPause;
+					p.SetPause();
+				}
+			}
+
 			/******************** Timer(Not Completed) ********************/
 			float deltaTime = isPause ? 0.f : dt.asSeconds();
 			timer -= deltaTime;

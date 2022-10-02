@@ -70,19 +70,32 @@ void Scene::SkinMenu(float dt)
 
 void Scene::Solo(float dt)
 {
-	if (player->GetAlive())
+	// Pause
+	if (InputMgr::GetKeyDown(Keyboard::D))
+		player->SetPause();
+
+	if (player->GetPause() == true)
 	{
-		if (InputMgr::GetKeyDown(Keyboard::Left))
+		
+	}
+
+	else if (player->GetPause() == false)
+	{
+		if (player->GetAlive())
 		{
-			player->Chop(Sides::Left);
-			sdMgr.SoundPlay(SoundChoice::ChopSound);
-		}
-		if (InputMgr::GetKeyDown(Keyboard::Right))
-		{
-			player->Chop(Sides::Right);
-			sdMgr.SoundPlay(SoundChoice::ChopSound);
+			if (InputMgr::GetKeyDown(Keyboard::Left))
+			{
+				player->Chop(Sides::Left);
+				sdMgr.SoundPlay(SoundChoice::ChopSound);
+			}
+			if (InputMgr::GetKeyDown(Keyboard::Right))
+			{
+				player->Chop(Sides::Right);
+				sdMgr.SoundPlay(SoundChoice::ChopSound);
+			}
 		}
 	}
+
 
 	if (InputMgr::GetKeyDown(Keyboard::Space)){
 		if (!player->GetAlive()) 

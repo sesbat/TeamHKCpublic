@@ -223,3 +223,13 @@ void Player::SubChoice()
 {
 	choice -= 1;
 }
+
+void Player::SetPause()
+{
+	isPause = !isPause;
+}
+
+bool Player::GetPause()
+{
+	return isPause;
+}

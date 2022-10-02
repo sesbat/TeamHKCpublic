@@ -38,6 +38,7 @@ private:
 
     int skinsel=0;
     int choice = 1;
+    bool isPause = false;
 
 public:
     Player(string tex);
@@ -62,4 +63,6 @@ public:
     int GetChoice();
     void AddChoice();
     void SubChoice();
+    void SetPause();
+    bool GetPause();
 };
