@@ -19,6 +19,7 @@ private:
 
 public:
     Branche(string tex);
+
     virtual void Init() override;
     void SetSide(Sides side);
     void UpdateBranches(vector<Branche*>& branches, int& current, vector<Vector2f>& posArr); // �������� ��, �� ���� ����, ��ȯ

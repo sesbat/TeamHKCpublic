@@ -34,6 +34,19 @@ Duo::Duo()
 	scoreResult_2P.SetAll(font, 40, Color::Yellow, "SCORE : " + to_string(scoreNum_2P), { 1920 * 0.5f, 1080 * 0.5f });
 
 	Init();	
+	timerBarSize.x = 400;
+	timerBarSize.y = 80;
+	timerBar1.setSize(timerBarSize);
+	timerBar1.setFillColor(Color::Red);
+	timerBar1.setPosition(
+		1920 * 0.2f - timerBarSize.x * 0.2f,
+		1080 - 100);
+
+	timerBar2.setSize(timerBarSize);
+	timerBar2.setFillColor(Color::Red);
+	timerBar2.setPosition(
+		1920 * 0.8f - timerBarSize.x * 0.8f,
+		1080 - 100);
 }
 
 Duo::~Duo()
@@ -54,10 +67,16 @@ void Duo::Draw(RenderWindow& e)
 	tree2.Draw(e);
 	player1.Draw(e);
 	player2.Draw(e);
+	e.draw(timerBar1);
+	e.draw(timerBar2);
+
 }
 
 void Duo::Update(float dt)
 {
+	timer1 -= dt;
+	timer2 -= dt;
+
 	if (updateInit == false) {
 		Init();
 		updateInit = true;
@@ -117,4 +136,16 @@ void Duo::Update(float dt)
 			dt = 0;
 		}
 	}
+	float normTime1 = timer1 / duration; // 정규화
+	float normTime2 = timer2 / duration;
+	float timerSizeX1 = timerBarSize.x * normTime1;
+	float timerSizeX2 = timerBarSize.x * normTime2;
+
+	timerBar1.setSize({ timerSizeX1, timerBarSize.y });
+	timerBar2.setSize({ timerSizeX2,timerBarSize.y });
+	timerBar1.setPosition
+	(1920 * 0.2f - timerSizeX1 * 0.2f, 1080 - 100);
+	timerBar2.setPosition
+	(1920 * 0.8f - timerSizeX2 * 0.8f, 1080 - 100);
+
 }
