@@ -88,6 +88,7 @@ void Scene::Solo(float dt)
 		if (!player->GetAlive()) 
 		{
 			player->Init();
+			player->SetAlive(true);
 		}
 		else
 		{

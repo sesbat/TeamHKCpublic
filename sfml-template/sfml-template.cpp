@@ -126,8 +126,9 @@ int main()
 		}
 		
 
+		if (!p.GetAlive() && (int)SceneMgr::GetInstance()->GetSel() == 3)
 		// Solo Mode - Show ScoreText, Score++
-		if ((int)SceneMgr::GetInstance()->GetSel() == 3)
+		//if ((int)SceneMgr::GetInstance()->GetSel() == 3)
 		{
 			/******************** Timer(Not Completed) ********************/
 			float deltaTime = isPause ? 0.f : dt.asSeconds();
