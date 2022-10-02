@@ -190,6 +190,7 @@ void Player::Chop(Sides side)
 
 	SetFlipX(pos == Sides::Left);
 }
+
 void Player::SetChop(bool chop)
 {
 	isChopping = chop;

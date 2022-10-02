@@ -20,7 +20,7 @@ int main()
 	//파일 불러오기
 
 	VideoMode vm(WIDTH, HEIGHT);
-
+	SoundMgr sdMgr;
 	RenderWindow window(vm, "Timber!!", Style::Default);
 
 	Graphics tree("graphics/tree.png", { WIDTH / 2, 0 });
@@ -75,60 +75,37 @@ int main()
 	env.clear();
 	
 
-
 	SceneMgr::GetInstance()->AddScene(SceneSelect::StartMenu, &startMenu);
 	SceneMgr::GetInstance()->AddScene(SceneSelect::MainMenu, &MainMeun);
 	SceneMgr::GetInstance()->AddScene(SceneSelect::SkinMenu, &SkinMenu);
 	SceneMgr::GetInstance()->AddScene(SceneSelect::Solo, &SoloPlay);
 
 
-
-	/***************************** Letter Change *****************************/
+	int scoreNum = 0;
+	float duration = 12.0f;
+	float timer = duration;
+	/***************************** Letter ***********************************/
+	string mabiFont = "fonts/Mabinogi_Classic_TTF.ttf";
 	Font font;
-	font.loadFromFile("fonts/Mabinogi_Classic_TTF.ttf");
-	Text deathText, restartText, menuText, pte, ptrh;
+	font.loadFromFile(mabiFont);
+	Letter deathText, restartText, menuText, pte, ptrh, score, scoreResult, timerText;
+	deathText.SetAll(font, 200, Color::White, "YOU  DIE  !", { WIDTH * 0.5f, HEIGHT * 0.25f });
+	restartText.SetAll(font, 80, Color::Blue, "RE  START ?", { WIDTH * 0.3f, HEIGHT * 0.55f });
+	menuText.SetAll(font, 80, Color::Blue, "MAIN  MENU", { WIDTH * 0.7f, HEIGHT * 0.55f });
+	pte.SetAll(font, 45, Color::White, "( PRESS  TO  ENTER )", { WIDTH * 0.3f, HEIGHT * 0.6f });
+	ptrh.SetAll(font, 45, Color::White, "( PRESS  TO  RSHIFT )", { WIDTH * 0.7f, HEIGHT * 0.6f });
 
-	deathText.setFont(font);
-	deathText.setCharacterSize(100);
-	deathText.setFillColor(Color::White);
-	deathText.setString("You  Die  !");
-	Letter::SetOrigin(deathText, Origins::MC);
-	deathText.setPosition(WIDTH * 0.5f, HEIGHT * 0.4f);
 
-	restartText.setFont(font);
-	restartText.setCharacterSize(80);
-	restartText.setFillColor(Color::Blue);
-	restartText.setString("RE  START ?");
-	Letter::SetOrigin(restartText, Origins::MC);
-	restartText.setPosition(WIDTH * 0.3f, HEIGHT * 0.55f);
-
-	menuText.setFont(font);
-	menuText.setCharacterSize(80);
-	menuText.setFillColor(Color::Blue);
-	menuText.setString("MAIN  MENU");
-	Letter::SetOrigin(menuText, Origins::MC);
-	menuText.setPosition(WIDTH * 0.7f, HEIGHT * 0.55f);
-
-	pte.setFont(font);
-	pte.setCharacterSize(45);
-	pte.setFillColor(Color::White);
-	pte.setString("(PRESS  TO  ENTER  KEY)");
-	Letter::SetOrigin(pte, Origins::MC);
-	pte.setPosition(WIDTH * 0.3f, HEIGHT * 0.6f);
-
-	ptrh.setFont(font);
-	ptrh.setCharacterSize(45);
-	ptrh.setFillColor(Color::White);
-	ptrh.setString("(PRESS  TO  RSHIFT  KEY)");
-	Letter::SetOrigin(ptrh, Origins::MC);
-	ptrh.setPosition(WIDTH * 0.7f, HEIGHT * 0.6f);
+	score.SetAll(font, 100, Color::Black, "SCORE = " + to_string(scoreNum), {0, 0});
+	score.SetOrigin(Origins::TL);
 	/*************************************************************************/
 
 
 	InputMgr::Set();
 	Clock clock;
-
-	while (window.isOpen()) {
+	bool isPause = false;
+	while (window.isOpen()) 
+	{
 		InputMgr::ClearInput();
 		Time dt = clock.restart();
 		Event ev;
@@ -143,16 +120,59 @@ int main()
 		{
 			window.close();
 		}
+		
 
+<<<<<<< HEAD
 		
 
 		if (!p.GetAlive() && (int)SceneMgr::GetInstance()->GetSel() == 3)
+=======
+		// Solo Mode - Show ScoreText, Score++
+		if ((int)SceneMgr::GetInstance()->GetSel() == 3)
+>>>>>>> origin/Develop
 		{
-			window.draw(deathText);
-			window.draw(restartText);
-			window.draw(menuText);
-			window.draw(pte);
-			window.draw(ptrh);
+			/******************** Timer(Not Completed) ********************/
+			float deltaTime = isPause ? 0.f : dt.asSeconds();
+			timer -= deltaTime;
+			float nomalTime = timer / duration;
+			if (InputMgr::GetKeyDown(Keyboard::Space))
+				!isPause;
+
+			timerText.SetAll(font, 100, Color::Black, to_string((int)timer), { WIDTH * 0.5f, HEIGHT - 100 });
+			timerText.SetOrigin(Origins::MC);
+			/***************************************************************/
+
+			score.Draw(window);
+			timerText.Draw(window);
+
+			// 살아있을때 엔터눌러도 초기화됨 (고쳐야함)
+			if (InputMgr::GetKeyDown(Keyboard::RShift) || InputMgr::GetKeyDown(Keyboard::Return))
+			{
+				scoreNum = 0;
+				score.SetString("SCORE = " + to_string(scoreNum));
+			}
+
+			if (p.GetAlive())
+			{
+				if (InputMgr::GetKeyDown(Keyboard::Left) || InputMgr::GetKeyDown(Keyboard::Right))
+				{
+					scoreNum += 1;
+					score.SetString("SCORE = " + to_string(scoreNum));
+				}
+			}
+			if (!p.GetAlive())
+			{
+				scoreResult.SetAll(font, 100, Color::Yellow, "SCORE : " + to_string(scoreNum),
+					{ WIDTH * 0.5f, HEIGHT * 0.4f});
+				scoreResult.Draw(window);
+
+				score.SetString("SCORE = " + to_string(scoreNum));
+				deathText.Draw(window);
+				restartText.Draw(window);
+				menuText.Draw(window);
+				pte.Draw(window);
+				ptrh.Draw(window);
+			}
 		}
 
 		window.display();

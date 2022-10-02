@@ -34,23 +34,38 @@ void SoundMgr::SoundPlay(SoundChoice soundchoice)
 	{
 	case SoundChoice::TitleSound:
 
-		sounds[0].play();
+		if (played)
+			sounds[0].play();
+		if (!played)
+			sounds[0].stop();
 		break;
 
 	case SoundChoice::PlaySound:
-		sounds[1].play();
+		if (played)
+			sounds[1].play();
+		if (!played)
+			sounds[1].stop();
 		break;
 
 	case SoundChoice::ChopSound:
-		sounds[1].play();
+		if (played)
+			sounds[2].play();
+		if (!played)
+			sounds[2].stop();
 		break;
 
 	case SoundChoice::DeathSound:
-		sounds[2].play();
+		if (played)
+			sounds[3].play();
+		if (!played)
+			sounds[3].stop();
 		break;
 
 	case SoundChoice::TimeOutSound:
-		sounds[3].play();
+		if (played)
+			sounds[4].play();
+		if (!played)
+			sounds[4].stop();
 		break;
 	}
 	this->soundChoice = soundchoice;
@@ -59,4 +74,9 @@ void SoundMgr::SoundPlay(SoundChoice soundchoice)
 SoundChoice SoundMgr::GetSoundChoice()
 {
 	return soundChoice;
+}
+
+void SoundMgr::SetPlay(bool tof)
+{
+	played = tof;
 }

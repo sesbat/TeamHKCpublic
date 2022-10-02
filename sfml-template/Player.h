@@ -3,7 +3,7 @@
 #include "Effect.h"
 #include <list>
 #include "InputMgr.h"
-//#include "Letter.h"
+#include "SoundMgr.h"
 
 class Graphics;
 
@@ -58,5 +58,4 @@ public:
     void SetSide(Sides pos);
     void SetChop(bool chop);
     void SetSkin(int temp);
- 
 };
