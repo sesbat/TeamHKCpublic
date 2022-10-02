@@ -24,6 +24,7 @@ private:
     Vector2f ScreenSize = { 1920, 1080 };
 
     int sel = 0;
+
 public:
    
     Scene(list<Graphics> tempenv, list<MovingObj>movingObj, int sel);

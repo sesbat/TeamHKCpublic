@@ -70,7 +70,6 @@ void Scene::SkinMenu(float dt)
 
 void Scene::Solo(float dt)
 {
-	cout << player->GetPos().x << " " << player->GetPos().y << endl;
 	if (player->GetAlive())
 	{
 		if (InputMgr::GetKeyDown(Keyboard::Left))
@@ -104,20 +103,27 @@ void Scene::Solo(float dt)
 
 	if (!player->GetAlive())
 	{
+		if (InputMgr::GetKeyDown(Keyboard::Left) && player->GetChoice() > 1)
+			player->SubChoice();
+		if (InputMgr::GetKeyDown(Keyboard::Right) && player->GetChoice() < 2)
+			player->AddChoice();
+
 		if (InputMgr::GetKeyDown(Keyboard::Return))
 		{
-			player->Init();
-			SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
+			if (player->GetChoice() == 1)
+			{
+				player->Init();
+				SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
+			}
+			if (player->GetChoice() == 2)
+			{
+				sel = 1;
+				player->Init();
+				player->SetAlive(true);
+				player->SetSide(Sides::Left);
+				SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
+			}
 		}
-	}
-
-	if (InputMgr::GetKeyDown(Keyboard::RShift))
-	{
-		sel = 1;
-		player->Init();
-		player->SetAlive(true);
-		player->SetSide(Sides::Left);
-		SceneMgr::GetInstance()->SetScene((SceneSelect)sel);
 	}
 }
 

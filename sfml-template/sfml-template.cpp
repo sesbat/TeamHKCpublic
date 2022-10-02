@@ -81,20 +81,24 @@ int main()
 	SceneMgr::GetInstance()->AddScene(SceneSelect::Solo, &SoloPlay);
 
 
+
+
 	int scoreNum = 0;
+	int choice = 1;
 	float duration = 12.0f;
 	float timer = duration;
-	/***************************** Letter ***********************************/
+	/***************************** Letter (Die) ***********************************/
+	Graphics deathText("graphics/Die.png", { WIDTH * 0.5f, HEIGHT * 0.25f });
+	deathText.SetOrigin(Origins::MC);
+	Graphics choiceStart("graphics/Choice.png");
+	choiceStart.SetOrigin(Origins::MC);
+
 	string mabiFont = "fonts/Mabinogi_Classic_TTF.ttf";
 	Font font;
 	font.loadFromFile(mabiFont);
-	Letter deathText, restartText, menuText, pte, ptrh, score, scoreResult, timerText;
-	deathText.SetAll(font, 200, Color::White, "YOU  DIE  !", { WIDTH * 0.5f, HEIGHT * 0.25f });
-	restartText.SetAll(font, 80, Color::Blue, "RE  START ?", { WIDTH * 0.3f, HEIGHT * 0.55f });
-	menuText.SetAll(font, 80, Color::Blue, "MAIN  MENU", { WIDTH * 0.7f, HEIGHT * 0.55f });
-	pte.SetAll(font, 45, Color::White, "( PRESS  TO  ENTER )", { WIDTH * 0.3f, HEIGHT * 0.6f });
-	ptrh.SetAll(font, 45, Color::White, "( PRESS  TO  RSHIFT )", { WIDTH * 0.7f, HEIGHT * 0.6f });
-
+	Letter restartText, menuText, score, scoreResult, timerText;
+	restartText.SetAll(font, 80, Color::Blue, "RE  START ?", { WIDTH * 0.2f, HEIGHT * 0.565f });
+	menuText.SetAll(font, 80, Color::Blue, "MAIN  MENU", { WIDTH * 0.8f, HEIGHT * 0.565f });
 
 	score.SetAll(font, 100, Color::Black, "SCORE = " + to_string(scoreNum), {0, 0});
 	score.SetOrigin(Origins::TL);
@@ -156,16 +160,20 @@ int main()
 			}
 			if (!p.GetAlive())
 			{
-				scoreResult.SetAll(font, 100, Color::Yellow, "SCORE : " + to_string(scoreNum),
+				if (p.GetChoice() == 1)
+					choiceStart.SetPos({ WIDTH * 0.202f, HEIGHT * 0.575f });
+				else if (p.GetChoice() == 2)
+					choiceStart.SetPos({ WIDTH * 0.802f, HEIGHT * 0.575f });
+
+				scoreResult.SetAll(font, 100, Color::White, "SCORE : " + to_string(scoreNum),
 					{ WIDTH * 0.5f, HEIGHT * 0.4f});
 				scoreResult.Draw(window);
 
-				score.SetString("SCORE = " + to_string(scoreNum));
 				deathText.Draw(window);
+				score.SetString("SCORE = " + to_string(scoreNum));
+				choiceStart.Draw(window);
 				restartText.Draw(window);
 				menuText.Draw(window);
-				pte.Draw(window);
-				ptrh.Draw(window);
 			}
 		}
 

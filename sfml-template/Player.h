@@ -37,6 +37,7 @@ private:
     Vector2f axePos;
 
     int skinsel=0;
+    int choice = 1;
 
 public:
     Player(string tex);
@@ -58,4 +59,7 @@ public:
     void SetSide(Sides pos);
     void SetChop(bool chop);
     void SetSkin(int temp);
+    int GetChoice();
+    void AddChoice();
+    void SubChoice();
 };

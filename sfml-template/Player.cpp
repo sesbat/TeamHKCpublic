@@ -208,3 +208,18 @@ void Player::SetSide(Sides pos)
 	SetFlipX(pos == Sides::Left);
 
 }
+
+int Player::GetChoice()
+{
+	return choice;
+}
+
+void Player::AddChoice()
+{
+	choice += 1;
+}
+
+void Player::SubChoice()
+{
+	choice -= 1;
+}
