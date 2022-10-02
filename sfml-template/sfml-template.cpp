@@ -40,7 +40,7 @@ int main()
 	}
 	for(auto& v:bee){
 		movingObj.push_back(v);
-		
+
 	}
 	for (auto& v : cloud) {
 		movingObj.push_back(v);
@@ -53,11 +53,11 @@ int main()
 
 	movingObj.push_back(bee);
 	movingObj.push_back(cloud);
-	
+
 	p.SetPos({ 1920 / 2 - 250,900 });
 
 	env.push_back(back);
-	
+
 	tree.SetOrigin(Origins::TC);
 
 	startText.SetOrigin(Origins::MC);
@@ -67,13 +67,13 @@ int main()
 	Scene startMenu(env, movingObj, (int)SceneSelect::StartMenu);
 	env.pop_back();
 	Scene MainMeun(env, movingObj, (int)SceneSelect::MainMenu);
-	env.push_back(tree);	
+	env.push_back(tree);
 	Scene SkinMenu(env, movingObj, &p, (int)SceneSelect::SkinMenu);
 	Scene SoloPlay(env, movingObj, &p, (int)SceneSelect::Solo);
 
 	movingObj.clear();
 	env.clear();
-	
+
 
 	SceneMgr::GetInstance()->AddScene(SceneSelect::StartMenu, &startMenu);
 	SceneMgr::GetInstance()->AddScene(SceneSelect::MainMenu, &MainMeun);
@@ -81,10 +81,7 @@ int main()
 	SceneMgr::GetInstance()->AddScene(SceneSelect::Solo, &SoloPlay);
 
 
-
-
 	int scoreNum = 0;
-	int choice = 1;
 	float duration = 12.0f;
 	float timer = duration;
 	/***************************** Letter (Die) ***********************************/
@@ -100,7 +97,7 @@ int main()
 	restartText.SetAll(font, 80, Color::Blue, "RE  START ?", { WIDTH * 0.2f, HEIGHT * 0.565f });
 	menuText.SetAll(font, 80, Color::Blue, "MAIN  MENU", { WIDTH * 0.8f, HEIGHT * 0.565f });
 
-	score.SetAll(font, 100, Color::Black, "SCORE = " + to_string(scoreNum), {0, 0});
+	score.SetAll(font, 100, Color::Black, "SCORE = " + to_string(scoreNum), { 0, 0 });
 	score.SetOrigin(Origins::TL);
 	/*************************************************************************/
 
@@ -108,7 +105,7 @@ int main()
 	InputMgr::Set();
 	Clock clock;
 	bool isPause = false;
-	while (window.isOpen()) 
+	while (window.isOpen())
 	{
 		InputMgr::ClearInput();
 		Time dt = clock.restart();
@@ -124,11 +121,10 @@ int main()
 		{
 			window.close();
 		}
-		
 
-		if (!p.GetAlive() && (int)SceneMgr::GetInstance()->GetSel() == 3)
+
 		// Solo Mode - Show ScoreText, Score++
-		//if ((int)SceneMgr::GetInstance()->GetSel() == 3)
+		if ((int)SceneMgr::GetInstance()->GetSel() == 3)
 		{
 			/******************** Timer(Not Completed) ********************/
 			float deltaTime = isPause ? 0.f : dt.asSeconds();
@@ -167,7 +163,7 @@ int main()
 					choiceStart.SetPos({ WIDTH * 0.802f, HEIGHT * 0.575f });
 
 				scoreResult.SetAll(font, 100, Color::White, "SCORE : " + to_string(scoreNum),
-					{ WIDTH * 0.5f, HEIGHT * 0.4f});
+					{ WIDTH * 0.5f, HEIGHT * 0.4f });
 				scoreResult.Draw(window);
 
 				deathText.Draw(window);
@@ -183,4 +179,3 @@ int main()
 
 	return 0;
 }
-
