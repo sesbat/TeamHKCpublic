@@ -89,7 +89,7 @@ void Scene::Solo(float dt)
 	if (InputMgr::GetKeyDown(Keyboard::Space)){
 		if (!player->GetAlive()) 
 		{
-			player->Init();
+			player->SetAlive(true);
 		}
 		else
 		{
@@ -110,6 +110,8 @@ void Scene::Solo(float dt)
 
 	if (InputMgr::GetKeyDown(Keyboard::RShift))
 	{
+		player->Init();
+		player->SetAlive(true);
 		sel = 1;
 		player->SetSide(Sides::Left);
 		SceneMgr::GetInstance()->SetScene((SceneSelect)sel);

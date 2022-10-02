@@ -144,6 +144,7 @@ int main()
 			window.close();
 		}
 
+		
 
 		if (!p.GetAlive() && (int)SceneMgr::GetInstance()->GetSel() == 3)
 		{
