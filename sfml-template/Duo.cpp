@@ -196,6 +196,18 @@ void Duo::Update(float dt)
 	}
 
 	if (InputMgr::GetKeyDown(Keyboard::Escape)) {
+		scoreNum_1P = 0;
+		scoreNum_2P = 0;
+		score_1P.SetString("SCORE = " + to_string(scoreNum_1P));
+		score_2P.SetString("SCORE = " + to_string(scoreNum_2P));
+		player1.SetAlive(true);
+		player2.SetAlive(true);
+		resultScreen = false;
+		player1.Init();
+		player2.Init();
+		timer1 = duration;
+		timer2 = duration;
+		
 		SceneMgr::GetInstance()->SetScene(SceneSelect::MainMenu);
 		updateInit = false;
 	}
@@ -283,18 +295,18 @@ void Duo::Update(float dt)
 			timer1 = 0.f;
 			timer2 = 0.f;
 			dt = 0.f;
-			if (player1.GetAlive()&&player2.GetAlive())
+			if (player1.GetAlive())
 			{
 				player1.SetAlive(false);
-				player2.SetAlive(false);
 				scoreResultNum_1P = scoreNum_1P;
-				scoreResultNum_2P = scoreNum_2P;
 				scoreResult_1P.SetString("SCORE = " + to_string(scoreResultNum_1P));
+				sdMgr.SoundPlay(SoundChoice::TimeOutSound);
+			}
+			if (player2.GetAlive())
+			{
+				player2.SetAlive(false);
+				scoreResultNum_2P = scoreNum_2P;
 				scoreResult_2P.SetString("SCORE = " + to_string(scoreResultNum_2P));
-				scoreNum_1P = 0;
-				scoreNum_2P = 0;
-				score_1P.SetString("SCORE = " + to_string(scoreNum_1P));
-				score_2P.SetString("SCORE = " + to_string(scoreNum_2P));
 				sdMgr.SoundPlay(SoundChoice::TimeOutSound);
 			}
 
@@ -331,15 +343,13 @@ void Duo::Update(float dt)
 			player2.SetAlive(true);
 			resultScreen = false;
 
+			player1.Init();
+			player2.Init();
+			timer1 = duration;
+			timer2 = duration;
+
 			if (choicePlay == 0)
-			{
 				SceneMgr::GetInstance()->SetScene(SceneSelect::Couple);
-				player1.Init();
-				player2.Init();
-				timer1 = duration;
-				timer2 = duration;
-				// 다시시작
-			}
 			else
 				SceneMgr::GetInstance()->SetScene(SceneSelect::MainMenu);
 		}
