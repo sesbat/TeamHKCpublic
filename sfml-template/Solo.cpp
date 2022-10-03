@@ -32,6 +32,10 @@ Solo::Solo()
 
 	scoreResult.SetAll(font, 100, Color::Yellow, "SCORE : " + to_string(scoreNum), { 1920 * 0.5f, 1080 * 0.5f });
 
+	Pause.SetTex("graphics/Pause.png");
+	Pause.SetOrigin(Origins::MC);
+	Pause.SetPos({1920 * 0.5f, 1080 * 0.5f});
+
 	Init();
 	timerBarSize.x = 400;
 	timerBarSize.y = 80;
@@ -87,25 +91,13 @@ void Solo::Draw(RenderWindow& e)
 	{
 		v->Draw(e);
 	}
+
+	if (isPause)
+		Pause.Draw(e);
 }
 
 void Solo::Update(float dt)
-{
-	Scene::Update(dt);
-	timer -= dt;
-
-	auto it = useLogs.begin();
-	while (it != useLogs.end()) {
-		(*it)->Update(dt);
-		if (!(*it)->GetActive()) {
-			unuseLogs.push_back(*it);
-			it = useLogs.erase(it);
-		}
-		else {
-			++it;
-		}
-	}
-	
+{	
 	if(updateInit==false){
 		player1.SetOriginalPos({ 1920 / 2 - 250,900 }, { 1920 / 2 + 250,900 });
 		updateInit = true;
@@ -117,45 +109,86 @@ void Solo::Update(float dt)
 	}
 	//여기에 실제게임플레이 입력,정보 브렌치 업데이트
 	
-	if (player1.GetAlive()) {
-		if (InputMgr::GetKeyDown(Keyboard::Left)) 
+	if (player1.GetAlive())
+	{
+		if (InputMgr::GetKeyDown(Keyboard::P))
 		{
-			scoreNum += 1;
-			player1.SetAxePos(50, 50);
-			player1.Chop(Sides::Left);
-			sdMgr.SoundPlay(SoundChoice::ChopSound);
-			ShowLogEffect();
+			if (!isPause)
+			{
+				isPause = true;
+				// 시간 멈춤
+			}
+			else if (isPause)
+			{
+				isPause = false;
+				// 시간 다시
+			}
 		}
-		if (InputMgr::GetKeyDown(Keyboard::Right))
-		{
-			scoreNum += 1;
-			player1.SetAxePos(50, 50);
-			player1.Chop(Sides::Right);
-			sdMgr.SoundPlay(SoundChoice::ChopSound);
-			ShowLogEffect();
-
-		}
-		if (InputMgr::GetKeyUp(Keyboard::Left) || InputMgr::GetKeyUp(Keyboard::Right))
-			player1.SetChop(false);
-		if (InputMgr::GetKey(Keyboard::Left) || InputMgr::GetKey(Keyboard::Right))
-			player1.SetAxePos(50, 50);
 	}
 
-
-	/********************************** 임시로 해둔거 *********************************/
-	if (InputMgr::GetKeyDown(Keyboard::Space) && player1.GetAlive())
+	if (isPause == false)
 	{
-		if (player1.GetAlive())
-		{
-			player1.SetAlive(false);
-			player1.Die();
-			sdMgr.SoundPlay(SoundChoice::DeathSound);
-			scoreResultNum = scoreNum;
-			scoreResult.SetString("SCORE = " + to_string(scoreResultNum));
-			scoreNum = 0;
+		auto it = useLogs.begin();
+		while (it != useLogs.end()) {
+			(*it)->Update(dt);
+			if (!(*it)->GetActive()) {
+				unuseLogs.push_back(*it);
+				it = useLogs.erase(it);
+			}
+			else {
+				++it;
+			}
 		}
-		else if (!player1.GetAlive())
-			player1.SetAlive(true);
+
+		Scene::Update(dt);
+		timer -= dt;
+
+		if (player1.GetAlive()) {
+			if (InputMgr::GetKeyDown(Keyboard::Left))
+			{
+				scoreNum += 1;
+				player1.SetAxePos(50, 50);
+				player1.Chop(Sides::Left);
+				sdMgr.SoundPlay(SoundChoice::ChopSound);
+				ShowLogEffect();
+			}
+			if (InputMgr::GetKeyDown(Keyboard::Right))
+			{
+				scoreNum += 1;
+				player1.SetAxePos(50, 50);
+				player1.Chop(Sides::Right);
+				sdMgr.SoundPlay(SoundChoice::ChopSound);
+				ShowLogEffect();
+
+			}
+			if (InputMgr::GetKeyUp(Keyboard::Left) || InputMgr::GetKeyUp(Keyboard::Right))
+				player1.SetChop(false);
+			if (InputMgr::GetKey(Keyboard::Left) || InputMgr::GetKey(Keyboard::Right))
+				player1.SetAxePos(50, 50);
+		}
+
+		/********************************** 임시로 해둔거 *********************************/
+		if (InputMgr::GetKeyDown(Keyboard::Space) && player1.GetAlive())
+		{
+			if (player1.GetAlive())
+			{
+				player1.SetAlive(false);
+				player1.Die();
+				sdMgr.SoundPlay(SoundChoice::DeathSound);
+				scoreResultNum = scoreNum;
+				scoreResult.SetString("SCORE = " + to_string(scoreResultNum));
+				scoreNum = 0;
+			}
+			else if (!player1.GetAlive())
+				player1.SetAlive(true);
+		}
+
+		timer -= dt;
+		float normTime = timer / duration; // 정규화
+		float timerSizeX = timerBarSize.x * normTime;
+		timerBar.setSize({ timerSizeX, timerBarSize.y });
+		timerBar.setPosition
+		(1920 * 0.5f - timerSizeX * 0.5f, 1080 - 100);
 	}
 
 	if (!player1.GetAlive())
@@ -179,28 +212,6 @@ void Solo::Update(float dt)
 				SceneMgr::GetInstance()->SetScene(SceneSelect::MainMenu);
 		}
 	}
-	/*************************************************************************************/
-
-	// 조건 : 피격시 or 타임아웃시 로 변경 / ReStart, MainMenu choice 버튼 옮기기
-
-	if (timer < 0.f)
-	{
-		timer = 0.f;
-		dt = 0.f;
-		//std:cout << player1.GetAlive();
-		//if (player1.GetAlive())
-		//{
-		//	player1.SetAlive(false);
-		//}
-	}
-
-	timer -= dt;
-	float normTime = timer / duration; // 정규화
-	float timerSizeX = timerBarSize.x * normTime;
-	timerBar.setSize({ timerSizeX, timerBarSize.y });
-	timerBar.setPosition
-	(1920 * 0.5f - timerSizeX * 0.5f, 1080 - 100);
-
 }
 
 void Solo::ShowLogEffect() {

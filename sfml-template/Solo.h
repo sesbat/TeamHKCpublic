@@ -19,6 +19,7 @@ private:
 	SkinMenu skin;
 	bool updateInit=false;
 
+	Graphics Pause;
 	Graphics dieText;
 	Graphics choice;
 	Letter reStart;

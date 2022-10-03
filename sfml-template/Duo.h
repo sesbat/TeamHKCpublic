@@ -23,7 +23,7 @@ private:
 	RectangleShape timerBar1;
 	RectangleShape timerBar2;
 
-
+	Graphics Pause;
 	Graphics choice;
 	Letter reStart;
 	Letter mainMenu;
@@ -53,4 +53,5 @@ private:
 	int choicePlay = 0;
 
 	bool resultScreen = false;
+	bool isPause = false;
 };
