@@ -65,10 +65,10 @@ void MainMenu::Update(float dt)
 
 	if (InputMgr::GetKeyDown(Keyboard::Left)) 
 		mode = 0;
-	if (InputMgr::GetKeyDown(Keyboard::Right)) {
+	if (InputMgr::GetKeyDown(Keyboard::Right))
+	{
 		mode = 1;
-		player1.SetPos({ 1300 ,900 });
+		player1.SetPos({ 1300, 900 });
 	}
-
 	cout << "main" << endl;
 }

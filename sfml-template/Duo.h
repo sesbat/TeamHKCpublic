@@ -22,6 +22,7 @@ private:
 	Graphics tree2;
 
 	bool updateInit = false;
+	bool set = false;
 	float duration = 10;
 	float timer1 = duration;
 	float timer2 = duration;
@@ -83,6 +84,5 @@ private:
 	int currentBranch2 = -1;
 
 	bool setBGM = true;
-	bool set = false;
 
 };

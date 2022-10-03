@@ -31,20 +31,18 @@ class Scene
 {
 protected:
     list<Graphics> env;  //배경만(나무따로) 
-    vector<MovingObj*> movingObj;//벌,구름
+    list<MovingObj> movingObj;//벌,구름
     SoundMgr sdMgr;
     Graphics back;
+    MovingObj bee;
+    MovingObj cloud;
 
     Vector2f ScreenSize = { 1920, 1080 };
 
     int sel = 0;
     static Player player1;
     static Player player2;
-    static std::random_device rd;
-    static std::mt19937 gen;
 public:
-    int RandomRange(int min, int maxExclude);
-
     Player* GetPlayer1() { return &player1; }
     Player* GetPlayer2() { return &player2; }
     static String tempSkin;

@@ -28,6 +28,8 @@ void Branche::SetSide(Sides side)
     case Sides::Right:
         sprite.setScale(1, 1);
         break;
+    case Sides::None:
+        sprite.setScale(0, 0);
     }
     this->side = side;
 }

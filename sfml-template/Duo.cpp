@@ -348,7 +348,6 @@ void Duo::Update(float dt)
 
 		if (player1.GetAlive()) {
 			if (InputMgr::GetKeyDown(Keyboard::Left)) {
-				timer2 += 0.07f;
 				player1.SetAxePos(40, 40);
 				player1.Chop(Sides::Left);
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
@@ -360,7 +359,6 @@ void Duo::Update(float dt)
 			}
 			if (InputMgr::GetKeyDown(Keyboard::Right))
 			{
-				timer2 += 0.07f;
 				player1.SetAxePos(40, 40);
 				player1.Chop(Sides::Right);
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
@@ -391,7 +389,6 @@ void Duo::Update(float dt)
 		////////////////////////////////////////////////////////
 		if (player2.GetAlive()) {
 			if (InputMgr::GetKeyDown(Keyboard::A)) {
-				timer1 += 0.07f;
 				player2.SetAxePos(40, 40);
 				player2.Chop(Sides::Left);
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
@@ -403,7 +400,6 @@ void Duo::Update(float dt)
 			}
 			if (InputMgr::GetKeyDown(Keyboard::D))
 			{
-				timer1 += 0.07f;
 				player2.SetAxePos(40, 40);
 				player2.Chop(Sides::Right);
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
@@ -434,7 +430,6 @@ void Duo::Update(float dt)
 				dt = 0;
 			}
 		}
-
 
 
 		//if (InputMgr::GetKeyDown(Keyboard::Space)) {
@@ -475,57 +470,31 @@ void Duo::Update(float dt)
 		}
 		if (timer1 < 0.f && timer2 < 0.f)
 
-	//if (InputMgr::GetKeyDown(Keyboard::Space)) {
-		//	if (!player2.GetAlive())
-		//	{
-		//		player2.Init();
-		//		player2.SetAlive(true);
-		//	}
-		//	else
-		//	{
-		//		scoreResultNum_2P = scoreNum_2P;
-		//		player2.Die();
-		//		sdMgr.SoundPlay(SoundChoice::DeathSound);
-		//		dt = 0;
-		//	}
-		//}
-
-
-		if (timer2 < 0.f)
-		{
-			timer2 = 0.f;
-
-			dt = 0.f;
-
-
-			if (player1.GetAlive())
-			{
-				player1.SetAlive(false);
-				player1.Die();
-				sdMgr.SoundPlay(SoundChoice::TimeOutSound);
-				scoreResultNum_1P = scoreNum_1P;
-				scoreResult_1P.SetString("SCORE = " + to_string(scoreResultNum_1P));
-			}
-		}
-		if (timer1 < 0.f)
 		{
 			timer1 = 0.f;
+			timer2 = 0.f;
+			dt = 0.f;
+
+			if (player1.GetAlive())
+
+			{
+				player1.SetAlive(false);
+				scoreResultNum_1P = scoreNum_1P;
+				scoreResult_1P.SetString("SCORE = " + to_string(scoreResultNum_1P));
+				sdMgr.SoundPlay(SoundChoice::TimeOutSound);
+				player1.Die();
+			}
 			if (player2.GetAlive())
 			{
 				player2.SetAlive(false);
-				player2.Die();
-				sdMgr.SoundPlay(SoundChoice::TimeOutSound);
 				scoreResultNum_2P = scoreNum_2P;
 				scoreResult_2P.SetString("SCORE = " + to_string(scoreResultNum_2P));
+				sdMgr.SoundPlay(SoundChoice::TimeOutSound);
+				player2.Die();
 			}
-		}
-
-		if (timer1 <= 0.f && timer2 <= 0.f)
-		{
-			dt = 0.f;
 			sdMgr.Stop();
 		}
-
+		
 
 		float normTime1 = timer1 / duration; // 정규화
 		float normTime2 = timer2 / duration;

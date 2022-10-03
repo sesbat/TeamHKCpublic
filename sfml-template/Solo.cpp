@@ -2,6 +2,8 @@
 #include "sceneMgr.h"
 #include <iostream>
 
+std::random_device Solo::rd;
+std::mt19937 Solo::gen(Solo::rd());
 
 Solo::Solo()
 {
@@ -62,8 +64,9 @@ Solo::Solo()
 		branchPosArr.push_back( Vector2f(x, y));
 		y -= offset;
 	}
+	branches[0]->SetSide(Sides::None);
 	UpdateBranches(branches, currentBranch, branchPosArr);
-
+	
 }
 
 void Solo::UpdateBranches(vector<Branche*>& branches, int& current, vector<Vector2f>& posArr)
@@ -80,6 +83,11 @@ void Solo::UpdateBranches(vector<Branche*>& branches, int& current, vector<Vecto
 		}
 	}
 
+}
+
+int Solo::RandomRange(int min, int maxExclude)
+{
+	return (gen() % (maxExclude - min)) + min;
 }
 
 
@@ -103,8 +111,6 @@ Solo::~Solo()
 
 void Solo::Draw(RenderWindow& e)
 {
-	
-
 	Scene::Draw(e);
 	for (auto& v : branches) {
 		v->Draw(e);
@@ -174,7 +180,7 @@ void Solo::Update(float dt)
 	
 	if (player1.GetAlive())
 	{
-		if (InputMgr::GetKeyDown(Keyboard::Space))
+		if (InputMgr::GetKeyDown(Keyboard::P))
 		{
 			if (!isPause)
 			{
@@ -210,7 +216,6 @@ void Solo::Update(float dt)
 			if (InputMgr::GetKeyDown(Keyboard::Left))
 			{
 				scoreNum += 1;
-				timer += 0.07f;
 				player1.SetAxePos(40, 40);
 				player1.Chop(Sides::Left);
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
@@ -220,7 +225,6 @@ void Solo::Update(float dt)
 			if (InputMgr::GetKeyDown(Keyboard::Right))
 			{
 				scoreNum += 1;
-				timer += 0.07f;
 				player1.SetAxePos(40, 40);
 				player1.Chop(Sides::Right);
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
@@ -234,6 +238,20 @@ void Solo::Update(float dt)
 		}
 
 		/********************************** 임시로 해둔거 *********************************/
+		if (InputMgr::GetKeyDown(Keyboard::Space) && player1.GetAlive())
+		{
+			if (player1.GetAlive())
+			{
+				player1.SetAlive(false);
+				player1.Die();
+				sdMgr.SoundPlay(SoundChoice::DeathSound);
+				scoreResultNum = scoreNum;
+				scoreResult.SetString("SCORE = " + to_string(scoreResultNum));
+				scoreNum = 0;
+			}
+			else if (!player1.GetAlive())
+				player1.SetAlive(true);
+		}
 		if (timer < 0.f)
 		{
 			timer = 0.f;
@@ -247,6 +265,22 @@ void Solo::Update(float dt)
 				scoreResult.SetString("SCORE = " + to_string(scoreResultNum));
 				scoreNum = 0;
 				sdMgr.SoundPlay(SoundChoice::TimeOutSound);
+			}
+			
+		}
+		if (branches[currentBranch]->GetSide() == player1.GetSide())
+		{
+			timer = 0.f;
+			dt = 0.f;
+			if(player1.GetAlive())
+			{
+				sdMgr.StopPlay();
+				player1.SetAlive(false);
+				player1.Die();
+				scoreResultNum = scoreNum;
+				scoreResult.SetString("SCORE = " + to_string(scoreResultNum));
+				scoreNum = 0;
+				sdMgr.SoundPlay(SoundChoice::DeathSound);
 			}
 		}
 
@@ -276,6 +310,7 @@ void Solo::Update(float dt)
 			{
 				SceneMgr::GetInstance()->SetScene(SceneSelect::Solo);
 				timer = duration;
+				branches[currentBranch]->SetSide(Sides::None);
 				player1.Init();
 				// 다시시작
 			}
