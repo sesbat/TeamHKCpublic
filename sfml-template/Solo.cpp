@@ -141,14 +141,25 @@ void Solo::Update(float dt)
 			player1.SetAxePos(50, 50);
 	}
 
-	// ReStart / MainMenu choice
-	if (!player1.GetAlive() || timer == 0.f)
-	{
-		player1.Die();
-		scoreResultNum = scoreNum;
-		scoreNum = 0;
-		sdMgr.SoundPlay(SoundChoice::DeathSound);
 
+	/********************************** 임시로 해둔거 *********************************/
+	if (InputMgr::GetKeyDown(Keyboard::Space) && player1.GetAlive())
+	{
+		if (player1.GetAlive())
+		{
+			player1.SetAlive(false);
+			player1.Die();
+			scoreResultNum = scoreNum;
+			scoreResult.SetString("SCORE = " + to_string(scoreResultNum));
+			scoreNum = 0;
+		}
+		else if (!player1.GetAlive())
+			player1.SetAlive(true);
+	}
+
+	if (!player1.GetAlive())
+	{
+		// ReStart / MainMenu choice
 		if (InputMgr::GetKeyDown(Keyboard::Left))
 			choicePlay = 0;
 		if (InputMgr::GetKeyDown(Keyboard::Right))
@@ -156,18 +167,18 @@ void Solo::Update(float dt)
 
 		if (InputMgr::GetKeyDown(Keyboard::Return))
 		{
+			player1.SetAlive(true);
 			if (choicePlay == 0)
 			{
+				SceneMgr::GetInstance()->SetScene(SceneSelect::Solo);
 				player1.Init();
-				player1.SetAlive(true);
+				// 다시시작
 			}
-			else if (choicePlay == 1)
-			{
+			else
 				SceneMgr::GetInstance()->SetScene(SceneSelect::MainMenu);
-				player1.SetAlive(true);
-			}
 		}
 	}
+	/*************************************************************************************/
 
 	// 조건 : 피격시 or 타임아웃시 로 변경 / ReStart, MainMenu choice 버튼 옮기기
 
@@ -175,11 +186,11 @@ void Solo::Update(float dt)
 	{
 		timer = 0.f;
 		dt = 0.f;
-		std:cout << player1.GetAlive();
-		if (player1.GetAlive())
-		{
-			player1.SetAlive(false);
-		}
+		//std:cout << player1.GetAlive();
+		//if (player1.GetAlive())
+		//{
+		//	player1.SetAlive(false);
+		//}
 	}
 
 	timer -= dt;

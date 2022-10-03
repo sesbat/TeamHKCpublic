@@ -267,19 +267,19 @@ void Duo::Update(float dt)
 
 		else if (InputMgr::GetKeyDown(Keyboard::Return) && resultScreen == true)
 		{
+			player1.SetAlive(true);
+			player2.SetAlive(true);
+			resultScreen = false;
+
 			if (choicePlay == 0)
 			{
+				SceneMgr::GetInstance()->SetScene(SceneSelect::Couple);
 				player1.Init();
 				player2.Init();
 				// 다시시작
 			}
 			else
-			{
-				// 메뉴화면으로
-			}
-			player1.SetAlive(true);
-			player2.SetAlive(true);
-			resultScreen = false;
+				SceneMgr::GetInstance()->SetScene(SceneSelect::MainMenu);
 		}
 
 
