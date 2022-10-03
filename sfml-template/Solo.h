@@ -25,7 +25,7 @@ private:
 	bool updateInit=false;
 
 	MovingObj bee;
-	vector<MovingObj> cloud;
+	vector<MovingObj*> cloud;
 
 	Graphics Pause;
 	Graphics dieText;

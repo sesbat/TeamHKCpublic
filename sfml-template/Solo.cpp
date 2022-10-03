@@ -229,6 +229,7 @@ void Solo::Update(float dt)
 			if (InputMgr::GetKeyDown(Keyboard::Left))
 			{
 				scoreNum += 1;
+				timer += 0.07f;
 				player1.SetAxePos(40, 40);
 				player1.Chop(Sides::Left);
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
@@ -238,6 +239,7 @@ void Solo::Update(float dt)
 			if (InputMgr::GetKeyDown(Keyboard::Right))
 			{
 				scoreNum += 1;
+				timer += 0.07f;
 				player1.SetAxePos(40, 40);
 				player1.Chop(Sides::Right);
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
@@ -279,7 +281,6 @@ void Solo::Update(float dt)
 				scoreNum = 0;
 				sdMgr.SoundPlay(SoundChoice::TimeOutSound);
 			}
-			
 		}
 
 
