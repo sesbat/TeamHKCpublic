@@ -84,9 +84,9 @@ Duo::~Duo()
 void Duo::Init()
 {
 	player1.SetOriginalPos({ 1300 ,900 }, { 1700 ,900 });
-	player1.SetScale({0.8f, 0.8f});
-
 	player2.SetOriginalPos({ 200,900 }, { 600,900 });
+
+	player1.SetScale({ 0.8f, 0.8f });
 	player2.SetScale({ 0.8f, 0.8f });
 }
 
@@ -173,6 +173,12 @@ void Duo::Draw(RenderWindow& e)
 
 void Duo::Update(float dt)
 {
+	if (setBGM)
+	{
+		sdMgr.SoundPlay(SoundChoice::PlaySound);
+		setBGM = false;
+	}
+
 	if (updateInit == false) {
 		Init();
 		updateInit = true;
@@ -196,6 +202,8 @@ void Duo::Update(float dt)
 	}
 
 	if (InputMgr::GetKeyDown(Keyboard::Escape)) {
+		setBGM = true;
+		sdMgr.StopPlay();
 		scoreNum_1P = 0;
 		scoreNum_2P = 0;
 		score_1P.SetString("SCORE = " + to_string(scoreNum_1P));
@@ -238,20 +246,20 @@ void Duo::Update(float dt)
 			if (InputMgr::GetKey(Keyboard::Left) || InputMgr::GetKey(Keyboard::Right))
 				player1.SetAxePos(40, 40);
 		}
-		if (InputMgr::GetKeyDown(Keyboard::Q)) {
-			if (!player1.GetAlive())
-			{
-				player1.Init();
-				player1.SetAlive(true);
-			}
-			else
-			{
-				scoreResultNum_1P = scoreNum_1P;
-				player1.Die();
-				sdMgr.SoundPlay(SoundChoice::DeathSound);
-				dt = 0;
-			}
-		}
+		//if (InputMgr::GetKeyDown(Keyboard::Q)) {
+		//	if (!player1.GetAlive())
+		//	{
+		//		player1.Init();
+		//		player1.SetAlive(true);
+		//	}
+		//	else
+		//	{
+		//		scoreResultNum_1P = scoreNum_1P;
+		//		player1.Die();
+		//		sdMgr.SoundPlay(SoundChoice::DeathSound);
+		//		dt = 0;
+		//	}
+		//}
 		////////////////////////////////////////////////////////
 		if (player2.GetAlive()) {
 			if (InputMgr::GetKeyDown(Keyboard::A)) {
@@ -276,20 +284,20 @@ void Duo::Update(float dt)
 				player2.SetAxePos(40, 40);
 		}
 
-		if (InputMgr::GetKeyDown(Keyboard::Space)) {
-			if (!player2.GetAlive())
-			{
-				player2.Init();
-				player2.SetAlive(true);
-			}
-			else
-			{
-				scoreResultNum_2P = scoreNum_2P;
-				player2.Die();
-				sdMgr.SoundPlay(SoundChoice::DeathSound);
-				dt = 0;
-			}
-		}
+		//if (InputMgr::GetKeyDown(Keyboard::Space)) {
+		//	if (!player2.GetAlive())
+		//	{
+		//		player2.Init();
+		//		player2.SetAlive(true);
+		//	}
+		//	else
+		//	{
+		//		scoreResultNum_2P = scoreNum_2P;
+		//		player2.Die();
+		//		sdMgr.SoundPlay(SoundChoice::DeathSound);
+		//		dt = 0;
+		//	}
+		//}
 		if (timer1 < 0.f&&timer2 <0.f)
 		{
 			timer1 = 0.f;
@@ -301,6 +309,7 @@ void Duo::Update(float dt)
 				scoreResultNum_1P = scoreNum_1P;
 				scoreResult_1P.SetString("SCORE = " + to_string(scoreResultNum_1P));
 				sdMgr.SoundPlay(SoundChoice::TimeOutSound);
+				player1.Die();
 			}
 			if (player2.GetAlive())
 			{
@@ -308,8 +317,9 @@ void Duo::Update(float dt)
 				scoreResultNum_2P = scoreNum_2P;
 				scoreResult_2P.SetString("SCORE = " + to_string(scoreResultNum_2P));
 				sdMgr.SoundPlay(SoundChoice::TimeOutSound);
+				player2.Die();
 			}
-
+			sdMgr.Stop();
 		}
 
 
@@ -330,6 +340,7 @@ void Duo::Update(float dt)
 	{
 		if (InputMgr::GetKeyDown(Keyboard::Return) && resultScreen == false)
 		{
+			setBGM = true;
 			scoreNum_1P = 0;
 			scoreNum_2P = 0;
 			score_1P.SetString("SCORE = " + to_string(scoreNum_1P));
@@ -339,6 +350,7 @@ void Duo::Update(float dt)
 
 		else if (InputMgr::GetKeyDown(Keyboard::Return) && resultScreen == true)
 		{
+			setBGM = true;
 			player1.SetAlive(true);
 			player2.SetAlive(true);
 			resultScreen = false;

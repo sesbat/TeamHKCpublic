@@ -41,6 +41,7 @@ private:
     bool isPause = false;
 
     string skin= "graphics/player.png";
+    SoundMgr sdMgr;
 
 public:
     Player();

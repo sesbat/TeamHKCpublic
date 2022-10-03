@@ -33,12 +33,24 @@ void SkinMenu::Draw(RenderWindow& e)
 
 void SkinMenu::Update(float dt)
 {
-	if(InputMgr::GetKeyDown(Keyboard::Escape))
+	if (setBGM)
+	{
+		sdMgr.SoundPlay(SoundChoice::TitleSound);
+		setBGM = false;
+	}
+
+	if (InputMgr::GetKeyDown(Keyboard::Escape))
+	{
+		sdMgr.StopPlay();
 		SceneMgr::GetInstance()->SetScene(SceneSelect::MainMenu);
+	}
 
 	if (!mode) {
 		if (InputMgr::GetKeyDown(Keyboard::Return))
+		{
+			sdMgr.StopPlay();
 			SceneMgr::GetInstance()->SetScene(SceneSelect::Solo);
+		}
 		if (InputMgr::GetKeyDown(Keyboard::Right)) {
 			if (skin == skinList.size() - 1)
 				skin = -1;
@@ -55,7 +67,10 @@ void SkinMenu::Update(float dt)
 	}
 	else if (mode) {
 		if (InputMgr::GetKeyDown(Keyboard::Return))
+		{
+			sdMgr.StopPlay();
 			SceneMgr::GetInstance()->SetScene(SceneSelect::Couple);
+		}
 		if (InputMgr::GetKeyDown(Keyboard::A)) {
 			if (skin == skinList.size() - 1)
 				skin = -1;

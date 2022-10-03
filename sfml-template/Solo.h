@@ -14,6 +14,8 @@ public:
 	virtual void Update(float dt);
 	void Init();
 	void ShowLogEffect();
+
+
 private:
 	Graphics tree;
 	SkinMenu skin;
@@ -38,4 +40,6 @@ private:
 	list<Effect*> useLogs;
 	list<Effect*> unuseLogs;
 	Texture texLog;
+
+	bool setBGM = true;
 };

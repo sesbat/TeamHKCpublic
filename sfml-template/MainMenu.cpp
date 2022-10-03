@@ -49,9 +49,19 @@ void MainMenu::Draw(RenderWindow& e)
 
 void MainMenu::Update(float dt)
 {
+	if (setBGM)
+	{
+		sdMgr.SoundPlay(SoundChoice::TitleSound);
+		setBGM = false;
+	}
+
 	//위에 draw함수에 화살표왼쪽=1p 오른쪽 =2p 텍스트 넣어줘
 	if (InputMgr::GetKeyDown(Keyboard::Return))
+	{
+		sdMgr.StopPlay();
+		setBGM = true;
 		SceneMgr::GetInstance()->SetScene(SceneSelect::SkinMenu);
+	}
 
 	if (InputMgr::GetKeyDown(Keyboard::Left)) 
 		mode = 0;

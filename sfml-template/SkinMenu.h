@@ -2,6 +2,7 @@
 #include <string>
 #include "Scene.h"
 #include "Graphics.h"
+#include "SoundMgr.h"
 
 class SkinMenu : public Scene
 {
@@ -19,5 +20,7 @@ private:
 	int skin2 = 0;
 
 	Graphics skinSelect;
+	bool setBGM = true;
+	SoundMgr sdMgr;
 };
 

@@ -21,7 +21,14 @@ void StartMenu::Draw(RenderWindow& e)
 
 void StartMenu::Update(float dt)
 {
+	if (setBGM)
+	{
+		sdMgr.SoundPlay(SoundChoice::TitleSound);
+		setBGM = false;
+	}
+
 	if (InputMgr::GetKeyDown(Keyboard::Return)) {
+		sdMgr.StopPlay();
 		SceneMgr::GetInstance()->SetScene(SceneSelect::MainMenu);
 	}
 	cout << "startmenu " << endl;

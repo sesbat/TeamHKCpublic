@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 #include "Letter.h"
+#include "SoundMgr.h"
 
 class Duo :public Scene {
 public:
@@ -44,6 +45,8 @@ private:
 
 	Font font;
 
+	SoundMgr sdMgr;
+
 	int scoreNum_1P = 0;
 	int scoreNum_2P = 0;
 
@@ -54,4 +57,6 @@ private:
 
 	bool resultScreen = false;
 	bool isPause = false;
+
+	bool setBGM = true;
 };
