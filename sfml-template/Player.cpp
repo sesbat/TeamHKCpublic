@@ -107,7 +107,7 @@ void Player::Release()
 	{
 		delete log;
 	}
-	unuseLogs.clear(); //��ȸ�ϸ鼭 Ŭ����
+	unuseLogs.clear();
 	for (auto log : useLogs)
 	{
 		delete log;

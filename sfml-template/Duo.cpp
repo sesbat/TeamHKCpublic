@@ -28,6 +28,11 @@ Duo::Duo()
 	score_2P.SetAll(font, 70, Color::Black, "SCORE = " + to_string(scoreNum_2P), { (1920 * 0.5f) - 100, 0 });
 	score_2P.SetOrigin(Origins::TR);
 
+	scoreResult_1P.SetAll(font, 120, Color::White, "SCORE : " + to_string(scoreResultNum_1P), { 1920 * 0.75f, 1080 * 0.2f });
+	scoreResult_1P.SetOrigin(Origins::MC);
+	scoreResult_2P.SetAll(font, 120, Color::White, "SCORE : " + to_string(scoreResultNum_1P), { 1920 * 0.25f, 1080 * 0.2f });
+	scoreResult_2P.SetOrigin(Origins::MC);
+
 
 	win.SetTex("graphics/Win.png");
 	win.SetOrigin(Origins::TL);
@@ -116,6 +121,9 @@ void Duo::Draw(RenderWindow& e)
 
 	if (!player1.GetAlive() && !player2.GetAlive() && !resultScreen)
 	{
+		scoreResult_1P.SetString("SCORE : " + to_string(scoreResultNum_1P));
+		scoreResult_2P.SetString("SCORE : " + to_string(scoreResultNum_2P));
+
 		if (scoreNum_1P > scoreNum_2P)
 		{
 			win.SetPos({ 1920 * 0.5f, 0 });
@@ -135,6 +143,9 @@ void Duo::Draw(RenderWindow& e)
 			draw1.Draw(e);
 			draw2.Draw(e);
 		}
+
+		scoreResult_1P.Draw(e);
+		scoreResult_2P.Draw(e);
 	}
 
 	if (resultScreen)

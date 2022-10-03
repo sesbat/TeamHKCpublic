@@ -149,6 +149,7 @@ void Solo::Update(float dt)
 		{
 			player1.SetAlive(false);
 			player1.Die();
+			sdMgr.SoundPlay(SoundChoice::DeathSound);
 			scoreResultNum = scoreNum;
 			scoreResult.SetString("SCORE = " + to_string(scoreResultNum));
 			scoreNum = 0;
