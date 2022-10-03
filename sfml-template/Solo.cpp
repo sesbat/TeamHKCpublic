@@ -1,5 +1,6 @@
 #include "Solo.h"
 #include "sceneMgr.h"
+#include <iostream>
 
 Solo::Solo()
 {
@@ -120,6 +121,7 @@ void Solo::Update(float dt)
 		if (InputMgr::GetKeyDown(Keyboard::Left)) 
 		{
 			scoreNum += 1;
+			player1.SetAxePos(50, 50);
 			player1.Chop(Sides::Left);
 			sdMgr.SoundPlay(SoundChoice::ChopSound);
 			ShowLogEffect();
@@ -127,6 +129,7 @@ void Solo::Update(float dt)
 		if (InputMgr::GetKeyDown(Keyboard::Right))
 		{
 			scoreNum += 1;
+			player1.SetAxePos(50, 50);
 			player1.Chop(Sides::Right);
 			sdMgr.SoundPlay(SoundChoice::ChopSound);
 			ShowLogEffect();
@@ -170,6 +173,7 @@ void Solo::Update(float dt)
 	{
 		timer = 0.f;
 		dt = 0.f;
+		std:cout << player1.GetAlive();
 		if (player1.GetAlive())
 		{
 			player1.SetAlive(false);

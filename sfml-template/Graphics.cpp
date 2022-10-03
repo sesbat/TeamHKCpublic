@@ -70,6 +70,11 @@ Vector2f Graphics::GetSize() const
     return Vector2f(rect.width, rect.height);
 }
 
+void Graphics::SetScale(Vector2f xy)
+{
+    sprite.setScale(xy);
+}
+
 void Graphics::Draw(RenderWindow& window)
 {
     window.draw(sprite);

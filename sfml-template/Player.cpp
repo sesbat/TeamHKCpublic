@@ -195,10 +195,6 @@ void Player::Chop(Sides side)
 	isChopping = true;
 	pos = side;
 	sprite.setPosition(originalPos[(int)pos]);
-	if (GetSide() == Sides::Left)
-		axe.setPosition(sprite.getPosition().x + 50, sprite.getPosition().y - 50);
-	else
-		axe.setPosition(sprite.getPosition().x - 50 , sprite.getPosition().y - 50);
 
 	SetFlipX(pos == Sides::Left);
 }
@@ -244,4 +240,12 @@ void Player::SetPause()
 bool Player::GetPause()
 {
 	return isPause;
+}
+
+void Player::SetAxePos(float x, float y)
+{
+	if (GetSide() == Sides::Left)
+		axe.setPosition(sprite.getPosition().x + x, sprite.getPosition().y - y);
+	else
+		axe.setPosition(sprite.getPosition().x - x, sprite.getPosition().y - y);
 }

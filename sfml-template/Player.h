@@ -74,4 +74,5 @@ public:
     void SubChoice();
     void SetPause();
     bool GetPause();
+    void SetAxePos(float x, float y);
 };

@@ -28,8 +28,15 @@ private:
 	Letter reStart;
 	Letter mainMenu;
 
-	Graphics dieText_1P;
-	Graphics dieText_2P;
+	Graphics win;
+	Graphics lose;
+	Graphics middleLine;
+	Graphics p1_Die;
+	Graphics p2_Die;
+
+	Graphics draw1;
+	Graphics draw2;
+
 	Letter score_1P;
 	Letter score_2P;
 	Letter scoreResult_1P;
@@ -44,4 +51,6 @@ private:
 	int scoreResultNum_2P;
 
 	int choicePlay = 0;
+
+	bool resultScreen = false;
 };

@@ -12,8 +12,8 @@ SkinMenu::SkinMenu() {
 	skinList.push_back("graphics/player_green.png");
 	player1.SetOrigin(Origins::BC);
 	player2.SetOrigin(Origins::BC);
-	player1.SetPos({ 200,900 });
-	player2.SetPos({ 1200,900 });
+	player1.SetPos({ 1200,900 });
+	player2.SetPos({ 710,900 });
 
 	skinSelect.SetTex("graphics/SkinSelect.png");
 	skinSelect.SetOrigin(Origins::MC);

@@ -51,4 +51,5 @@ public:
     Vector2f GetScale() { return sprite.getScale(); };
     Sprite GetSprite() { return sprite; }
     Vector2f GetSize() const;
+    void SetScale(Vector2f xy);
 };
