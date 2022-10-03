@@ -182,6 +182,21 @@ void Solo::Update(float dt)
 			else if (!player1.GetAlive())
 				player1.SetAlive(true);
 		}
+		if (timer < 0.f)
+		{
+			timer = 0.f;
+			dt = 0.f;
+			if (player1.GetAlive())
+			{
+				player1.SetAlive(false);
+				scoreResultNum = scoreNum;
+				scoreResult.SetString("SCORE = " + to_string(scoreResultNum));
+				scoreNum = 0;
+				sdMgr.SoundPlay(SoundChoice::TimeOutSound);
+			}
+			
+		}
+
 
 		timer -= dt;
 		float normTime = timer / duration; // 정규화
@@ -205,6 +220,7 @@ void Solo::Update(float dt)
 			if (choicePlay == 0)
 			{
 				SceneMgr::GetInstance()->SetScene(SceneSelect::Solo);
+				timer = duration;
 				player1.Init();
 				// 다시시작
 			}

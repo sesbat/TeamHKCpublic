@@ -278,6 +278,28 @@ void Duo::Update(float dt)
 				dt = 0;
 			}
 		}
+		if (timer1 < 0.f&&timer2 <0.f)
+		{
+			timer1 = 0.f;
+			timer2 = 0.f;
+			dt = 0.f;
+			if (player1.GetAlive()&&player2.GetAlive())
+			{
+				player1.SetAlive(false);
+				player2.SetAlive(false);
+				scoreResultNum_1P = scoreNum_1P;
+				scoreResultNum_2P = scoreNum_2P;
+				scoreResult_1P.SetString("SCORE = " + to_string(scoreResultNum_1P));
+				scoreResult_2P.SetString("SCORE = " + to_string(scoreResultNum_2P));
+				scoreNum_1P = 0;
+				scoreNum_2P = 0;
+				score_1P.SetString("SCORE = " + to_string(scoreNum_1P));
+				score_2P.SetString("SCORE = " + to_string(scoreNum_2P));
+				sdMgr.SoundPlay(SoundChoice::TimeOutSound);
+			}
+
+		}
+
 
 		float normTime1 = timer1 / duration; // 정규화
 		float normTime2 = timer2 / duration;
@@ -314,6 +336,8 @@ void Duo::Update(float dt)
 				SceneMgr::GetInstance()->SetScene(SceneSelect::Couple);
 				player1.Init();
 				player2.Init();
+				timer1 = duration;
+				timer2 = duration;
 				// 다시시작
 			}
 			else
