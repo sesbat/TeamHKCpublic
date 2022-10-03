@@ -7,6 +7,14 @@ std::mt19937 Solo::gen(Solo::rd());
 
 Solo::Solo()
 {
+	bee.SetTex("graphics/bee.png");
+
+	for (int i = 0; i < 3; i++)
+		cloud.push_back(new MovingObj("graphics/cloud.png"));
+
+
+
+
 	for (int i = 0; i < 100; i++) {
 		auto log = new Effect("graphics/log.png", 5);
 		unuseLogs.push_back(log);
@@ -110,6 +118,12 @@ Solo::~Solo()
 
 void Solo::Draw(RenderWindow& e)
 {
+	bee.Draw(e);
+	for (auto& v : cloud) {
+		v->Draw(e);
+
+	}
+
 	Scene::Draw(e);
 	for (auto& v : branches) {
 		v->Draw(e);
