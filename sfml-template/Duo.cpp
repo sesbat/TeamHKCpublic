@@ -257,7 +257,13 @@ void Duo::Update(float dt)
 	if (!player1.GetAlive() && !player2.GetAlive())
 	{
 		if (InputMgr::GetKeyDown(Keyboard::Return) && resultScreen == false)
+		{
+			scoreNum_1P = 0;
+			scoreNum_2P = 0;
+			score_1P.SetString("SCORE = " + to_string(scoreNum_1P));
+			score_2P.SetString("SCORE = " + to_string(scoreNum_2P));
 			resultScreen = true;
+		}
 
 		else if (InputMgr::GetKeyDown(Keyboard::Return) && resultScreen == true)
 		{
