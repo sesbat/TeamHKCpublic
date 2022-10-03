@@ -122,6 +122,8 @@ Duo::Duo()
 
 	UpdateBranches(branches1, currentBranch, branchPosArr1);
 	UpdateBranches(branches2, currentBranch2, branchPosArr2);
+	branches1[currentBranch]->SetSide(Sides::None);
+	branches2[currentBranch2]->SetSide(Sides::None);
 }
 
 void Duo::UpdateBranches(vector<Branche*>& branches, int& current, vector<Vector2f>& posArr)
@@ -266,11 +268,20 @@ void Duo::Draw(RenderWindow& e)
 		v->Draw(e);
 	}
 
-
 }
 
 void Duo::Update(float dt)
 {
+	if (set == false) {
+
+		for (int i = 0; i < 5; i++) {
+			UpdateBranches(branches1, currentBranch, branchPosArr1);
+			UpdateBranches(branches2, currentBranch2, branchPosArr2);
+		}
+		set = true;
+		branches1[currentBranch]->SetSide(Sides::None);
+		branches2[currentBranch2]->SetSide(Sides::None);
+	}
 	if (setBGM)
 	{
 		sdMgr.SoundPlay(SoundChoice::PlaySound);
@@ -313,7 +324,7 @@ void Duo::Update(float dt)
 		player2.Init();
 		timer1 = duration;
 		timer2 = duration;
-		
+
 		SceneMgr::GetInstance()->SetScene(SceneSelect::MainMenu);
 		updateInit = false;
 	}
@@ -419,30 +430,50 @@ void Duo::Update(float dt)
 				dt = 0;
 			}
 		}
-		if (timer1 < 0.f && timer2 < 0.f)
 
-	//if (InputMgr::GetKeyDown(Keyboard::Space)) {
-		//	if (!player2.GetAlive())
-		//	{
-		//		player2.Init();
-		//		player2.SetAlive(true);
-		//	}
-		//	else
-		//	{
-		//		scoreResultNum_2P = scoreNum_2P;
-		//		player2.Die();
-		//		sdMgr.SoundPlay(SoundChoice::DeathSound);
-		//		dt = 0;
-		//	}
-		//}
-		if (timer1 < 0.f&&timer2 <0.f)
+
+		//if (InputMgr::GetKeyDown(Keyboard::Space)) {
+			//	if (!player2.GetAlive())
+			//	{
+			//		player2.Init();
+			//		player2.SetAlive(true);
+			//	}
+			//	else
+			//	{
+			//		scoreResultNum_2P = scoreNum_2P;
+			//		player2.Die();
+			//		sdMgr.SoundPlay(SoundChoice::DeathSound);
+			//		dt = 0;
+			//	}
+			//}
+		if (branches2[currentBranch2]->GetSide() == player1.GetSide())
+		{
+			if (player1.GetAlive())
+			{
+				player1.SetAlive(false);
+				scoreResultNum_1P = scoreNum_1P;
+				scoreResult_1P.SetString("SCORE = " + to_string(scoreResultNum_1P));
+				sdMgr.SoundPlay(SoundChoice::DeathSound);
+				player1.Die();
+			}
+		}
+		if (branches1[currentBranch]->GetSide() == player2.GetSide())
+		{
+			if (player2.GetAlive())
+			{
+				player2.SetAlive(false);
+				scoreResultNum_2P = scoreNum_2P;
+				scoreResult_2P.SetString("SCORE = " + to_string(scoreResultNum_2P));
+				sdMgr.SoundPlay(SoundChoice::DeathSound);
+				player2.Die();
+			}
+		}
+		if (timer1 < 0.f && timer2 < 0.f)
 
 		{
 			timer1 = 0.f;
 			timer2 = 0.f;
 			dt = 0.f;
-
-			if (player1.GetAlive() && player2.GetAlive())
 
 			if (player1.GetAlive())
 
@@ -488,6 +519,8 @@ void Duo::Update(float dt)
 			score_1P.SetString("SCORE = " + to_string(scoreNum_1P));
 			score_2P.SetString("SCORE = " + to_string(scoreNum_2P));
 			resultScreen = true;
+			branches1[currentBranch]->SetSide(Sides::None);
+			branches2[currentBranch2]->SetSide(Sides::None);
 		}
 
 		else if (InputMgr::GetKeyDown(Keyboard::Return) && resultScreen == true)
@@ -497,10 +530,14 @@ void Duo::Update(float dt)
 			player2.SetAlive(true);
 			resultScreen = false;
 
-			player1.Init();
-			player2.Init();
+			//player1.Init();
+			//player2.Init();
+			player1.SetTex(tempSkin);
+			player2.SetTex(tempSkin2);
 			timer1 = duration;
 			timer2 = duration;
+			branches1[currentBranch]->SetSide(Sides::None);
+			branches2[currentBranch2]->SetSide(Sides::None);
 
 			if (choicePlay == 0)
 				SceneMgr::GetInstance()->SetScene(SceneSelect::Couple);

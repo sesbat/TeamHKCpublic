@@ -4,6 +4,8 @@
 #include "Letter.h"
 #include <iostream>
 
+std::random_device Scene::rd;
+std::mt19937 Scene::gen(Scene::rd());
 String Scene::tempSkin = "graphics/player.png";
 String Scene::tempSkin2 = "graphics/player.png";
 bool Scene::mode = 0;
@@ -12,15 +14,28 @@ Player Scene::player2;
 Scene::Scene()
 {
 	back.SetTex("graphics/background.png");
-	bee.SetTex("graphics/bee.png");
-	cloud.SetTex("graphics/cloud.png");
 	env.push_back(back);
-	movingObj.push_back(bee);
-	movingObj.push_back(cloud);
+
+	movingObj.push_back(new MovingObj("graphics/bee.png"));
+	//for (int i = 0; i < 3; i++) {
+	//	movingObj.push_back(new MovingObj("graphics/cloud.png"));
+	//	movingObj[i]->Set({ 200,400 }, { 100, 400 }, { 1920,RandomRange(0,400) }, { -10,0 });
+	//	movingObj[i]->SetPos({1920,RandomRange(0,400)});
+	//}
 }
+
+int Scene::RandomRange(int min, int maxExclude)
+{
+	return (gen() % (maxExclude - min)) + min;
+}
+
 
 Scene::~Scene()
 {
+	for (auto& v : movingObj) {
+		delete v;
+	}
+	movingObj.clear();
 }
 
 void Scene::Draw(RenderWindow& e)
@@ -28,11 +43,21 @@ void Scene::Draw(RenderWindow& e)
 
 	for (auto& v : env)
 		v.Draw(e);
-	for (auto& v : movingObj){
-		v.Draw(e);
+	for (auto& v : movingObj) {
+		v->Draw(e);
 	}
 }
 
+void Scene::Update(float dt)
+{
+	/*for (auto& v : movingObj) {
+		Vector2f pos = v->GetPos();
+
+		float distanceX = endPos.x - pos.x;
+
+		v->Translate(direction * speed * dt);
+	}*/
+}
 //void Scene::StartMeun(float dt)
 //{
 //	std::cout << "Start" << std::endl;
@@ -144,27 +169,3 @@ void Scene::Draw(RenderWindow& e)
 //
 //}
 
-void Scene::Update(float dt)
-{
-	/*sel = (int)SceneMgr::GetInstance()->GetSel();
-	switch (sel) {
-	case 0:
-		break;
-	case 1:
-		MainMenu(dt);
-		break;
-
-	case 2:
-		SkinMenu(dt);
-		break;
-
-	case 3:
-		Solo(dt);
-		break;
-	}*/
-	//    sceneCollect[sel]->Draw(e);
-	//case 4:
-	//    sceneCollect[sel]->Draw(e);
-	//    break;
-	//} 
-}

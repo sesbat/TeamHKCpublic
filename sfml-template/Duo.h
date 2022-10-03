@@ -83,5 +83,6 @@ private:
 	int currentBranch2 = -1;
 
 	bool setBGM = true;
+	bool set = false;
 
 };
