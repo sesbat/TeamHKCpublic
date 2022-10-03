@@ -119,8 +119,6 @@ void Solo::Draw(RenderWindow& e)
 	tree.Draw(e);
 	player1.Draw(e);
 	
-	
-
 	if (choicePlay == 0)
 		choice.SetPos({ 1920 * 0.202f, 1080 * 0.575f });
 	else if (choicePlay == 1)
@@ -165,22 +163,11 @@ void Solo::Update(float dt)
 		player1.SetOriginalPos({ 1920 / 2 - 250,900 }, { 1920 / 2 + 250,900 });
 		updateInit = true;
 	}
-
-	if (InputMgr::GetKeyDown(Keyboard::Escape)) {
-		setBGM = true;
-		sdMgr.StopPlay();
-		scoreResult.SetString("SCORE = " + to_string(scoreResultNum));
-		scoreNum = 0;
-		timer = duration;
-		player1.Init();
-		SceneMgr::GetInstance()->SetScene(SceneSelect::MainMenu);
-		updateInit = false;
-	}
 	//여기에 실제게임플레이 입력,정보 브렌치 업데이트
 	
 	if (player1.GetAlive())
 	{
-		if (InputMgr::GetKeyDown(Keyboard::P))
+		if (InputMgr::GetKeyDown(Keyboard::Space))
 		{
 			if (!isPause)
 			{
@@ -215,6 +202,7 @@ void Solo::Update(float dt)
 		if (player1.GetAlive()) {
 			if (InputMgr::GetKeyDown(Keyboard::Left))
 			{
+				timer += 0.07f;
 				scoreNum += 1;
 				player1.SetAxePos(40, 40);
 				player1.Chop(Sides::Left);
@@ -224,6 +212,7 @@ void Solo::Update(float dt)
 			}
 			if (InputMgr::GetKeyDown(Keyboard::Right))
 			{
+				timer += 0.07f;
 				scoreNum += 1;
 				player1.SetAxePos(40, 40);
 				player1.Chop(Sides::Right);
@@ -237,21 +226,6 @@ void Solo::Update(float dt)
 				player1.SetAxePos(40, 40);
 		}
 
-		/********************************** 임시로 해둔거 *********************************/
-		if (InputMgr::GetKeyDown(Keyboard::Space) && player1.GetAlive())
-		{
-			if (player1.GetAlive())
-			{
-				player1.SetAlive(false);
-				player1.Die();
-				sdMgr.SoundPlay(SoundChoice::DeathSound);
-				scoreResultNum = scoreNum;
-				scoreResult.SetString("SCORE = " + to_string(scoreResultNum));
-				scoreNum = 0;
-			}
-			else if (!player1.GetAlive())
-				player1.SetAlive(true);
-		}
 		if (timer < 0.f)
 		{
 			timer = 0.f;

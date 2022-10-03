@@ -8,30 +8,10 @@
 #include "SoundMgr.h"
 #include "Branche.h"
 
-enum class MOVEOBJ {
-    CLOUD,
-    BEE,
-};
-
-/*
-         씬mgr(그대로?)
-            
-        씬(벌,구름,배경)              필요한것:벌 구름 배경 
-            |
-            |
-        -------------------
-        |   |   |    |    |                     필요한것: 플레이어 나무 
-      솔로 듀오 스킨 메뉴 시작 (각각 나무 플레이어 멤버 ) 생성자에서 플레이어,나무객체 만듬 
-       
-       업데이트 씬 객체 씬mgr sceneCollect에 넣기
-       드로우 씬 객체 씬mgr sceneCollect에 넣기
-*/
-
 class Scene
 {
 protected:
     list<Graphics> env;  //배경만(나무따로) 
-    list<MovingObj> movingObj;//벌,구름
     SoundMgr sdMgr;
     Graphics back;
     MovingObj bee;
