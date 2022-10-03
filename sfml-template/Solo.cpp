@@ -104,6 +104,10 @@ void Solo::Update(float dt)
 	}
 
 	if (InputMgr::GetKeyDown(Keyboard::Escape)) {
+		scoreResult.SetString("SCORE = " + to_string(scoreResultNum));
+		scoreNum = 0;
+		timer = duration;
+		player1.Init();
 		SceneMgr::GetInstance()->SetScene(SceneSelect::MainMenu);
 		updateInit = false;
 	}
