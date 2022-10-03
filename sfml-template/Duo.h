@@ -9,8 +9,13 @@ public:
 	virtual ~Duo();
 	virtual void Draw(RenderWindow& e);
 	virtual void Update(float dt);
+	void ShowLogEffect(bool who);
 
 	void Init();
+
+	int RandomRange(int min, int maxExclude);
+	void UpdateBranches(vector<Branche*>& branches, int& current, vector<Vector2f>& posArr);
+
 private:
 	Graphics tree;
 	Graphics tree2;
@@ -44,6 +49,12 @@ private:
 
 	Font font;
 
+	list<Effect*> useLogs;
+	list<Effect*> unuseLogs;
+
+	list<Effect*> useLogs1;
+	list<Effect*> unuseLogs2;
+
 	int scoreNum_1P = 0;
 	int scoreNum_2P = 0;
 
@@ -54,4 +65,18 @@ private:
 
 	bool resultScreen = false;
 	bool isPause = false;
+
+
+	static std::random_device rd;
+	static std::mt19937 gen;
+
+	vector<Branche*> branches1;
+	vector<Vector2f> branchPosArr1;
+
+	vector<Branche*> branches2;
+	vector<Vector2f> branchPosArr2;
+
+	int currentBranch = -1;
+	int currentBranch2 = -1;
+
 };

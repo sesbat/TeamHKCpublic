@@ -18,7 +18,7 @@ private:
     int curBranch;
 
 public:
-    Branche(string tex);
+    Branche(string tex,Graphics* tree);
 
     virtual void Init() override;
     void SetSide(Sides side);

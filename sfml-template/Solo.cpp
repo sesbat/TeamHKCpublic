@@ -2,6 +2,9 @@
 #include "sceneMgr.h"
 #include <iostream>
 
+std::random_device Solo::rd;
+std::mt19937 Solo::gen(Solo::rd());
+
 Solo::Solo()
 {
 	for (int i = 0; i < 100; i++) {
@@ -44,27 +47,79 @@ Solo::Solo()
 	timerBar.setPosition(
 		1920 * 0.5f - timerBarSize.x * 0.5f,
 		1080 - 100);
+
+	for (int i =0; i < 6; ++i)
+	{
+		branches.push_back(new Branche("graphics/branch.png",&tree));
+		int temp = 0;
+		branches[i]->SetSide((Sides)temp);
+	}
+
+	float x = branches[0]->GetPos().x;
+	float y = 800;
+	float offset = branches[0]->GetSize().y;
+	offset += 100;
+	for (int i = 0; i < branches.size(); ++i)
+	{
+		branchPosArr.push_back( Vector2f(x, y));
+		y -= offset;
+	}
+	UpdateBranches(branches, currentBranch, branchPosArr);
+
 }
+
+void Solo::UpdateBranches(vector<Branche*>& branches, int& current, vector<Vector2f>& posArr)
+{
+	current = (current + 1) % branches.size();
+
+	for (int i = 0; i < branches.size(); ++i)
+	{
+		int index = (current + i) % branches.size();
+		branches[index]->SetPos(posArr[i]);
+		if (i == branches.size() - 1)
+		{
+			branches[index]->SetSide((Sides)RandomRange(0,2));
+		}
+	}
+
+}
+
+int Solo::RandomRange(int min, int maxExclude)
+{
+	return (gen() % (maxExclude - min)) + min;
+}
+
 
 Solo::~Solo()
 {
-	for (auto v : unuseLogs) {
+	for (auto &v : unuseLogs) {
 		delete v;
 	}
 	unuseLogs.clear();
-	for (auto v : useLogs) {
+	for (auto &v : useLogs) {
 		delete v;
 	}
 	useLogs.clear();
+
+	for (auto &v : branches) {
+		delete v;
+	}
+	branches.clear();
+
 }
 
 void Solo::Draw(RenderWindow& e)
 {
 	Scene::Draw(e);
+	for (auto& v : branches) {
+		v->Draw(e);
 
+	}
 	tree.Draw(e);
 	player1.Draw(e);
 	
+	
+
 	if (choicePlay == 0)
 		choice.SetPos({ 1920 * 0.202f, 1080 * 0.575f });
 	else if (choicePlay == 1)
@@ -151,6 +206,7 @@ void Solo::Update(float dt)
 				player1.Chop(Sides::Left);
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
 				ShowLogEffect();
+				UpdateBranches(branches, currentBranch, branchPosArr);
 			}
 			if (InputMgr::GetKeyDown(Keyboard::Right))
 			{
@@ -159,7 +215,7 @@ void Solo::Update(float dt)
 				player1.Chop(Sides::Right);
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
 				ShowLogEffect();
-
+				UpdateBranches(branches, currentBranch, branchPosArr);
 			}
 			if (InputMgr::GetKeyUp(Keyboard::Left) || InputMgr::GetKeyUp(Keyboard::Right))
 				player1.SetChop(false);

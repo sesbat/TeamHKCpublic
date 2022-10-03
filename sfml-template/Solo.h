@@ -14,6 +14,9 @@ public:
 	virtual void Update(float dt);
 	void Init();
 	void ShowLogEffect();
+	void UpdateBranches(vector<Branche*>& branches, int& current, vector<Vector2f>& posArr);
+	int RandomRange(int min, int maxExclude);
+
 private:
 	Graphics tree;
 	SkinMenu skin;
@@ -38,4 +41,13 @@ private:
 	list<Effect*> useLogs;
 	list<Effect*> unuseLogs;
 	Texture texLog;
+
+	static std::random_device rd;
+	static std::mt19937 gen;
+
+	vector<Branche*> branches;
+	vector<Vector2f> branchPosArr;
+
+	int currentBranch = -1;
+
 };

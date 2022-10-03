@@ -1,8 +1,16 @@
 #include"Duo.h"
 #include "sceneMgr.h"
 
+std::random_device Duo::rd;
+std::mt19937 Duo::gen(Duo::rd());
+
 Duo::Duo()
 {
+	for (int i = 0; i < 100; i++) {
+		auto log = new Effect("graphics/log.png", 5);
+		unuseLogs.push_back(log);
+	}
+
 	player1.SetOrigin(Origins::BC);
 	tree.SetTex("graphics/tree.png");
 	tree.SetOrigin(Origins::TC);
@@ -10,7 +18,7 @@ Duo::Duo()
 	tree2.SetTex("graphics/tree.png");
 	tree2.SetOrigin(Origins::TC);
 	tree2.SetPos({ 1500 ,0 });
-	tree.SetScale({0.65f, 1});
+	tree.SetScale({ 0.65f, 1 });
 	tree2.SetScale({ 0.65f, 1 });
 
 
@@ -40,7 +48,7 @@ Duo::Duo()
 	lose.SetOrigin(Origins::TL);
 	middleLine.SetTex("graphics/MiddleLine.png");
 	middleLine.SetOrigin(Origins::MC);
-	middleLine.SetPos({1920 * 0.5f, 1080 * 0.5f});
+	middleLine.SetPos({ 1920 * 0.5f, 1080 * 0.5f });
 
 	p1_Die.SetTex("graphics/Duo_Die.png");
 	p1_Die.SetOrigin(Origins::MC);
@@ -61,7 +69,7 @@ Duo::Duo()
 	Pause.SetOrigin(Origins::MC);
 	Pause.SetPos({ 1920 * 0.5f, 1080 * 0.5f });
 
-	Init();	
+	Init();
 	timerBarSize.x = 400;
 	timerBarSize.y = 80;
 	timerBar1.setSize(timerBarSize);
@@ -75,16 +83,93 @@ Duo::Duo()
 	timerBar2.setPosition(
 		1920 * 0.8f - timerBarSize.x * 0.8f,
 		1080 - 100);
+
+	for (int i = 0; i < 6; ++i)
+	{
+		branches1.push_back(new Branche("graphics/branch.png", &tree));
+		int temp = RandomRange(0, 2);
+		branches1[i]->SetSide((Sides)temp);
+		branches1[i]->SetScale({ 0.8,1 });
+	}
+	for (int i = 0; i < 6; ++i)
+	{
+		branches2.push_back(new Branche("graphics/branch.png", &tree2));
+		int temp = RandomRange(0, 2);
+		branches2[i]->SetSide((Sides)temp);
+		branches2[i]->SetScale({ 0.8,1 });
+
+	}
+
+	float x = branches1[0]->GetPos().x;
+	float y = 800;
+	float offset = branches1[0]->GetSize().y;
+	offset += 100;
+
+	for (int i = 0; i < branches1.size(); ++i)
+	{
+		branchPosArr1.push_back(Vector2f(x, y));
+		y -= offset;
+	}
+	x = branches2[0]->GetPos().x;
+	y = 800;
+	offset = branches2[0]->GetSize().y;
+	offset += 100;
+	for (int i = 0; i < branches2.size(); ++i)
+	{
+		branchPosArr2.push_back(Vector2f(x, y));
+		y -= offset;
+	}
+
+	UpdateBranches(branches1, currentBranch, branchPosArr1);
+	UpdateBranches(branches2, currentBranch2, branchPosArr2);
+}
+
+void Duo::UpdateBranches(vector<Branche*>& branches, int& current, vector<Vector2f>& posArr)
+{
+	current = (current + 1) % branches.size();
+
+	for (int i = 0; i < branches.size(); ++i)
+	{
+		int index = (current + i) % branches.size();
+		branches[index]->SetPos(posArr[i]);
+		if (i == branches.size() - 1)
+		{
+			branches[index]->SetSide((Sides)RandomRange(0, 2));
+		}
+	}
+
+}
+
+int Duo::RandomRange(int min, int maxExclude)
+{
+	return (gen() % (maxExclude - min)) + min;
 }
 
 Duo::~Duo()
 {
+	for (auto& v : unuseLogs) {
+		delete v;
+	}
+	unuseLogs.clear();
+	for (auto& v : useLogs) {
+		delete v;
+	}
+	useLogs.clear();
+
+	for (auto& v : branches1) {
+		delete v;
+	}
+	branches1.clear();
+	for (auto& v : branches2) {
+		delete v;
+	}
+	branches2.clear();
 }
 
 void Duo::Init()
 {
 	player1.SetOriginalPos({ 1300 ,900 }, { 1700 ,900 });
-	player1.SetScale({0.8f, 0.8f});
+	player1.SetScale({ 0.8f, 0.8f });
 
 	player2.SetOriginalPos({ 200,900 }, { 600,900 });
 	player2.SetScale({ 0.8f, 0.8f });
@@ -93,6 +178,12 @@ void Duo::Init()
 void Duo::Draw(RenderWindow& e)
 {
 	Scene::Draw(e);
+	for (auto& v : branches1) {
+		v->Draw(e);
+	}
+	for (auto& v : branches2) {
+		v->Draw(e);
+	}
 	tree.Draw(e);
 	tree2.Draw(e);
 	player1.Draw(e);
@@ -157,9 +248,9 @@ void Duo::Draw(RenderWindow& e)
 		mainMenu.Draw(e);
 
 		if (choicePlay == 0)
-			choice.SetPos({ (1920 * 0.5f) + 5, (1080 * 0.4f) + 15});
+			choice.SetPos({ (1920 * 0.5f) + 5, (1080 * 0.4f) + 15 });
 		else
-			choice.SetPos({ (1920 * 0.5f) + 5, (1080 * 0.6f) + 15});
+			choice.SetPos({ (1920 * 0.5f) + 5, (1080 * 0.6f) + 15 });
 
 		choice.Draw(e);
 	}
@@ -169,6 +260,13 @@ void Duo::Draw(RenderWindow& e)
 		if (isPause)
 			Pause.Draw(e);
 	}
+
+	for (auto v : useLogs)
+	{
+		v->Draw(e);
+	}
+
+
 }
 
 void Duo::Update(float dt)
@@ -202,6 +300,18 @@ void Duo::Update(float dt)
 	//여기에 실제게임플레이 입력,정보 브렌치 업데이트
 	if (isPause == false)
 	{
+		auto it = useLogs.begin();
+		while (it != useLogs.end()) {
+			(*it)->Update(dt);
+			if (!(*it)->GetActive()) {
+				unuseLogs.push_back(*it);
+				it = useLogs.erase(it);
+			}
+			else {
+				++it;
+			}
+		}
+
 		timer1 -= dt;
 		timer2 -= dt;
 
@@ -212,6 +322,9 @@ void Duo::Update(float dt)
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
 				scoreNum_1P += 1;
 				score_1P.SetString("SCORE = " + to_string(scoreNum_1P));
+				ShowLogEffect(0);
+				UpdateBranches(branches2, currentBranch2, branchPosArr2);
+
 			}
 			if (InputMgr::GetKeyDown(Keyboard::Right))
 			{
@@ -220,6 +333,8 @@ void Duo::Update(float dt)
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
 				scoreNum_1P += 1;
 				score_1P.SetString("SCORE = " + to_string(scoreNum_1P));
+				ShowLogEffect(0);
+				UpdateBranches(branches2, currentBranch2, branchPosArr2);
 			}
 			if (InputMgr::GetKeyUp(Keyboard::Left) || InputMgr::GetKeyUp(Keyboard::Right))
 				player1.SetChop(false);
@@ -248,6 +363,9 @@ void Duo::Update(float dt)
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
 				scoreNum_2P += 1;
 				score_2P.SetString("SCORE = " + to_string(scoreNum_2P));
+				ShowLogEffect(1);
+				UpdateBranches(branches1, currentBranch, branchPosArr1);
+
 			}
 			if (InputMgr::GetKeyDown(Keyboard::D))
 			{
@@ -256,6 +374,9 @@ void Duo::Update(float dt)
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
 				scoreNum_2P += 1;
 				score_2P.SetString("SCORE = " + to_string(scoreNum_2P));
+				ShowLogEffect(1);
+				UpdateBranches(branches1, currentBranch, branchPosArr1);
+
 			}
 			if (InputMgr::GetKeyUp(Keyboard::A) || InputMgr::GetKeyUp(Keyboard::D))
 				player2.SetChop(false);
@@ -278,12 +399,12 @@ void Duo::Update(float dt)
 				dt = 0;
 			}
 		}
-		if (timer1 < 0.f&&timer2 <0.f)
+		if (timer1 < 0.f && timer2 < 0.f)
 		{
 			timer1 = 0.f;
 			timer2 = 0.f;
 			dt = 0.f;
-			if (player1.GetAlive()&&player2.GetAlive())
+			if (player1.GetAlive() && player2.GetAlive())
 			{
 				player1.SetAlive(false);
 				player2.SetAlive(false);
@@ -350,4 +471,43 @@ void Duo::Update(float dt)
 		if (InputMgr::GetKeyDown(Keyboard::Down))
 			choicePlay = 1;
 	}
+}
+
+void Duo::ShowLogEffect(bool who) {
+	if (unuseLogs.empty())
+		return;
+	auto log = unuseLogs.front();
+	unuseLogs.pop_front();
+	useLogs.push_back(log);
+	Vector2f pos;
+	Vector2f force;
+	float aForce;
+	if (!who) {
+		force.x = player1.GetSide() == Sides::Left ? 1500 : -1500;
+		force.y = -1500;
+		aForce = player1.GetSide() == Sides::Left ? 360 * 5 : -360 * 5;
+
+		pos = player1.GetPos();
+		if (player1.GetSide() == Sides::Left) {
+			pos.x = player1.GetPos().x + 200;
+		}
+		else
+			pos.x = player1.GetPos().x - 200;
+	}
+	else {
+		force.x = player2.GetSide() == Sides::Left ? 1500 : -1500;
+		force.y = -1500;
+		aForce = player2.GetSide() == Sides::Left ? 360 * 5 : -360 * 5;
+
+		pos = player2.GetPos();
+		if (player2.GetSide() == Sides::Left) {
+			pos.x = player2.GetPos().x + 200;
+		}
+		else
+			pos.x = player2.GetPos().x - 200;
+	}
+	pos.y = 800;
+
+	log->SetPos(pos);
+	log->Shot(force, aForce);
 }

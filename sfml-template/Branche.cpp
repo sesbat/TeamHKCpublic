@@ -3,7 +3,7 @@
 random_device Branche::rd;
 mt19937 Branche::gen(Branche::rd());
 
-Branche::Branche(string tex) 
+Branche::Branche(string tex,Graphics* tree) 
     : Graphics(tex), tree(tree), curBranch(-1)
 {
  
@@ -14,7 +14,7 @@ void Branche::Init()
 {
     Vector2f treeSize = tree->GetSize();
     Vector2f branchSize = GetSize();
-    sprite.setOrigin(-treeSize.x * 0.5f, branchSize.y * 0.5f);
+    sprite.setOrigin(-treeSize.x * 0.2f, branchSize.y * 0.2f);
     SetPos(tree->GetPos());
 }
 
