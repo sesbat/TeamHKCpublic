@@ -153,12 +153,25 @@ void Solo::Draw(RenderWindow& e)
 
 void Solo::Update(float dt)
 {	
+	if (setBGM)
+	{
+		sdMgr.SoundPlay(SoundChoice::PlaySound);
+		setBGM = false;
+	}
+
+
 	if(updateInit==false){
 		player1.SetOriginalPos({ 1920 / 2 - 250,900 }, { 1920 / 2 + 250,900 });
 		updateInit = true;
 	}
 
 	if (InputMgr::GetKeyDown(Keyboard::Escape)) {
+		setBGM = true;
+		sdMgr.StopPlay();
+		scoreResult.SetString("SCORE = " + to_string(scoreResultNum));
+		scoreNum = 0;
+		timer = duration;
+		player1.Init();
 		SceneMgr::GetInstance()->SetScene(SceneSelect::MainMenu);
 		updateInit = false;
 	}
@@ -202,7 +215,7 @@ void Solo::Update(float dt)
 			if (InputMgr::GetKeyDown(Keyboard::Left))
 			{
 				scoreNum += 1;
-				player1.SetAxePos(50, 50);
+				player1.SetAxePos(40, 40);
 				player1.Chop(Sides::Left);
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
 				ShowLogEffect();
@@ -211,7 +224,7 @@ void Solo::Update(float dt)
 			if (InputMgr::GetKeyDown(Keyboard::Right))
 			{
 				scoreNum += 1;
-				player1.SetAxePos(50, 50);
+				player1.SetAxePos(40, 40);
 				player1.Chop(Sides::Right);
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
 				ShowLogEffect();
@@ -220,7 +233,7 @@ void Solo::Update(float dt)
 			if (InputMgr::GetKeyUp(Keyboard::Left) || InputMgr::GetKeyUp(Keyboard::Right))
 				player1.SetChop(false);
 			if (InputMgr::GetKey(Keyboard::Left) || InputMgr::GetKey(Keyboard::Right))
-				player1.SetAxePos(50, 50);
+				player1.SetAxePos(40, 40);
 		}
 
 		/********************************** 임시로 해둔거 *********************************/
@@ -244,7 +257,9 @@ void Solo::Update(float dt)
 			dt = 0.f;
 			if (player1.GetAlive())
 			{
+				sdMgr.StopPlay();
 				player1.SetAlive(false);
+				player1.Die();
 				scoreResultNum = scoreNum;
 				scoreResult.SetString("SCORE = " + to_string(scoreResultNum));
 				scoreNum = 0;
@@ -272,6 +287,8 @@ void Solo::Update(float dt)
 
 		if (InputMgr::GetKeyDown(Keyboard::Return))
 		{
+			setBGM = true;
+			sdMgr.StopPlay();
 			player1.SetAlive(true);
 			if (choicePlay == 0)
 			{
@@ -310,8 +327,8 @@ void Solo::ShowLogEffect() {
 	log->Shot(force, aForce);
 }
 
+
 void Solo::Init()
 {
 	GetPlayer1()->SetOriginalPos({ 1920 / 2 - 250,900 }, { 1920 / 2 + 250,900 });
-
 }

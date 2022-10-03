@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 #include "Letter.h"
+#include "SoundMgr.h"
 
 class Duo :public Scene {
 public:
@@ -55,6 +56,8 @@ private:
 	list<Effect*> useLogs1;
 	list<Effect*> unuseLogs2;
 
+	SoundMgr sdMgr;
+
 	int scoreNum_1P = 0;
 	int scoreNum_2P = 0;
 
@@ -78,5 +81,7 @@ private:
 
 	int currentBranch = -1;
 	int currentBranch2 = -1;
+
+	bool setBGM = true;
 
 };

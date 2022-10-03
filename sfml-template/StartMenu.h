@@ -12,4 +12,5 @@ public:
 	virtual void Update(float dt);
 private:
 	Graphics startGraphic;
+	bool setBGM = true;
 };
