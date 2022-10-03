@@ -23,6 +23,10 @@ private:
 	SkinMenu skin;
 	bool updateInit=false;
 
+
+	MovingObj bee;
+	vector<MovingObj*> cloud;
+
 	Graphics Pause;
 	Graphics dieText;
 	Graphics choice;

@@ -174,7 +174,7 @@ void Solo::Update(float dt)
 	
 	if (player1.GetAlive())
 	{
-		if (InputMgr::GetKeyDown(Keyboard::P))
+		if (InputMgr::GetKeyDown(Keyboard::Space))
 		{
 			if (!isPause)
 			{
@@ -210,6 +210,7 @@ void Solo::Update(float dt)
 			if (InputMgr::GetKeyDown(Keyboard::Left))
 			{
 				scoreNum += 1;
+				timer += 0.07f;
 				player1.SetAxePos(40, 40);
 				player1.Chop(Sides::Left);
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
@@ -219,6 +220,7 @@ void Solo::Update(float dt)
 			if (InputMgr::GetKeyDown(Keyboard::Right))
 			{
 				scoreNum += 1;
+				timer += 0.07f;
 				player1.SetAxePos(40, 40);
 				player1.Chop(Sides::Right);
 				sdMgr.SoundPlay(SoundChoice::ChopSound);
@@ -232,20 +234,6 @@ void Solo::Update(float dt)
 		}
 
 		/********************************** 임시로 해둔거 *********************************/
-		if (InputMgr::GetKeyDown(Keyboard::Space) && player1.GetAlive())
-		{
-			if (player1.GetAlive())
-			{
-				player1.SetAlive(false);
-				player1.Die();
-				sdMgr.SoundPlay(SoundChoice::DeathSound);
-				scoreResultNum = scoreNum;
-				scoreResult.SetString("SCORE = " + to_string(scoreResultNum));
-				scoreNum = 0;
-			}
-			else if (!player1.GetAlive())
-				player1.SetAlive(true);
-		}
 		if (timer < 0.f)
 		{
 			timer = 0.f;
@@ -260,7 +248,6 @@ void Solo::Update(float dt)
 				scoreNum = 0;
 				sdMgr.SoundPlay(SoundChoice::TimeOutSound);
 			}
-			
 		}
 
 
