@@ -137,6 +137,8 @@ void Solo::Update(float dt)
 		}
 		if (InputMgr::GetKeyUp(Keyboard::Left) || InputMgr::GetKeyUp(Keyboard::Right))
 			player1.SetChop(false);
+		if (InputMgr::GetKey(Keyboard::Left) || InputMgr::GetKey(Keyboard::Right))
+			player1.SetAxePos(50, 50);
 	}
 
 	// ReStart / MainMenu choice

@@ -29,7 +29,7 @@ private:
 	int scoreNum = 0;
 	int scoreResultNum;
 	int choicePlay = 0;
-	float duration = 3;
+	float duration = 10;
 	float timer = duration;
 	bool isPause = false;
 	Vector2f timerBarSize;
