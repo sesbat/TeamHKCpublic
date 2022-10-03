@@ -193,7 +193,7 @@ void Solo::Update(float dt)
 	
 	if (player1.GetAlive())
 	{
-		if (InputMgr::GetKeyDown(Keyboard::P))
+		if (InputMgr::GetKeyDown(Keyboard::Space))
 		{
 			if (!isPause)
 			{
@@ -253,20 +253,6 @@ void Solo::Update(float dt)
 		}
 
 		/********************************** 임시로 해둔거 *********************************/
-		if (InputMgr::GetKeyDown(Keyboard::Space) && player1.GetAlive())
-		{
-			if (player1.GetAlive())
-			{
-				player1.SetAlive(false);
-				player1.Die();
-				sdMgr.SoundPlay(SoundChoice::DeathSound);
-				scoreResultNum = scoreNum;
-				scoreResult.SetString("SCORE = " + to_string(scoreResultNum));
-				scoreNum = 0;
-			}
-			else if (!player1.GetAlive())
-				player1.SetAlive(true);
-		}
 		if (timer < 0.f)
 		{
 			timer = 0.f;

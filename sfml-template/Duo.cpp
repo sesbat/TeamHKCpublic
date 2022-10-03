@@ -250,7 +250,7 @@ void Duo::Draw(RenderWindow& e)
 		if (choicePlay == 0)
 			choice.SetPos({ (1920 * 0.5f) + 5, (1080 * 0.4f) + 15 });
 		else
-			choice.SetPos({ (1920 * 0.5f) + 5, (1080 * 0.6f) - 15 });
+			choice.SetPos({ (1920 * 0.5f) + 5, (1080 * 0.6f) + 15 });
 
 		choice.Draw(e);
 	}
